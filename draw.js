@@ -146,6 +146,7 @@ function draw_event(){
             font(10, `>`, 4, 100 + 10*i);
         }
         i++;
+    }
 }
 function draw_status(){
     // background
