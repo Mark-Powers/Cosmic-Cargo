@@ -1,12 +1,11 @@
 var gameInterval, canvas, ctx, width, height;
-var t, gameState, ship, party, images, imagesLoaded, distance, 
+var t, gameState, ship, party, images, imagesLoaded, 
     endDistance, currentEvent, currentDay, lastEventDay, 
     selectedEventChoice, doEventAction, eventResult;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
     lastEventT = 0
-    distance = 0
     endDistance = 100
     width = 160
     height = 144
@@ -17,17 +16,14 @@ function init() {
     ship = {
         fuel: 100,
         cargo: 50,
-        credits: 1000
+        credits: 1000, 
+        distance = 0,
+        speed = 5
     }
     party = createParty(6);
     generate_events();
 }
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
+
 function createParty(size){
     party = [];
     for(var i = 0; i < size; i++){
@@ -54,7 +50,7 @@ function getRandomName(){
             "Rose",
             "Martha",
         ];
-        shuffleArray(randomNames);
+        shuffle_array(randomNames);
     }
     return randomNames[randomNameIndex++];
 }
@@ -171,7 +167,7 @@ function draw() {
             }
             // map
             font(10, `Day ${currentDay}`, 3, 82);
-            font(10, `${distance}/${endDistance} lightyears`, 3, 139);
+            font(10, `${ship.distance}/${endDistance} lightyears`, 3, 139);
             break;
         case "event":
             // background
@@ -239,7 +235,8 @@ function drawStars(w, h){
     for(var x = 0; x < w; x++){
         for(var y = 0; y < h; y++){
             let chance = 1; // chance% of drawing a star
-            if(randomInt(100) < chance){
+            if(random_chance(0.01)){
+            //if(random_int(100) < chance){
                 ctx.fillRect(x, y, 1, 1);
             } 
         }
@@ -259,11 +256,16 @@ function drawTitle(){
 function update() {
     switch(gameState){
         case "main":
-            if(t % 5 == 0){
+            if(t % ship.speed == 0){
                 currentDay++;
+                if(currentDay % 3 == 0){
+                    ship.fuel--;
+                }
                 // Check for event for today
                 if(lastEventDay + 3 < currentDay){
-                    if(randomInt(5) < 1){ // 20% chance any day 3 days after last event will be another event
+                    // 20% chance any day 3 days after last event will be another event
+                    if(random_chance(0.2)){
+                    //if(randomInt(5) < 1){ 
                         lastEventDay = currentDay;
                         currentEvent = get_event();
                         selectedEventChoice = 0;
@@ -273,8 +275,8 @@ function update() {
                     }                
                 }
             }
-            distance++;
-            if(distance >= endDistance){
+            ship.distance++;
+            if(ship.distance >= endDistance){
                 gameState = "win"
             }            
             break;
@@ -334,9 +336,6 @@ function keyPush(e) {
         case 13: // enter
             break;
     }
-}
-function randomInt(max) {
-    return Math.floor(Math.random() * max);
 }
 function font(size, what, x, y, wrap = false) {
     ctx.font = size + "px Courier";

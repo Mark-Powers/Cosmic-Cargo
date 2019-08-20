@@ -23,7 +23,7 @@ function generate_events(){
  * Returns a random event from the events array
  */
 function get_event(){
-    return events[Math.floor(Math.random() * events.length)];
+    return random_choice(events);
 }
 
 /**
