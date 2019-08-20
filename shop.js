@@ -1,6 +1,6 @@
 var names = ["Johnney's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randel's"];
 var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!"];
-test_shops();
+//test_shops();
 
 /**
  * Creates a shop object with a randomized name and unit prices for each resource
