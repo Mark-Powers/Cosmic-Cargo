@@ -6,10 +6,16 @@ var events = [];
  */
 function generate_events(){
     events = [
-        new SpaceEvent("Testing in progress...", "The captain would like to know if this test was successfull...", [["Yes",function(ship, party){return "Hooray!"}], ["No",function(ship, party){return "Welp..."}]]),
+        new SpaceEvent("Testing in progress...", "The captain would like to know if this test was successfull...",
+            [["Yes",function(ship, party){return "Hooray!"}],
+            ["No",function(ship, party){return "Welp..."}]]),
         new SpaceEvent("Pirates", "Space pirates have boarded your ship! Fight?", 
             [["Yes",function(ship, party){return "Hooray!"}], 
-            ["No",function(ship, party){return "Welp..."}]])
+            ["No",function(ship, party){return "Welp..."}]]),
+        new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria...",
+            [["Ok..", function(ship, party){return "One of you starts to feel sick."}]]),
+        new SpaceEvent("Engine Fault", "A part of your engine requires repairs, resulting in a delay.",
+            [["This is a serious setback...", function(ship, party){return "This has set you back some time."}]])
     ];
 }
 
