@@ -5,9 +5,13 @@ function init() {
     t = 0 // The frame of the game (time basically)
     width = 160
     height = 144
-    gameState = "main";
-    gameInterval = setInterval(game, 1000 / 1);
-
+    gameState = "title";
+    gameInterval = setInterval(game, 1000 / 15);
+    ship = {
+        fuel: 100,
+        cargo: 50,
+        credits: 1000
+    }
     party = [
         {name: "Mark", status: "Good"},
         {name: "Matt", status: "Good"},
@@ -34,6 +38,25 @@ function game() {
 }
 function draw() {
     switch(gameState){
+        case "title":
+            // background
+            color(3);
+            ctx.fillRect(0, 0, width-2, height-2);
+            // stars
+            color(0);
+            for(var x = 0; x < width; x++){
+                for(var y = 0; y < height; y++){
+                    let chance = 1; // chance% of drawing a star
+                    if(randomInt(100) < chance){
+                        ctx.fillRect(x, y, 1, 1);
+                    }
+                }
+            }
+            // title
+            font(25, "PROJECT 71", 4, 20);
+            font(12, "A space trucking game", 7, 30);
+            font(12, "(press any key)", 30, height - 20);
+            break;
         case "main":
             // background
             color(3);
@@ -84,6 +107,10 @@ function update() {
     t++;
 }
 function keyPush(e) {
+    if(gameState = "title"){
+        gameState = "main";
+        return;
+    }
     switch (e.keyCode) {
         case 37: // left
             
