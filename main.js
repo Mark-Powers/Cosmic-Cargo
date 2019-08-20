@@ -1,7 +1,7 @@
 var gameInterval, canvas, ctx, width, height;
 var t, gameState, ship, party, images, imagesLoaded, 
     currentEvent, lastEventDay, 
-    selectedEventChoice, doEventAction, eventResult;
+    selectedChoice, doAction, eventResult, doneShopping, currentShop, shopResult;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
@@ -11,6 +11,7 @@ function init() {
     lastEventDay = 1
     gameState = "title";
     gameInterval = setInterval(game, 1000 / FPS);
+    doneShopping = false;
     ship = {
         fuel: 100,
         cargo: 50,
@@ -131,11 +132,20 @@ function update() {
                     if(random_chance(0.1)){
                         lastEventDay = ship.current_day;
                         currentEvent = get_event();
-                        selectedEventChoice = 0;
-                        doEventAction = false;
+                        selectedChoice = 0;
+                        doAction = false;
                         eventResult = undefined;
                         gameState = "event";
                     }                
+                }
+                // Check for shop day
+                if(ship.current_day == 5){ //TODO: Make this better
+                    currentShop = new Shop(ship);
+                    selectedChoice = 0;
+                    doAction = false;
+                    doneShopping = false;
+                    shopResult = undefined;
+                    gameState = "shop";
                 }
             }
             ship.distance++;
@@ -144,8 +154,22 @@ function update() {
             }            
             break;
         case "event":
-            if(doEventAction){
-                eventResult = handle_event(currentEvent, selectedEventChoice, ship, party);
+            if(doAction){
+                eventResult = handle_event(currentEvent, selectedChoice, ship, party);
+            }
+            break;
+        case "shop":
+            if(doAction){ // TODO: Refactor this into method within shop.js
+                if (selectedChoice == 0){
+                    shopResult = purchase_fuel(ship, currentShop);
+                }
+                else if (selectedChoice == 1){
+                    shopResult = truck_talk(currentShop);
+                }
+                else if (selectedChoice == 2){
+                    shopResult = leave();
+                    doneShopping = true;
+                }
             }
             break;
         case "gameover":
@@ -156,18 +180,29 @@ function update() {
 function keyPush(e) {
     if((imagesLoaded && gameState == "title")
         || ((gameState == "event" && eventResult != undefined))
+        || ((gameState == "Shop" && doneShopping == true))
         ){
         gameState = "main";
         return;
+    }
+    else {
+        selectedChoice = 0;
+        shopResult = undefined;
     }
     switch (e.keyCode) {
         case 37: // left
             break;
         case 38: // up
             if(gameState == "event"){
-                selectedEventChoice--
-                if(selectedEventChoice < 0){
-                    selectedEventChoice = get_choices(currentEvent).length-1
+                selectedChoice--;
+                if(selectedChoice < 0){
+                    selectedChoice = get_choices(currentEvent).length-1;
+                }
+            }
+            else if(gameState == "shop"){
+                selectedChoice--;
+                if(selectedChoice < 0){
+                    selectedChoice = shop_choices(currentShop).length-1;
                 }
             }
             break;
@@ -175,15 +210,21 @@ function keyPush(e) {
             break;
         case 40: // down
             if(gameState == "event"){
-                selectedEventChoice++
-                if(selectedEventChoice >= get_choices(currentEvent).length){
-                    selectedEventChoice = 0
+                selectedChoice++;
+                if(selectedChoice >= get_choices(currentEvent).length){
+                    selectedChoice = 0;
+                }
+            }
+            else if(gameState == "shop"){
+                selectedChoice++;
+                if(selectedChoice >= shop_choices(currentShop).length) {
+                    selectedChoice = 0;
                 }
             }
             break;
         case 90: // z
-            if(gameState == "event"){
-                doEventAction = true
+            if(gameState == "event" || gameState == "shop"){
+                doAction = true;
             }
             break;
         case 88: // x

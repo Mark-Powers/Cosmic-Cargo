@@ -20,6 +20,16 @@ function generate_events(){
 }
 
 /**
+ * Preset event to call during specific days of travel
+ */
+function astroid_event(){
+    return new SpaceEvent("Astroid Belt", "Your ship is approaching an astroid belt that is difficult to navigate.",
+                [["Attempt to fly through", function(ship, party){return ""}],
+                ["Look for a different route (lose fuel)", function(ship, party){return ""}],
+                ["Wait for an opening (lose time)", function(ship, party){return ""}]]);
+}
+
+/**
  * Returns a random event from the events array
  */
 function get_event(){
