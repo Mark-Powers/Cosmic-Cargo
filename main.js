@@ -107,7 +107,7 @@ function update() {
     t++;
 }
 function keyPush(e) {
-    if(gameState = "title"){
+    if(gameState == "title"){
         gameState = "main";
         return;
     }
