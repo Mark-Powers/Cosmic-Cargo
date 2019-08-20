@@ -16,7 +16,7 @@ function generate_events(){
 /**
  * Returns a random event from the events array
  */
-function draw_event(){
+function get_event(){
     return events[Math.floor(Math.random() * events.length)];
 }
 
@@ -67,13 +67,13 @@ function test_events(){
     events.push(event1);
     // Should return the event1 object literal
     console.log("Testing draw event method...")
-    console.log(draw_event());
+    console.log(get_event());
     // Should return ["Yes", "No"]
     console.log("Testing get_choices method...");
     console.log(get_choices(event1));
     // Should return "Horray!" and then "Welp"
     console.log("Testing handle event method...")
-    var e = draw_event();
+    var e = get_event();
     console.log(handle_event(e, 0));
     console.log(handle_event(e, 1));
 }

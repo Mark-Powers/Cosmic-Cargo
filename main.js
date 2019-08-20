@@ -1,12 +1,15 @@
 var gameInterval, canvas, ctx, width, height;
-var t, gameState, ship, party, images, imagesLoaded, distance, endDistance;
+var t, gameState, ship, party, images, imagesLoaded, distance, endDistance, currentEvent, currentDay, lastEventDay, selectedEventChoice;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
+    lastEventT = 0
     distance = 0
-    endDistance = 30
+    endDistance = 100
     width = 160
     height = 144
+    currentDay = 1
+    lastEventDay = 1
     gameState = "title";
     gameInterval = setInterval(game, 1000 / FPS);
     ship = {
@@ -15,6 +18,7 @@ function init() {
         credits: 1000
     }
     party = createParty(6);
+    generate_events();
 }
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -164,7 +168,24 @@ function draw() {
                 ctx.drawImage(images["ship2"], 20, 28); 
             }
             // map
-            font(10, `${distance}/${endDistance} lightyears`, 5, 135);
+            font(10, `Day ${currentDay}`, 3, 82);
+            font(10, `${distance}/${endDistance} lightyears`, 3, 139);
+            break;
+        case "event":
+            // background
+            color(3);
+            ctx.fillRect(0, 0, width, height);
+            font(16, `${currentEvent.name}`, 5, 13);
+            font(12, `${currentEvent.desc}`, 5, 25, true);
+            let choices = get_choices(currentEvent)
+            var i = 0;
+            for(let choice of choices){
+                font(10, choice, 10, 100 + 10*i);
+                if(selectedEventChoice == i){
+                    font(10, `>`, 4, 100 + 10*i);
+                }
+                i++;
+            }
             break;
         case "status":
             // background
@@ -231,10 +252,22 @@ function drawTitle(){
 function update() {
     switch(gameState){
         case "main":
+            if(t % 5 == 0){
+                currentDay++;
+                // Check for event for today
+                if(lastEventDay + 3 < currentDay){
+                    if(randomInt(5) < 1){ // 20% chance any day 3 days after last event will be another event
+                        lastEventDay = currentDay;
+                        currentEvent = get_event();
+                        selectedEventChoice = 0;
+                        gameState = "event";
+                    }                
+                }
+            }
             distance++;
             if(distance >= endDistance){
                 gameState = "win"
-            }
+            }            
             break;
         case "gameover":
             clearInterval(gameInterval);
@@ -249,10 +282,24 @@ function keyPush(e) {
     }
     switch (e.keyCode) {
         case 37: // left
+            break;
         case 38: // up
+            if(gameState == "event"){
+                selectedEventChoice--
+                if(selectedEventChoice < 0){
+                    selectedEventChoice = get_choices(currentEvent).length-1
+                }
+            }
+            break;
         case 39: // right
             break;
         case 40: // down
+            if(gameState == "event"){
+                selectedEventChoice++
+                if(selectedEventChoice >= get_choices(currentEvent).length){
+                    selectedEventChoice = 0
+                }
+            }
             break;
         case 90: // z
             break;
@@ -272,10 +319,17 @@ function keyPush(e) {
 function randomInt(max) {
     return Math.floor(Math.random() * max);
 }
-function font(size, what, x, y) {
+function font(size, what, x, y, wrap = false) {
     ctx.font = size + "px Courier";
     color(2);
-    ctx.fillText(what, x, y);
+    if(wrap){
+        var parts = what.match(/.{1,21}\W/g); // Match up to 22 characters, making sure to not end a line mid word
+        parts.forEach((element, i) => {
+            ctx.fillText(element.trim(), x, y + i*size);
+        });
+    } else {
+        ctx.fillText(what, x, y);
+    }
 }
 function color(c) {
     var color = "";
