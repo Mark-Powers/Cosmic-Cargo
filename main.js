@@ -1,5 +1,7 @@
 var gameInterval, canvas, ctx, width, height;
-var t, gameState, ship, party, images, imagesLoaded, distance, endDistance, currentEvent, currentDay, lastEventDay, selectedEventChoice;
+var t, gameState, ship, party, images, imagesLoaded, distance, 
+    endDistance, currentEvent, currentDay, lastEventDay, 
+    selectedEventChoice, doEventAction, eventResult;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
@@ -175,16 +177,21 @@ function draw() {
             // background
             color(3);
             ctx.fillRect(0, 0, width, height);
-            font(16, `${currentEvent.name}`, 5, 13);
-            font(12, `${currentEvent.desc}`, 5, 25, true);
-            let choices = get_choices(currentEvent)
-            var i = 0;
-            for(let choice of choices){
-                font(10, choice, 10, 100 + 10*i);
-                if(selectedEventChoice == i){
-                    font(10, `>`, 4, 100 + 10*i);
+            if(eventResult == undefined){
+                font(16, `${currentEvent.name}`, 5, 13);
+                font(12, `${currentEvent.desc}`, 5, 25, true);
+                let choices = get_choices(currentEvent)
+                var i = 0;
+                for(let choice of choices){
+                    font(10, choice, 10, 100 + 10*i);
+                    if(selectedEventChoice == i){
+                        font(10, `>`, 4, 100 + 10*i);
+                    }
+                    i++;
                 }
-                i++;
+            } else {
+                font(12, `${eventResult}`, 5, 11, true);
+                font(12, "(press any key)", 26, height - 8);
             }
             break;
         case "status":
@@ -260,6 +267,8 @@ function update() {
                         lastEventDay = currentDay;
                         currentEvent = get_event();
                         selectedEventChoice = 0;
+                        doEventAction = false;
+                        eventResult = undefined;
                         gameState = "event";
                     }                
                 }
@@ -269,6 +278,11 @@ function update() {
                 gameState = "win"
             }            
             break;
+        case "event":
+            if(doEventAction){
+                eventResult = handle_event(currentEvent, selectedEventChoice, ship, party);
+            }
+            break;
         case "gameover":
             clearInterval(gameInterval);
             break;
@@ -276,7 +290,9 @@ function update() {
     t++;
 }
 function keyPush(e) {
-    if(imagesLoaded && gameState == "title"){
+    if((imagesLoaded && gameState == "title")
+        || ((gameState == "event" && eventResult != undefined))
+        ){
         gameState = "main";
         return;
     }
@@ -302,6 +318,9 @@ function keyPush(e) {
             }
             break;
         case 90: // z
+            if(gameState == "event"){
+                doEventAction = true
+            }
             break;
         case 88: // x
             break;
