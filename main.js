@@ -1,4 +1,4 @@
-var gameInterval, canvas, ctx, width, height;
+var gameInterval, canvas, ctx, width, height, music;
 var t, gameState, ship, party, images, imagesLoaded, 
     currentEvent, lastEventDay, 
     selectedChoice, doAction, eventResult, doneShopping, shopResult;
@@ -98,6 +98,7 @@ window.onload = function () {
     document.addEventListener("keydown", keyPush);
     window.addEventListener('resize', resizeCanvas, false);
     window.addEventListener('orientationchange', resizeCanvas, false);
+
     var imagesArray = loadImages(["Assets/Ship_1.png", "Assets/Ship_2.png", "Assets/Ship_Destroyed.png", "Assets/Map.png"])
     images = {
         "ship1": imagesArray[0],
@@ -178,6 +179,17 @@ function update() {
     }
 }
 function keyPush(e) {
+    if(music == undefined){
+        music = new Audio("Assets/music.ogg");
+        music.addEventListener('ended', function(){
+            this.currentTime = 0;
+            this.play();
+        }, false)
+        music.volume = .5;
+        music.play();
+    }
+
+
     if((imagesLoaded && gameState == "title")
         || ((gameState == "event"))
         || ((gameState == "shop"))
