@@ -1,15 +1,13 @@
 var gameInterval, canvas, ctx, width, height;
 var t, gameState, ship, party, images, imagesLoaded, 
-    endDistance, currentEvent, currentDay, lastEventDay, 
+    currentEvent, lastEventDay, 
     selectedEventChoice, doEventAction, eventResult;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
     lastEventT = 0
-    endDistance = 100
     width = 160
     height = 144
-    currentDay = 1
     lastEventDay = 1
     gameState = "title";
     gameInterval = setInterval(game, 1000 / FPS);
@@ -17,8 +15,10 @@ function init() {
         fuel: 100,
         cargo: 50,
         credits: 1000, 
-        distance = 0,
-        speed = 5
+        distance: 0,
+        end_distance: 1000,
+        speed: 10, // How many lightyears traveled in a day
+        current_day: 1
     }
     party = createParty(6);
     generate_events();
@@ -166,8 +166,8 @@ function draw() {
                 ctx.drawImage(images["ship2"], 20, 28); 
             }
             // map
-            font(10, `Day ${currentDay}`, 3, 82);
-            font(10, `${ship.distance}/${endDistance} lightyears`, 3, 139);
+            font(10, `Day ${ship.current_day}`, 3, 82);
+            font(10, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
             break;
         case "event":
             // background
@@ -257,16 +257,16 @@ function update() {
     switch(gameState){
         case "main":
             if(t % ship.speed == 0){
-                currentDay++;
-                if(currentDay % 3 == 0){
+                ship.current_day++;
+                if(ship.current_day % 3 == 0){
                     ship.fuel--;
                 }
                 // Check for event for today
-                if(lastEventDay + 3 < currentDay){
+                if(lastEventDay + 3 < ship.current_day){
                     // 20% chance any day 3 days after last event will be another event
                     if(random_chance(0.2)){
                     //if(randomInt(5) < 1){ 
-                        lastEventDay = currentDay;
+                        lastEventDay = ship.current_day;
                         currentEvent = get_event();
                         selectedEventChoice = 0;
                         doEventAction = false;
@@ -276,7 +276,7 @@ function update() {
                 }
             }
             ship.distance++;
-            if(ship.distance >= endDistance){
+            if(ship.distance >= ship.end_distance){
                 gameState = "win"
             }            
             break;
