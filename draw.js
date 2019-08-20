@@ -9,6 +9,9 @@ function draw() {
         case "event":
             draw_event();
             break;
+        case "shop":
+            draw_shop();
+            break;
         case "status":
             draw_status();
             break;
@@ -96,7 +99,7 @@ function draw_event(){
         var i = 0;
         for(let choice of choices){
             font(10, choice, 10, 100 + 10*i);
-            if(selectedEventChoice == i){
+            if(selectedChoice == i){
                 font(10, `>`, 4, 100 + 10*i);
             }
             i++;
@@ -123,6 +126,27 @@ function draw_status(){
     font(10, `Fuel: ${ship.fuel}%`, 15, 130);
     font(10, `Day ${ship.current_day}%`, 15, 142);
     font(10, `${ship.distance}/${ship.end_distance}`, 115, 142);
+}
+function draw_shop(){
+    // background
+    color(3);
+    ctx.fillRect(0, 0, width, height);
+    if(shopResult == undefined){
+        font(16, "Shop", 5, 13);
+        font(12, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
+        let choices = shop_choices(currentShop);
+        var i = 0;
+        for(let choice of choices){
+            font(10, choice, 10, 100 + 10*i);
+            if(selectedChoice == i){
+                font(10, `>`, 4, 100 + 10*i);
+            }
+            i++;
+        }
+    } else {
+        font(12, `${shopResult}`, 5, 11, true);
+        font(12, "(press any key)", 26, height - 8);
+    }
 }
 
 function font(size, what, x, y, wrap = false) {

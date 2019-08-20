@@ -1,15 +1,14 @@
 var names = ["Johnney's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randel's"];
 var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!"];
-//test_shops();
 
 /**
  * Creates a shop object with a randomized name and unit prices for each resource
  * @Constructor
  */
-function Shop(){
+function Shop(ship){
     this.name = generate_name();
-    this.fuel_unit_price = calculate_price(1, 3, 2);
-    this.prices = [this.fuel_unit_price] //Organized in order of resource: fuel, ...
+    this.fuel_price = calculate_price(1, 3, 2) * (100 - ship.fuel);
+    this.message = "This is a test message";
 }
 
 /**
@@ -32,65 +31,38 @@ function calculate_price(min, max, modifier){
 }
 
 /**
- * Returns an array containing the unit prices of each resources
- * Organized by the following: fuel, ...
- * @param {*} shop 
- */
-function get_prices(shop){
-    return shop.prices;
-}
-
-/**
- * Generates a new shop and prompts the user for inputs
- */
-function go_shopping(){
-    return new Shop();
-}
-
-/**
- * Calculates cost of listed purchases from this shop
- * @param {Shop} shop - A shop object
- * @param {Array} resources - An array containing resources in the order of:
- * fuel, ...
- */
-function calculate_cost(shop, resources){
-    let total_cost = 0;
-    for (i = 0; i < resources.length; i++){
-        total_cost += (shop.prices[i] * resources[i]);
-    }
-
-    return total_cost;
-}
-
-/**
  * If the current credits owned by the player is greater than the cost, subtract
  * the cost from the credits and return true, otherwise return false
  * @param {Ship} ship - The Ship object which contains a reference to credits
  * @param {int} cost - The total cost as calculated through the calculate_cost method
  */
-function confirm_purchase(ship, cost){
-    if (ship.credits >= cost){
-        ship.credits -= cost;
-        return true;
+function purchase_fuel(ship, shop){
+    if (ship.fuel == 100){
+        if (ship.credits >= shop.fuel_price){
+            ship.credits -= shop.fuel_price;
+            ship.fuel = 100;
+            return `You refuel your ship. You have ${ship.credits} credits remaining!`;
+        }
+        return "You do not have enough credits to refuel your ship!";
     }
-    return false;
+    return "Your ship is currently full of fuel."
 }
 
 /**
- * Just quickly tests shop logic to demonstrate it working
+ * Flavor text of talking with a trucker at this shop
+ * @param {Shop} shop - The current shop the player is at
  */
-function test_shops(){
-    console.log("Test generating a shop");
-    var shop = go_shopping();
-    console.log(shop);
-    console.log("Test calculate_price");
-    var cost = calculate_cost(shop, [10]);
-    console.log(cost);
-    console.log("Test confirm_purchase");
-    ship = {
-        fuel: 100,
-        cargo: 50,
-        credits: 1000
-    };
-    console.log(confirm_purchase(ship, cost));
+function truck_talk(shop){
+    return shop.message;
+}
+
+/**
+ * The player leaves the shop
+ */
+function leave(){
+    return "You leave the stop.";
+}
+
+function shop_choices(shop){
+    return [`Refuel (costs ${shop.fuel_price} credits)`, "Talk", "Leave"];
 }
