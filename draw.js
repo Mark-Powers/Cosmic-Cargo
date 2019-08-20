@@ -15,8 +15,11 @@ function draw() {
         case "status":
             draw_status();
             break;
-        case "result":
-            draw_result();
+        case "event_result":
+            draw_event_result();
+            break;
+        case "shop_result":
+            draw_shop_result();
             break;
         case "gameover":
             // background
@@ -183,8 +186,18 @@ function draw_shop(){
         i++;
     }
 }
-function result(){
+function draw_event_result(){
+    // background
+    color(3);
+    ctx.fillRect(0, 0, width, height);
     font(12, `${eventResult}`, 5, 11, true);
+    font(12, "(press any key)", 26, height - 8);
+}
+function draw_shop_result(){
+    // background
+    color(3);
+    ctx.fillRect(0, 0, width, height);
+    font(12, `${shopResult}`, 5, 11, true);
     font(12, "(press any key)", 26, height - 8);
 }
 

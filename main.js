@@ -156,19 +156,23 @@ function update() {
         case "event":
             if(doAction){
                 eventResult = handle_event(currentEvent, selectedChoice, ship, party);
+                gameState = "event_result";
             }
             break;
         case "shop":
             if(doAction){ // TODO: Refactor this into method within shop.js
                 if (selectedChoice == 0){
                     shopResult = purchase_fuel(ship, currentShop);
+                    gameState = "shop_result";
                 }
                 else if (selectedChoice == 1){
                     shopResult = truck_talk(currentShop);
+                    gameState = "shop_result";
                 }
                 else if (selectedChoice == 2){
                     shopResult = leave();
                     doneShopping = true;
+                    gameState = "shop_result";
                 }
             }
             break;
@@ -180,14 +184,21 @@ function update() {
 function keyPush(e) {
     if((imagesLoaded && gameState == "title")
         || ((gameState == "event"))
-        || ((gameState == "shop"))
+        || ((gameState == "event_result"))
         ){
         gameState = "main";
         return;
     }
-    else {
+    else if (gameState == "shop_result"){
+        if (doneShopping == true){
+            gameState = "main";
+            return;
+        }
+        gameState = "shop";
         selectedChoice = 0;
+        doAction = false;
         shopResult = undefined;
+        return;
     }
     switch (e.keyCode) {
         case 37: // left
