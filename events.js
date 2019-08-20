@@ -5,7 +5,12 @@ var events = [];
  * Creates all established events and stores them in the events array
  */
 function generate_events(){
-
+    events = [
+        new SpaceEvent("Testing in progress...", "The captain would like to know if this test was successfull...", [["Yes",function(ship, party){return "Hooray!"}], ["No",function(ship, party){return "Welp..."}]]),
+        new SpaceEvent("Pirates", "Space pirates have boarded your ship! Fight?", 
+            [["Yes",function(ship, party){return "Hooray!"}], 
+            ["No",function(ship, party){return "Welp..."}]])
+    ];
 }
 
 /**
