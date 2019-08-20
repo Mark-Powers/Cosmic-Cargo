@@ -89,11 +89,10 @@ function draw_main(){
     font(10, `Day ${ship.current_day}`, 3, 82);
     font(10, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
     // map progress
-    console.log("drawing progress");
     color(0);
     ctx.lineWidth = "1";
     // Draw dashed
-    ctx.setLineDash([3])
+    ctx.setLineDash([2])
     ctx.beginPath();
     ctx.moveTo(9, 104)
     ctx.lineTo(43, 92)
