@@ -84,6 +84,10 @@ function draw() {
                 font(10, person.status, 100, 15 + 15*i);
                 i++;
             }
+            
+            font(10, `Fuel: ${ship.fuel}%`, 15, 95);
+            font(10, `Cargo: ${ship.cargo} tons`, 15, 110);
+            font(10, `Credits: ${ship.credits}`, 15, 125);
             break;
         case "gameover":
             // background
