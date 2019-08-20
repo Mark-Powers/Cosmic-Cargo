@@ -82,8 +82,50 @@ function draw_main(){
         ctx.drawImage(images["ship2"], 20, 28); 
     }
     // map
+    ctx.drawImage(images["map"], 0, height/2); 
     font(10, `Day ${ship.current_day}`, 3, 82);
     font(10, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
+    // map progress
+    console.log("drawing progress");
+    color(0);
+    ctx.lineWidth = "1";
+    // Draw dashed
+    ctx.setLineDash([3])
+    ctx.beginPath();
+    ctx.moveTo(9, 104)
+    ctx.lineTo(43, 92)
+    ctx.lineTo(76, 112)
+    ctx.lineTo(98, 81)
+    ctx.lineTo(147, 103)
+    ctx.stroke();
+    // Draw solid on top
+    let progress = ship.distance / ship.end_distance;
+    ctx.setLineDash([0])
+    ctx.beginPath();
+    ctx.moveTo(9, 104)
+    if(progress < 0.25){
+        line_to_from_progress(progress, 9, 104, 43, 92);
+    } else {
+        ctx.lineTo(43, 92)
+        if (progress < 0.5){
+            line_to_from_progress(progress - .25, 43, 92, 76, 112);
+        }
+        else {
+            ctx.lineTo(76, 112)
+            if(progress < 0.75){
+                line_to_from_progress(progress - .5, 76, 112, 98, 81);
+            } else {
+                ctx.lineTo(98, 81)
+                line_to_from_progress(progress - .75, 98, 81, 147, 103);
+            }   
+        }        
+    }
+    ctx.stroke();
+}
+function line_to_from_progress(norm_progress, x1, y1, x2, y2){
+    var  newX = x1 + (x2-x1)*4*norm_progress
+    var  newY = y1 + (y2-y1)*4*norm_progress
+    ctx.lineTo(newX, newY)
 }
 function draw_event(){
     // background
@@ -155,4 +197,28 @@ function color(c) {
     }
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
+}
+function loadImages(imagefiles) {
+    loadcount = 0;
+    loadtotal = imagefiles.length;
+    imagesLoaded = false;
+ 
+    // Load the images
+    var loadedimages = [];
+    for (var i=0; i<imagefiles.length; i++) {
+        // Create the image object
+        var image = new Image();
+ 
+        // Add onload event handler
+        image.onload = function () {
+            loadcount++;
+            if (loadcount == loadtotal) {
+                // Done loading
+                imagesLoaded = true;
+            }
+        };
+        image.src = imagefiles[i];
+        loadedimages[i] = image;
+    }
+    return loadedimages;
 }

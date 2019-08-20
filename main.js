@@ -91,41 +91,18 @@ function getStatus(currentStatus, delta = undefined){
         return statuses[currentStatus]["down"];
     }
 }
-function loadImages(imagefiles) {
-    loadcount = 0;
-    loadtotal = imagefiles.length;
-    imagesLoaded = false;
- 
-    // Load the images
-    var loadedimages = [];
-    for (var i=0; i<imagefiles.length; i++) {
-        // Create the image object
-        var image = new Image();
- 
-        // Add onload event handler
-        image.onload = function () {
-            loadcount++;
-            if (loadcount == loadtotal) {
-                // Done loading
-                imagesLoaded = true;
-            }
-        };
-        image.src = imagefiles[i];
-        loadedimages[i] = image;
-    }
-    return loadedimages;
-}
 window.onload = function () {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     document.addEventListener("keydown", keyPush);
     window.addEventListener('resize', resizeCanvas, false);
     window.addEventListener('orientationchange', resizeCanvas, false);
-    var imagesArray = loadImages(["Assets/Ship_1.png", "Assets/Ship_2.png", "Assets/Ship_Destroyed.png"])
+    var imagesArray = loadImages(["Assets/Ship_1.png", "Assets/Ship_2.png", "Assets/Ship_Destroyed.png", "Assets/Map.png"])
     images = {
         "ship1": imagesArray[0],
         "ship2": imagesArray[1],
         "shipDestroyed": imagesArray[2],
+        "map": imagesArray[3]
     };
     init();
     resizeCanvas();
