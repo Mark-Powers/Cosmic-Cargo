@@ -1,7 +1,7 @@
 var gameInterval, canvas, ctx, width, height;
 var t, gameState, ship, party, images, imagesLoaded, 
     currentEvent, lastEventDay, 
-    selectedChoice, doAction, eventResult, doneShopping, currentShop, shopResult;
+    selectedChoice, doAction, eventResult, doneShopping, shopResult;
 var FPS = 10;
 function init() {
     t = 0 // The frame of the game (time basically)
@@ -179,8 +179,8 @@ function update() {
 }
 function keyPush(e) {
     if((imagesLoaded && gameState == "title")
-        || ((gameState == "event" && eventResult != undefined))
-        || ((gameState == "Shop" && doneShopping == true))
+        || ((gameState == "event"))
+        || ((gameState == "shop"))
         ){
         gameState = "main";
         return;
