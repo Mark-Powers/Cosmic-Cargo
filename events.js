@@ -14,7 +14,7 @@ function generate_events(){
             ["No",function(ship, party){return "Welp..."}]]),
         new SpaceEvent("Dalek Attack!", "EXTERMINATE",
             [["EXTERMINATE",function(ship, party){return "EXTERMINATE"}]
-            ["EXTERMINATE", function(ship, party){return "EXTERMINATE"}]])
+            [["EXTERMINATE", function(ship, party){return "EXTERMINATE"}]])
         new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria...",
             [["Ok..", function(ship, party){return "One of you starts to feel sick."}]]),
         new SpaceEvent("Engine Fault", "A part of your engine requires repairs, resulting in a delay.",
