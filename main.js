@@ -19,7 +19,8 @@ function init() {
         distance: 0,
         end_distance: 3000,
         speed: 10, // How many lightyears traveled in a day
-        current_day: 1
+        current_day: 1,
+        next_shop: 1
     }
     party = createParty(6);
     generate_events();
@@ -140,7 +141,9 @@ function update() {
                     }                
                 }
                 // Check for shop day
-                if(ship.current_day == 5){ //TODO: Make this better
+                let progress = ship.distance/ship.end_distance
+                if(ship.next_shop * .25<progress){
+                    ship.next_shop++;
                     currentShop = new Shop(ship);
                     selectedChoice = 0;
                     doAction = false;

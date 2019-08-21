@@ -40,7 +40,7 @@ function draw() {
             font(10, `${ship.cargo} tons of cargo * 100`, 7, 44);
             font(10, `${ship.credits} credits`, 7, 54);
             font(10, `Took ${ship.current_day} days (${10*(100-ship.current_day)})`, 7, 64);
-            let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(100-ship.current_day));
+            let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(300-ship.current_day));
             font(10, `Total: ${total}`, 20, 120);
             break;
 
@@ -72,12 +72,6 @@ function draw_main(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    // map rectangle
-    color(1)
-    ctx.beginPath();
-    ctx.lineWidth = "2";
-    ctx.rect(1, 1, width-2, height/2);
-    ctx.stroke();
     // ship rectangle
     draw_stars(width, height/2);
     ctx.beginPath();
@@ -92,6 +86,13 @@ function draw_main(){
     }
     // map
     ctx.drawImage(images["map"], 0, height/2); 
+    // map rectangle
+    color(1)
+    ctx.beginPath();
+    ctx.lineWidth = "2";
+    ctx.rect(1, 1, width-2, height/2);
+    ctx.stroke();
+    // Day and distance notification
     font(10, `Day ${ship.current_day}`, 3, 82);
     font(10, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
     // map progress
@@ -166,7 +167,7 @@ function draw_status(){
     font(10, `Cargo: ${ship.cargo} tons`, 15, 106);
     font(10, `Credits: ${ship.credits}`, 15, 118);
     font(10, `Fuel: ${ship.fuel}%`, 15, 130);
-    font(10, `Day ${ship.current_day}%`, 15, 142);
+    font(10, `Day ${ship.current_day}`, 15, 142);
     font(10, `${ship.distance}/${ship.end_distance}`, 115, 142);
 }
 function draw_shop(){
