@@ -1,4 +1,4 @@
-var gameInterval, canvas, ctx, width, height, music;
+var gameInterval, canvas, ctx, width, height;
 var t, gameState, ship, party, images, imagesLoaded, 
     currentEvent, lastEventDay, 
     selectedChoice, doAction, eventResult, doneShopping, shopResult;
@@ -183,21 +183,12 @@ function update() {
     }
 }
 function keyPush(e) {
-    if(music == undefined){
-        music = new Audio("Assets/music.ogg");
-        music.addEventListener('ended', function(){
-            this.currentTime = 0;
-            this.play();
-        }, false)
-        music.volume = .5;
-        music.play();
-    }
-
-
     if((imagesLoaded && gameState == "title")
         || ((gameState == "event"))
         || ((gameState == "event_result"))
         ){
+        // Plays background music if not playing
+        play_audio("bgm", true);
         gameState = "main";
         return;
     }
@@ -212,6 +203,7 @@ function keyPush(e) {
         shopResult = undefined;
         return;
     }
+
     switch (e.keyCode) {
         case 37: // left
             break;
@@ -221,12 +213,14 @@ function keyPush(e) {
                 if(selectedChoice < 0){
                     selectedChoice = get_choices(currentEvent).length-1;
                 }
+                play_audio("click");
             }
             else if(gameState == "shop"){
                 selectedChoice--;
                 if(selectedChoice < 0){
                     selectedChoice = shop_choices(currentShop).length-1;
                 }
+                play_audio("click");
             }
             break;
         case 39: // right
@@ -237,12 +231,14 @@ function keyPush(e) {
                 if(selectedChoice >= get_choices(currentEvent).length){
                     selectedChoice = 0;
                 }
+                play_audio("click");
             }
             else if(gameState == "shop"){
                 selectedChoice++;
                 if(selectedChoice >= shop_choices(currentShop).length) {
                     selectedChoice = 0;
                 }
+                play_audio("click");
             }
             break;
         case 90: // z
