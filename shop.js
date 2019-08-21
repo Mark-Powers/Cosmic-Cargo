@@ -7,7 +7,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
                     "How do you do? I'm the owner of this here establishment. Good to see a friendly face.",
                     "Beware of people named Karen. Maybe you'll understand when you're old like me. Ha!",
                     "Look kid, are you going to buy something?",
-                    "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one"
+                    "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one",
                     "Buzz off.",
                     "Hey we got a rule around these parts! The new guy pays first round!"]
 
