@@ -38,14 +38,15 @@ function calculate_price(min, max, modifier){
  */
 function purchase_fuel(ship, shop){
     if (ship.fuel == 100){
-        if (ship.credits >= shop.fuel_price){
-            ship.credits -= shop.fuel_price;
-            ship.fuel = 100;
-            return `You refuel your ship. You have ${ship.credits} credits remaining!`;
-        }
-        return "You do not have enough credits to refuel your ship!";
+        return "Your ship is currently full of fuel."
     }
-    return "Your ship is currently full of fuel."
+
+    if (ship.credits >= shop.fuel_price){
+        ship.credits -= shop.fuel_price;
+        ship.fuel = 100;
+        return `You refuel your ship. You have ${ship.credits} credits remaining!`;
+    }
+    return "You do not have enough credits to refuel your ship!";
 }
 
 /**
