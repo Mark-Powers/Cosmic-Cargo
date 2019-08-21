@@ -1,10 +1,13 @@
-var names = ["Johnney's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randel's"];
-var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!"];
+var names = ["Johnny's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randal's", "Mitchard's"];
+var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!", "Pool Party", "Restaurant at the End of the Universe"];
 var trucker_talk = ["I would be wary of pirates around these parts. Good folk have been getting robbed as of late.",
                     "You new around here? Haven't seen you around these parts.",
                     "I used to be a trucker like you, until I took a torpedo to the wing.",
                     "It's a harsh life out in space. Never know what day might be your last out here.",
                     "How do you do? I'm the owner of this here establishment. Good to see a friendly face.",
+                    "Beware of people named Karen. Maybe you'll understand when you're old like me. Ha!",
+                    "Look kid, are you going to buy something?",
+                    "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one"
                     "Buzz off.",
                     "Hey we got a rule around these parts! The new guy pays first round!"]
 
