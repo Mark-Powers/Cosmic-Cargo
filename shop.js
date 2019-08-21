@@ -1,5 +1,12 @@
 var names = ["Johnney's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randel's"];
 var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!"];
+var trucker_talk = ["I would be wary of pirates around these parts. Good folk have been getting robbed as of late.",
+                    "You new around here? Haven't seen you around these parts.",
+                    "I used to be a trucker like you, until I took a torpedo to the wing.",
+                    "It's a harsh life out in space. Never know what day might be your last out here.",
+                    "How do you do? I'm the owner of this here establishment. Good to see a friendly face.",
+                    "Buzz off.",
+                    "Hey we got a rule around these parts! The new guy pays first round!"]
 
 /**
  * Creates a shop object with a randomized name and unit prices for each resource
@@ -8,7 +15,7 @@ var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill",
 function Shop(ship){
     this.name = generate_name();
     this.fuel_price = calculate_price(1, 3, 2) * (100 - ship.fuel);
-    this.message = "This is a test message";
+    this.message = generate_trucker_message();
 }
 
 /**
@@ -28,6 +35,13 @@ function generate_name(){
  */
 function calculate_price(min, max, modifier){
     return Math.floor((Math.random() * (max - min + 1) + min) + (Math.random() * modifier));
+}
+
+/**
+ * Randomly chooses the 'talk' option message for this stop
+ */
+function generate_trucker_message(){
+    return random_choice(trucker_talk);
 }
 
 /**
