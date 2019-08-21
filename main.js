@@ -147,6 +147,8 @@ function update() {
                     doneShopping = false;
                     shopResult = undefined;
                     gameState = "shop";
+                    pause_audio("bgm");
+                    play_audio("shop", true);
                 }
             }
             ship.distance++;
@@ -195,6 +197,8 @@ function keyPush(e) {
     else if (gameState == "shop_result"){
         if (doneShopping == true){
             gameState = "main";
+            pause_audio("shop");
+            play_audio("bgm", true);
             return;
         }
         gameState = "shop";
