@@ -157,6 +157,9 @@ function update() {
             ship.distance++;
             if(ship.distance >= ship.end_distance){
                 gameState = "win"
+                pause_audio("bgm");
+                pause_audio("shop");
+                play_audio("endgame", true);
             }            
             break;
         case "event":

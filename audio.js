@@ -2,6 +2,7 @@ var audio = {
     "bgm": new Audio("Assets/music.ogg"),
     "click": new Audio("Assets/click.ogg"),
     "shop": new Audio("Assets/shop.ogg"),
+    "endgame": new Audio("Assets/endgame.ogg"),
 }
 
 function play_audio(sound, loop = false){
