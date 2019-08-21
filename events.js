@@ -6,19 +6,74 @@ var events = [];
  */
 function generate_events(){
     events = [
-        new SpaceEvent("Testing in progress...", "The captain would like to know if this test was successfull...",
-            [["Yes",function(ship, party){return "Hooray!"}],
-            ["No",function(ship, party){return "Welp..."}]]),
-        new SpaceEvent("Pirates", "Space pirates have boarded your ship! Fight?", 
-            [["Yes",function(ship, party){return "Hooray!"}], 
-            ["No",function(ship, party){return "Welp..."}]]),
-        new SpaceEvent("Dalek Attack!", "EXTERMINATE",
-            [["EXTERMINATE",function(ship, party){return "EXTERMINATE"}],
-            ["EXTERMINATE",function(ship, party){return "EXTERMINATE"}]]),
-        new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria...",
-            [["Ok..", function(ship, party){return "One of you starts to feel sick."}]]),
-        new SpaceEvent("Engine Fault", "A part of your engine requires repairs, resulting in a delay.",
-            [["This is a serious setback...", function(ship, party){return "This has set you back some time."}]])
+        new SpaceEvent("Pirates!", "Pirates have boarded your ship demanding payment! Fight?", 
+            [["Pay",function(ship, party){
+                let loot = Math.floor(ship.credits *.2);
+                ship.credits -= loot;
+                return `The pirates take ${loot} credits, and your party remains unscathed.`
+            }], 
+            ["Fight",function(ship, party){
+                // Higher chance to win if there are more members in your party
+                let alive = party.filter( el => (el.status != "Dead"));
+                if(random_chance(1-(1/alive.length))){
+                    return "You fight the pirates off successfully!"
+                } else {
+                    let loot = Math.floor(ship.credits *.2);
+                    ship.credits -= loot;
+                    let injured = random_choice(alive);
+                    injured.status = getStatus(injured.status, -1);
+                    return `The pirates overtake you. They steal ${loot} credits, and ${injured.name} is now ${injured.status}.`
+                }
+            }]]),
+        new SpaceEvent("Dalek Attack!", "A group of daleks have invaded your ship!",
+            [["Surrender",function(ship, party){
+                let exterminated = random_choice(party.filter( el => (el.status != "Dead")));
+                exterminated.status = "Dead"
+                return `The daleks exterminate ${exterminated.name} and move on, finding nothing of interest on your ship.`
+            }], 
+            ["Try to resist",function(ship, party){
+                // Higher chance to win if there are more members in your party
+                let alive = party.filter( el => (el.status != "Dead"));
+                if(alive.length == 1 || random_chance(0.2)){
+                    let talker = random_choice(alive);
+                    return `${talker.name} tries to convince the daleks to leave. Some how against all odds, it works!`
+                } else {
+                    let talker = random_choice(alive);
+                    var fodder = random_choice(alive);
+                    while(fodder.name == talker.name){
+                        fodder = random_choice(alive);
+                    }
+                    talker.status = "Dead";
+                    fodder.status = "Dead"
+                    return `${talker.name} tries to convince the daleks to leave. They shout 'EXTERMINATE' and murder ${talker.name} and ${fodder.name}.`
+                }
+            }]]),
+        new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
+            [["OK", function(ship, party){
+                let alive = party.filter( el => (el.status != "Dead"));
+                let sick = random_choice(alive);
+                sick.status = getStatus(sick.status, -1);
+                if(alive.length >= 2 && random_chance(0.4)){
+                    var fodder = random_choice(alive);
+                    while(fodder.name == sick.name){
+                        fodder = random_choice(alive);
+                    }
+                    fodder.status = getStatus(sick.status, -1);
+                    return `${sick.name} catches the illness and is now feeling ${sick.status}. It spreads to ${fodder.name}, who now is ${fodder.status}`
+                } else {
+                    return `${sick.name} catches the illness and is now feeling ${sick.status}.`
+                }
+            }]]),
+        new SpaceEvent("Engine Fault", "Your engine breaks down and requires repair.",
+            [["Go on without it", function(ship, party){
+                ship.speed -= 1
+                return "Your speed has been impacted, it will take you longer to arrive."
+            }],
+            ["Try to repair it", function(ship, party){
+                var days = random_int(15);
+                ship.current_day += days;
+                return `It took ${days} days but you manage to get the engine back in working order.`
+            }]])
     ];
 }
 

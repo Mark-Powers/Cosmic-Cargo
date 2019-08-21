@@ -168,7 +168,7 @@ function draw_status(){
     font(10, `Credits: ${ship.credits}`, 15, 118);
     font(10, `Fuel: ${ship.fuel}%`, 15, 130);
     font(10, `Day ${ship.current_day}`, 15, 142);
-    font(10, `${ship.distance}/${ship.end_distance}`, 115, 142);
+    font(10, `${ship.distance}/${ship.end_distance}`, 100, 142);
 }
 function draw_shop(){
     // background
