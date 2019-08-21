@@ -131,7 +131,7 @@ function update() {
                 // Check for event for today
                 if(lastEventDay + 3 < ship.current_day){
                     // chance any day 3 days after last event will be another event
-                    if(random_chance(0.1)){
+                    if(random_chance(0.15)){
                         lastEventDay = ship.current_day;
                         currentEvent = get_event();
                         selectedChoice = 0;

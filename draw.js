@@ -39,7 +39,7 @@ function draw() {
             font(10, `${getAliveMembers().length} alive members * 400`, 7, 34);
             font(10, `${ship.cargo} tons of cargo * 100`, 7, 44);
             font(10, `${ship.credits} credits`, 7, 54);
-            font(10, `Took ${ship.current_day} days (${10*(100-ship.current_day)})`, 7, 64);
+            font(10, `Took ${ship.current_day} days (${10*(300-ship.current_day)})`, 7, 64);
             let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(300-ship.current_day));
             font(10, `Total: ${total}`, 20, 120);
             break;
