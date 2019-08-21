@@ -17,7 +17,7 @@ function init() {
         cargo: 50,
         credits: 1000, 
         distance: 0,
-        end_distance: 100,
+        end_distance: 3000,
         speed: 10, // How many lightyears traveled in a day
         current_day: 1
     }
@@ -186,8 +186,7 @@ function update() {
 }
 function keyPush(e) {
     if((imagesLoaded && gameState == "title")
-        || ((gameState == "event"))
-        || ((gameState == "event_result"))
+        || (gameState == "event_result")
         ){
         // Plays background music if not playing
         play_audio("bgm", true);
