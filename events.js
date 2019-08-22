@@ -80,11 +80,18 @@ function generate_events(){
 /**
  * Preset event to call during specific days of travel
  */
-function astroid_event(){
+function asteroid_event(){
     return new SpaceEvent("Astroid Belt", "Your ship is approaching an astroid belt that is difficult to navigate.",
                 [["Attempt to fly through", function(ship, party){return ""}],
                 ["Look for a different route (lose fuel)", function(ship, party){return ""}],
                 ["Wait for an opening (lose time)", function(ship, party){return ""}]]);
+}
+
+function hostiles_event(){
+    return new SpaceEvent("Hostile Area", "Your ship is reaches a hostile zone, full of marauders.",
+                [["Attempt to fly through", function(ship, party){return ""}],
+                ["Look for a different route (lose fuel)", function(ship, party){return ""}],
+                ["Ask for an escort through the zone (lose time)", function(ship, party){return ""}]]);
 }
 
 /**

@@ -20,7 +20,9 @@ function init() {
         end_distance: 3000,
         speed: 10, // How many lightyears traveled in a day
         current_day: 1,
-        next_shop: 1
+        next_shop: 1,
+        // hostiles / asteroid
+        next_zone: 0
     }
     party = createParty(6);
     generate_events();
@@ -123,6 +125,20 @@ function update() {
     switch(gameState){
         case "main":
             t++;
+            if(getAliveMembers().length == 0 || ship.fuel <= 0){
+                gameState = "gameover"
+            }
+
+            ship.distance++;
+            if(ship.distance >= ship.end_distance){
+                gameState = "win"
+                play_audio("alert");
+                pause_audio("bgm");
+                pause_audio("shop");
+                play_audio("endgame", true);
+                return;
+            }      
+
             if(t % ship.speed == 0){
                 ship.current_day++;
                 if(ship.current_day % 3 == 0){
@@ -143,7 +159,7 @@ function update() {
                 }
                 // Check for shop day
                 let progress = ship.distance/ship.end_distance
-                if(ship.next_shop * .25<progress){
+                if(progress > ship.next_shop * .25){
                     ship.next_shop++;
                     currentShop = new Shop(ship);
                     selectedChoice = 0;
@@ -154,16 +170,21 @@ function update() {
                     pause_audio("bgm");
                     play_audio("alert");
                     play_audio("shop", true);
+                } else if(progress > ship.next_zone * .5 + .36){
+                    if(ship.next_zone == 0){
+                        currentEvent = hostiles_event()
+                    } else {
+                        currentEvent = asteroid_event()
+                    }
+                    lastEventDay = ship.current_day;
+                    ship.next_zone++;
+                    selectedChoice = 0;
+                    doAction = false;
+                    eventResult = undefined;
+                    gameState = "event";
+                    play_audio("alert");
                 }
-            }
-            ship.distance++;
-            if(ship.distance >= ship.end_distance){
-                gameState = "win"
-                play_audio("alert");
-                pause_audio("bgm");
-                pause_audio("shop");
-                play_audio("endgame", true);
-            }            
+            }      
             break;
         case "event":
             if(doAction){
