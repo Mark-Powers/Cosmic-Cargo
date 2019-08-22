@@ -9,6 +9,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
                     "Look kid, are you going to buy something?",
                     "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one",
                     "Buzz off.",
+                    "Space age technology and we're still clinging to our CB radios. Heh. Imagine that.",
                     "Hey we got a rule around these parts! The new guy pays first round!"]
 
 /**
