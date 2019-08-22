@@ -25,18 +25,18 @@ function generate_events(){
                     return `The pirates overtake you. They steal ${loot} credits, and ${injured.name} is now ${injured.status}.`
                 }
             }]]),
-        new SpaceEvent("Dalek Attack!", "A group of daleks have invaded your ship!",
+        new SpaceEvent("Dolik Attack!", "A group of doliks have invaded your ship!",
             [["Surrender",function(ship, party){
                 let exterminated = random_choice(party.filter( el => (el.status != "Dead")));
                 exterminated.status = "Dead"
-                return `The daleks exterminate ${exterminated.name} and move on, finding nothing of interest on your ship.`
+                return `The doliks exterminate ${exterminated.name} and move on, finding nothing of interest on your ship.`
             }], 
             ["Try to resist",function(ship, party){
                 // Higher chance to win if there are more members in your party
                 let alive = party.filter( el => (el.status != "Dead"));
                 if(alive.length == 1 || random_chance(0.2)){
                     let talker = random_choice(alive);
-                    return `${talker.name} tries to convince the daleks to leave. Some how against all odds, it works!`
+                    return `${talker.name} tries to convince the doliks to leave. Some how against all odds, it works!`
                 } else {
                     let talker = random_choice(alive);
                     var fodder = random_choice(alive);
@@ -45,7 +45,7 @@ function generate_events(){
                     }
                     talker.status = "Dead";
                     fodder.status = "Dead"
-                    return `${talker.name} tries to convince the daleks to leave. They shout 'EXTERMINATE' and murder ${talker.name} and ${fodder.name}.`
+                    return `${talker.name} tries to convince the doliks to leave. They shout 'EXTERMINATE' and murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
         new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
