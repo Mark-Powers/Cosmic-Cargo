@@ -35,13 +35,13 @@ function draw() {
             ctx.fillRect(0, 0, width, height);
             // game over text
             font(12, "You've arrived!", 3, 12);
-            font(7, "Score:", 3, 24);
-            font(7, `${getAliveMembers().length} alive members * 400`, 7, 34);
-            font(7, `${ship.cargo} tons of cargo * 100`, 7, 44);
-            font(7, `${ship.credits} credits`, 7, 54);
-            font(7, `Took ${ship.current_day} days (${10*(300-ship.current_day)})`, 7, 64);
+            font(8, "Score:", 3, 24);
+            font(8, `${getAliveMembers().length} alive members * 400`, 3, 34);
+            font(8, `${ship.cargo} tons of cargo * 100`, 3, 44);
+            font(8, `${ship.credits} credits`, 3, 54);
+            font(8, `Took ${ship.current_day} days (${10*(300-ship.current_day)})`, 3, 64);
             let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(300-ship.current_day));
-            font(7, `Total: ${total}`, 20, 120);
+            font(8, `Total: ${total}`, 3, 120);
             break;
         case "setup":
             color(3);
@@ -54,8 +54,8 @@ function draw() {
                 }
             }, "")
             let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone there will die. Your team includes ${names}.`;
-            font(7, text, 3, 7, true);
-            font(7, ")press any key)", 30, height - 10);
+            font(8, text, 3, 7, true);
+            font(8, ")press any key)", 30, height - 10);
             break;
     }
 }
@@ -109,8 +109,8 @@ function draw_main(){
     ctx.rect(1, 1, width-2, height/2);
     ctx.stroke();
     // Day and distance notification
-    font(7, `Day ${ship.current_day}`, 3, 82);
-    font(7, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
+    font(8, `Day ${ship.current_day}`, 3, 82);
+    font(8, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
     // map progress
     color(0);
     ctx.lineWidth = "1";
@@ -157,13 +157,13 @@ function draw_event(){
     color(3);
     ctx.fillRect(0, 0, width, height);
     font(12, `${currentEvent.name}`, 5, 13);
-    font(7, `${currentEvent.desc}`, 5, 25, true);
+    font(8, `${currentEvent.desc}`, 5, 25, true);
     let choices = get_choices(currentEvent)
     var i = 0;
     for(let choice of choices){
-        font(7, choice, 10, 100 + 10*i);
+        font(8, choice, 10, 100 + 10*i);
         if(selectedChoice == i){
-            font(7, `~`, 4, 100 + 10*i);
+            font(8, `~`, 4, 100 + 10*i);
         }
         i++;
     }
@@ -175,29 +175,29 @@ function draw_status(){
     // person list
     var i = 0;
     for(let person of party){
-        font(7, person.name, 15, 15 + 12*i);
-        font(7, person.status, 100, 15 + 12*i);
+        font(8, person.name, 15, 15 + 12*i);
+        font(8, person.status, 100, 15 + 12*i);
         i++;
     }
     
-    font(7, `Cargo: ${ship.cargo} tons`, 15, 106);
-    font(7, `Credits: ${ship.credits}`, 15, 118);
-    font(7, `Fuel: ${ship.fuel}%`, 15, 130);
-    font(7, `Day ${ship.current_day}`, 15, 142);
-    font(7, `${ship.distance}/${ship.end_distance}`, 100, 142);
+    font(8, `Cargo: ${ship.cargo} tons`, 15, 106);
+    font(8, `Credits: ${ship.credits}`, 15, 118);
+    font(8, `Fuel: ${ship.fuel}%`, 15, 130);
+    font(8, `Day ${ship.current_day}`, 15, 142);
+    font(8, `${ship.distance}/${ship.end_distance}`, 100, 142);
 }
 function draw_shop(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
     font(12, "Shop", 5, 13);
-    font(7, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
+    font(8, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
     let choices = shop_choices(currentShop);
     var i = 0;
     for(let choice of choices){
-        font(7, choice, 10, 100 + 10*i);
+        font(8, choice, 10, 100 + 10*i);
         if(selectedChoice == i){
-            font(7, `>`, 4, 100 + 10*i);
+            font(8, `~`, 4, 100 + 10*i);
         }
         i++;
     }
@@ -206,15 +206,15 @@ function draw_event_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(7, `${eventResult}`, 5, 11, true);
-    font(7, ")press any key)", 26, height - 8);
+    font(8, `${eventResult}`, 5, 11, true);
+    font(8, ")press any key)", 26, height - 8);
 }
 function draw_shop_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(7, `${shopResult}`, 5, 11, true);
-    font(7, ")press any key)", 26, height - 8);
+    font(8, `${shopResult}`, 5, 11, true);
+    font(8, ")press any key)", 26, height - 8);
 }
 
 function font(size, what, x, y, wrap = false) {
@@ -222,7 +222,7 @@ function font(size, what, x, y, wrap = false) {
     color(2);
     if(wrap){
         // Match up to 22 characters, making sure to not end a line mid word
-        var parts = what.match(/.{1,22}\b/g); 
+        var parts = what.match(/.{1,21}\b/g); 
         parts.forEach((element, i) => {
             ctx.fillText(element.trim(), x, y + i*size);
         });
