@@ -191,15 +191,17 @@ function update() {
     }
 }
 function keyPush(e) {
-    if((imagesLoaded && gameState == "title")
-        || (gameState == "event_result")
-        ){
+    if(imagesLoaded && gameState == "title") {
+        // Plays background music if not playing
+        play_audio("bgm", true);
+        gameState = "setup";
+        return;
+    } else if(gameState == "setup" || gameState == "event_result"){
         // Plays background music if not playing
         play_audio("bgm", true);
         gameState = "main";
         return;
-    }
-    else if (gameState == "shop_result"){
+    } else if (gameState == "shop_result"){
         if (doneShopping == true){
             gameState = "main";
             pause_audio("shop");

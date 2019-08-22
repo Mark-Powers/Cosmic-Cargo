@@ -43,7 +43,19 @@ function draw() {
             let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(300-ship.current_day));
             font(10, `Total: ${total}`, 20, 120);
             break;
-
+        case "setup":
+            color(3);
+            ctx.fillRect(0, 0, width, height);
+            var names = party.reduce( (acc, el) => {
+                if(acc == ""){
+                    return el.name
+                } else {
+                    return `${acc}, ${el.name}`
+                }
+            }, "")
+            let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone on there will die. Your team includes ${names}. (Press any key)`;
+            font(10, text, 3, 7, true);
+            break;
     }
 }
 function draw_stars(w, h){
@@ -66,7 +78,10 @@ function draw_title(){
     // title
     font(25, "PROJECT 71", 4, 20);
     font(12, "A space trucking game", 7, 30);
-    font(12, "(press any key)", 30, height - 20);
+    // Only display this if the game is loaded
+    if(imagesLoaded){
+        font(12, "(press any key)", 30, height - 20);
+    }
 }
 function draw_main(){
     // background
@@ -205,7 +220,10 @@ function font(size, what, x, y, wrap = false) {
     ctx.font = size + "px Courier";
     color(2);
     if(wrap){
-        var parts = what.match(/.{1,21}\W/g); // Match up to 22 characters, making sure to not end a line mid word
+        // Match up to 22 characters, making sure to not end a line mid word
+        var parts = what.match(/.{1,22}\b/g); 
+        //console.log(what)
+        //console.log(parts)
         parts.forEach((element, i) => {
             ctx.fillText(element.trim(), x, y + i*size);
         });
