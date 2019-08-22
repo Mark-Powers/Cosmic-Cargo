@@ -53,7 +53,7 @@ function draw() {
                     return `${acc}, ${el.name}`
                 }
             }, "")
-            let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone on there will die. Your team includes ${names}. (Press any key)`;
+            let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone there will die. Your team includes ${names}. (Press any key)`;
             font(10, text, 3, 7, true);
             break;
     }
