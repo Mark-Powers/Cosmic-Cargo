@@ -198,6 +198,7 @@ function update() {
                         pause_audio("bgm");
                         play_audio("alert");
                         play_audio("encounter", true);
+                        return
                     }                
                 }
                 // Check for shop day
@@ -213,6 +214,7 @@ function update() {
                     pause_audio("bgm");
                     play_audio("alert");
                     play_audio("shop", true);
+                    return
                 } else if(progress > ship.next_zone * .5 + .36){
                     if(ship.next_zone == 0){
                         currentEvent = hostiles_event()
@@ -226,6 +228,7 @@ function update() {
                     eventResult = undefined;
                     gameState = "event";
                     play_audio("alert");
+                    return
                 }
             }      
             break;
