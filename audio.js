@@ -1,9 +1,12 @@
 var audio = {
     "bgm": new Audio("Assets/music.ogg"),
-    "click": new Audio("Assets/click.ogg"),
     "shop": new Audio("Assets/shop.ogg"),
     "endgame": new Audio("Assets/endgame.ogg"),
+    "alert": new Audio("Assets/SoundEffects/Alert.wav"),
+    "select": new Audio("Assets/SoundEffects/SelectNoise.wav"),
+    "move": new Audio("Assets/SoundEffects/MoveCursor.wav"),
 }
+var music = ["bgm", "shop"]
 
 function play_audio(sound, loop = false){
     var curr_audio = audio[sound];
@@ -13,7 +16,9 @@ function play_audio(sound, loop = false){
         } else {
             curr_audio.removeEventListener("ended", loop_audio_listener, false)
         }
-        if(curr_audio.paused){
+        // play if paused or if not music
+        if(curr_audio.paused || !music.includes(sound)){
+            curr_audio.currentTime = 0;
             curr_audio.play();
         }
     }

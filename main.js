@@ -138,6 +138,7 @@ function update() {
                         doAction = false;
                         eventResult = undefined;
                         gameState = "event";
+                        play_audio("alert");
                     }                
                 }
                 // Check for shop day
@@ -151,12 +152,14 @@ function update() {
                     shopResult = undefined;
                     gameState = "shop";
                     pause_audio("bgm");
+                    play_audio("alert");
                     play_audio("shop", true);
                 }
             }
             ship.distance++;
             if(ship.distance >= ship.end_distance){
                 gameState = "win"
+                play_audio("alert");
                 pause_audio("bgm");
                 pause_audio("shop");
                 play_audio("endgame", true);
@@ -192,16 +195,17 @@ function update() {
 }
 function keyPush(e) {
     if(imagesLoaded && gameState == "title") {
-        // Plays background music if not playing
+        play_audio("select");
         play_audio("bgm", true);
         gameState = "setup";
         return;
     } else if(gameState == "setup" || gameState == "event_result"){
-        // Plays background music if not playing
+        play_audio("select");
         play_audio("bgm", true);
         gameState = "main";
         return;
     } else if (gameState == "shop_result"){
+        play_audio("select");
         if (doneShopping == true){
             gameState = "main";
             pause_audio("shop");
@@ -224,14 +228,14 @@ function keyPush(e) {
                 if(selectedChoice < 0){
                     selectedChoice = get_choices(currentEvent).length-1;
                 }
-                play_audio("click");
+                play_audio("move");
             }
             else if(gameState == "shop"){
                 selectedChoice--;
                 if(selectedChoice < 0){
                     selectedChoice = shop_choices(currentShop).length-1;
                 }
-                play_audio("click");
+                play_audio("move");
             }
             break;
         case 39: // right
@@ -242,19 +246,20 @@ function keyPush(e) {
                 if(selectedChoice >= get_choices(currentEvent).length){
                     selectedChoice = 0;
                 }
-                play_audio("click");
+                play_audio("move");
             }
             else if(gameState == "shop"){
                 selectedChoice++;
                 if(selectedChoice >= shop_choices(currentShop).length) {
                     selectedChoice = 0;
                 }
-                play_audio("click");
+                play_audio("move");
             }
             break;
         case 90: // z
             if(gameState == "event" || gameState == "shop"){
                 doAction = true;
+                play_audio("select");
             }
             break;
         case 88: // x
@@ -262,8 +267,10 @@ function keyPush(e) {
         case 32: // space
             if(gameState == "status"){
                 gameState = "main";
+                play_audio("select");
             } else if(gameState == "main"){
                 gameState = "status";
+                play_audio("select");
             }
             break;
         case 13: // enter
