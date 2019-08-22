@@ -55,6 +55,34 @@ function getRandomName(){
             "Bryce",
             "Tanner",
             "Shawn",
+            "Karen",
+            "Marge",
+            "Scoob",
+            "Ice Man",
+            "White Lightning",
+            "Bandit",
+            "Rocky",
+            "Foxworthy",
+            "Cable Guy",
+            "Gus",
+            "Turntable",
+            "Hooch",
+            "Bugeyes",
+            "Kitty Kat",
+            "Hollywood",
+            "Skeeter",
+            "Archimedes",
+            "Ace",
+            "Doc",
+            "Flying Squirrel",
+            "Fatcat",
+            "Twitchy",
+            "Stank",
+            "Wagon Wheel",
+            "Ford",
+            "Bandit",
+            "The Gambler",
+            "Gygax",
             "Janet",
             "Jill",
             "Stephanie",
@@ -76,14 +104,14 @@ function getStatus(currentStatus, delta = undefined){
         },
         "Good": {
             "up": "Good",
-            "down": "OK"
+            "down": "Fatigued"
         },
-        "OK": {
+        "Fatigued": {
             "up": "Good",
-            "down": "Poor"
+            "down": "Ill"
         },
-        "Poor": {
-            "up": "OK",
+        "Ill": {
+            "up": "Fatigued",
             "down": "Dead"
         },
         "Dead": {
