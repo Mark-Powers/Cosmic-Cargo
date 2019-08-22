@@ -21,6 +21,9 @@ function draw() {
         case "shop_result":
             draw_shop_result();
             break;
+        case "options":
+            draw_options();
+            break;
         case "gameover":
             // background
             color(3);
@@ -175,6 +178,23 @@ function draw_event(){
             font(8, `~`, 4, 100 + 10*i);
         }
         i++;
+    }
+}
+function draw_options(){
+    // background
+    color(3);
+    ctx.fillRect(0, 0, width, height);
+    font(12, `Adjust volume`, 5, 13);
+
+    let music_volume = `${audio[music[0]].volume*100}`.replace(/\.\d*/,"")
+    let sfx_volume = `${audio[sfx[0]].volume*100}`.replace(/\.\d*/,"")
+    font(8, `MUSIC: ${(music_volume)}`, 10, 22);
+    if(selectedChoice == 0){
+        font(8, `~`, 4, 22);
+    }
+    font(8, `SFX: ${sfx_volume}`, 10, 32);
+    if(selectedChoice == 1){
+        font(8, `~`, 4, 32);
     }
 }
 function draw_status(){

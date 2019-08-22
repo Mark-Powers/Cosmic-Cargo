@@ -25,6 +25,13 @@ function init() {
         next_zone: 0
     }
     party = createParty(6);
+    
+    for(var song of music){
+        audio[song].volume = 0.5
+    }
+    for(var song of sfx){
+        audio[song].volume = 0.5
+    }
     generate_events();
 }
 
@@ -127,6 +134,11 @@ function update() {
             t++;
             if(getAliveMembers().length == 0 || ship.fuel <= 0){
                 gameState = "gameover"
+                play_audio("alert");
+                pause_audio("bgm");
+                pause_audio("shop");
+                play_audio("gameover", true);
+                return;
             }
 
             ship.distance++;
@@ -241,8 +253,6 @@ function keyPush(e) {
     }
 
     switch (e.keyCode) {
-        case 37: // left
-            break;
         case 38: // up
             if(gameState == "event"){
                 selectedChoice--;
@@ -257,9 +267,14 @@ function keyPush(e) {
                     selectedChoice = shop_choices(currentShop).length-1;
                 }
                 play_audio("move");
+            } else if(gameState == "options"){
+                if(selectedChoice == 1){
+                    selectedChoice = 0;
+                } else {
+                    selectedChoice = 1
+                }
+                play_audio("move");
             }
-            break;
-        case 39: // right
             break;
         case 40: // down
             if(gameState == "event"){
@@ -275,6 +290,49 @@ function keyPush(e) {
                     selectedChoice = 0;
                 }
                 play_audio("move");
+            } else if(gameState == "options"){
+                if(selectedChoice == 1){
+                    selectedChoice = 0;
+                } else {
+                    selectedChoice = 1
+                }
+                play_audio("move");
+            }
+            break;
+        case 39: // right
+            if(gameState == "options"){
+                if(selectedChoice == 0){
+                    var music_volume = audio[music[0]].volume
+                    music_volume = Math.min(1, music_volume + .05).toFixed(2)
+                    for(var song of music){
+                        audio[song].volume = music_volume
+                    }
+                } else {
+                    var sfx_volume = audio[sfx[0]].volume
+                    sfx_volume = Math.min(1, sfx_volume + .05).toFixed(2)
+                    for(var song of sfx){
+                        audio[song].volume = sfx_volume
+                    }
+                    play_audio("move");
+                }
+            }
+            break;
+        case 37: // left
+            if(gameState == "options"){
+                if(selectedChoice == 0){
+                    var music_volume = audio[music[0]].volume
+                    music_volume = Math.max(0, music_volume - .05).toFixed(2)
+                    for(var song of music){
+                        audio[song].volume = music_volume
+                    }
+                } else {
+                    var sfx_volume = audio[sfx[0]].volume
+                    sfx_volume = Math.max(0, sfx_volume - .05).toFixed(2)
+                    for(var song of sfx){
+                        audio[song].volume = sfx_volume
+                    }
+                    play_audio("move");
+                }
             }
             break;
         case 90: // z
@@ -295,6 +353,14 @@ function keyPush(e) {
             }
             break;
         case 13: // enter
+            if(gameState == "options"){
+                gameState = "main";
+                play_audio("select");
+            } else if(gameState == "main"){
+                selectedChoice = 0;
+                gameState = "options";
+                play_audio("select");
+            }
             break;
     }
 }
