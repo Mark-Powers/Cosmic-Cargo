@@ -1,13 +1,14 @@
 var audio = {
     "bgm": new Audio("Assets/music.ogg"),
     "shop": new Audio("Assets/shop.ogg"),
+    "encounter": new Audio("Assets/encounter.ogg"),
     "endgame": new Audio("Assets/endgame.ogg"),
     "gameover": new Audio("Assets/gameover.ogg"),
     "alert": new Audio("Assets/SoundEffects/Alert.wav"),
     "select": new Audio("Assets/SoundEffects/SelectNoise.wav"),
     "move": new Audio("Assets/SoundEffects/MoveCursor.wav"),
 }
-var music = ["bgm", "shop", "endgame", "gameover"]
+var music = ["bgm", "shop", "endgame", "gameover", "encounter"]
 var sfx = ["alert", "select", "move"]
 
 function play_audio(sound, loop = false){

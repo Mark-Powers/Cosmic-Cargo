@@ -98,7 +98,7 @@ function draw_title(){
     // stars
     draw_stars(width, height);
     // title
-    font(16, "PROJECT 71", 8, 20);
+    font(13, "COSMIC CARGO", 5, 20);
     font(8, "A space trucking game", 3, 30);
     // Only display this if the game is loaded
     if(imagesLoaded){

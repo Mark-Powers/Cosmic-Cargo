@@ -25,7 +25,6 @@ function init() {
         next_zone: 0
     }
     party = createParty(6);
-    
     for(var song of music){
         audio[song].volume = 0.5
     }
@@ -165,6 +164,7 @@ function update() {
                 play_audio("alert");
                 pause_audio("bgm");
                 pause_audio("shop");
+                pause_audio("encounter");
                 play_audio("gameover", true);
                 return;
             }
@@ -175,6 +175,7 @@ function update() {
                 play_audio("alert");
                 pause_audio("bgm");
                 pause_audio("shop");
+                pause_audio("encounter");
                 play_audio("endgame", true);
                 return;
             }      
@@ -194,7 +195,9 @@ function update() {
                         doAction = false;
                         eventResult = undefined;
                         gameState = "event";
+                        pause_audio("bgm");
                         play_audio("alert");
+                        play_audio("encounter", true);
                     }                
                 }
                 // Check for shop day
@@ -261,6 +264,7 @@ function keyPush(e) {
         gameState = "setup";
         return;
     } else if(gameState == "setup" || gameState == "event_result"){
+        pause_audio("encounter");
         play_audio("select");
         play_audio("bgm", true);
         gameState = "main";
