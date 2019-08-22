@@ -28,20 +28,20 @@ function draw() {
             // game over text
             color(1);
             ctx.fillRect(28, 33, 100, 20);
-            font(16, "Game over!", 30, 50);
+            font(12, "Game over!", 30, 50);
             break;
         case "win":
             color(3);
             ctx.fillRect(0, 0, width, height);
             // game over text
-            font(16, "You've arrived!", 3, 12);
-            font(10, "Score:", 3, 24);
-            font(10, `${getAliveMembers().length} alive members * 400`, 7, 34);
-            font(10, `${ship.cargo} tons of cargo * 100`, 7, 44);
-            font(10, `${ship.credits} credits`, 7, 54);
-            font(10, `Took ${ship.current_day} days (${10*(300-ship.current_day)})`, 7, 64);
+            font(12, "You've arrived!", 3, 12);
+            font(7, "Score:", 3, 24);
+            font(7, `${getAliveMembers().length} alive members * 400`, 7, 34);
+            font(7, `${ship.cargo} tons of cargo * 100`, 7, 44);
+            font(7, `${ship.credits} credits`, 7, 54);
+            font(7, `Took ${ship.current_day} days (${10*(300-ship.current_day)})`, 7, 64);
             let total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(300-ship.current_day));
-            font(10, `Total: ${total}`, 20, 120);
+            font(7, `Total: ${total}`, 20, 120);
             break;
         case "setup":
             color(3);
@@ -53,8 +53,9 @@ function draw() {
                     return `${acc}, ${el.name}`
                 }
             }, "")
-            let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone there will die. Your team includes ${names}. (Press any key)`;
-            font(10, text, 3, 7, true);
+            let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Replaris to a new colony on Octilion. Without your goods, everyone there will die. Your team includes ${names}.`;
+            font(7, text, 3, 7, true);
+            font(7, ")press any key)", 30, height - 10);
             break;
     }
 }
@@ -76,11 +77,11 @@ function draw_title(){
     // stars
     draw_stars(width, height);
     // title
-    font(25, "PROJECT 71", 4, 20);
-    font(12, "A space trucking game", 7, 30);
+    font(16, "PROJECT 71", 8, 20);
+    font(8, "A space trucking game", 3, 30);
     // Only display this if the game is loaded
     if(imagesLoaded){
-        font(12, "(press any key)", 30, height - 20);
+        font(8, ")press any key)", 27, height - 20);
     }
 }
 function draw_main(){
@@ -108,8 +109,8 @@ function draw_main(){
     ctx.rect(1, 1, width-2, height/2);
     ctx.stroke();
     // Day and distance notification
-    font(10, `Day ${ship.current_day}`, 3, 82);
-    font(10, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
+    font(7, `Day ${ship.current_day}`, 3, 82);
+    font(7, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
     // map progress
     color(0);
     ctx.lineWidth = "1";
@@ -155,14 +156,14 @@ function draw_event(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(16, `${currentEvent.name}`, 5, 13);
-    font(12, `${currentEvent.desc}`, 5, 25, true);
+    font(12, `${currentEvent.name}`, 5, 13);
+    font(7, `${currentEvent.desc}`, 5, 25, true);
     let choices = get_choices(currentEvent)
     var i = 0;
     for(let choice of choices){
-        font(10, choice, 10, 100 + 10*i);
+        font(7, choice, 10, 100 + 10*i);
         if(selectedChoice == i){
-            font(10, `>`, 4, 100 + 10*i);
+            font(7, `~`, 4, 100 + 10*i);
         }
         i++;
     }
@@ -174,29 +175,29 @@ function draw_status(){
     // person list
     var i = 0;
     for(let person of party){
-        font(10, person.name, 15, 15 + 12*i);
-        font(10, person.status, 100, 15 + 12*i);
+        font(7, person.name, 15, 15 + 12*i);
+        font(7, person.status, 100, 15 + 12*i);
         i++;
     }
     
-    font(10, `Cargo: ${ship.cargo} tons`, 15, 106);
-    font(10, `Credits: ${ship.credits}`, 15, 118);
-    font(10, `Fuel: ${ship.fuel}%`, 15, 130);
-    font(10, `Day ${ship.current_day}`, 15, 142);
-    font(10, `${ship.distance}/${ship.end_distance}`, 100, 142);
+    font(7, `Cargo: ${ship.cargo} tons`, 15, 106);
+    font(7, `Credits: ${ship.credits}`, 15, 118);
+    font(7, `Fuel: ${ship.fuel}%`, 15, 130);
+    font(7, `Day ${ship.current_day}`, 15, 142);
+    font(7, `${ship.distance}/${ship.end_distance}`, 100, 142);
 }
 function draw_shop(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(16, "Shop", 5, 13);
-    font(12, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
+    font(12, "Shop", 5, 13);
+    font(7, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
     let choices = shop_choices(currentShop);
     var i = 0;
     for(let choice of choices){
-        font(10, choice, 10, 100 + 10*i);
+        font(7, choice, 10, 100 + 10*i);
         if(selectedChoice == i){
-            font(10, `>`, 4, 100 + 10*i);
+            font(7, `>`, 4, 100 + 10*i);
         }
         i++;
     }
@@ -205,25 +206,23 @@ function draw_event_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(12, `${eventResult}`, 5, 11, true);
-    font(12, "(press any key)", 26, height - 8);
+    font(7, `${eventResult}`, 5, 11, true);
+    font(7, ")press any key)", 26, height - 8);
 }
 function draw_shop_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(12, `${shopResult}`, 5, 11, true);
-    font(12, "(press any key)", 26, height - 8);
+    font(7, `${shopResult}`, 5, 11, true);
+    font(7, ")press any key)", 26, height - 8);
 }
 
 function font(size, what, x, y, wrap = false) {
-    ctx.font = size + "px Courier";
+    ctx.font = size + "px Gameboy";
     color(2);
     if(wrap){
         // Match up to 22 characters, making sure to not end a line mid word
         var parts = what.match(/.{1,22}\b/g); 
-        //console.log(what)
-        //console.log(parts)
         parts.forEach((element, i) => {
             ctx.fillText(element.trim(), x, y + i*size);
         });
