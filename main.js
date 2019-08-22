@@ -154,7 +154,7 @@ function update() {
             if(t % ship.speed == 0){
                 ship.current_day++;
                 if(ship.current_day % 3 == 0){
-                    ship.fuel--;
+                    ship.fuel -= 1.5;
                 }
                 // Check for event for today
                 if(lastEventDay + 3 < ship.current_day){

@@ -70,7 +70,7 @@ function generate_events(){
                 return "Your speed has been impacted, it will take you longer to arrive."
             }],
             ["Try to repair it", function(ship, party){
-                var days = random_int(15);
+                var days = random_int(25)+1;
                 ship.current_day += days;
                 return `It took ${days} days but you manage to get the engine back in working order.`
             }]])
@@ -81,17 +81,59 @@ function generate_events(){
  * Preset event to call during specific days of travel
  */
 function asteroid_event(){
-    return new SpaceEvent("Astroid Belt", "Your ship is approaching an astroid belt that is difficult to navigate.",
-                [["Attempt to fly through", function(ship, party){return ""}],
-                ["Look for a different route (lose fuel)", function(ship, party){return ""}],
-                ["Wait for an opening (lose time)", function(ship, party){return ""}]]);
+    return new SpaceEvent("Astroid Belt", "Your ship is approaching an asteroid belt that is difficult to navigate.",
+                [["Try to fly through", function(ship, party){
+                    if(random_chance(0.33)){
+                        return "Your mastery at piloting your ship allowed you to navigate the field with no difficulties."
+                    } else if(random_chance(0.5)){
+                        let lost = Math.floor(ship.cargo * ((random_int(10)+2)/100)); // (2-11% of cargo)
+                        ship.cargo -= lost;
+                        return `Your trip through the asteroid belt went mostly smooth, except for a minor collision towards the end in which you lost ${lost} tons fo cargo`
+                    } else {
+                        let lost = Math.floor(ship.cargo * ((random_int(10)+10)/100)); // (11-20% of cargo)
+                        ship.cargo -= lost;
+                        return `The asteroid belt hits you hard, you lost ${lost} tons of cargo during the trip.`
+                    }
+                }],
+                ["Look for a new route", function(ship, party){
+                    let days = random_int(20)+1;
+                    let fuel = Math.floor(days/2);
+                    ship.current_day += days
+                    ship.fuel -= fuel;
+                    return `You took ${days} days to find a safe route, and used some fuel in the process.`
+                }],
+                ["Ask for an escort", function(ship, party){
+                    let charge = Math.min(random_int(75)+50, ship.credits);
+                    return `You pay for the local taxi service to escort you across the belt. They do with no difficulties,  but charge you ${charge} credits.`
+                }]]);
 }
 
 function hostiles_event(){
     return new SpaceEvent("Hostile Area", "Your ship is reaches a hostile zone, full of marauders.",
-                [["Attempt to fly through", function(ship, party){return ""}],
-                ["Look for a different route (lose fuel)", function(ship, party){return ""}],
-                ["Ask for an escort through the zone (lose time)", function(ship, party){return ""}]]);
+        [["Try to fly through", function(ship, party){
+            if(random_chance(0.33)){
+                return "Your mastery at piloting your ship allowed you to navigate the area with no difficulties."
+            } else if(random_chance(0.5)){
+                let lost = Math.floor(ship.cargo * ((random_int(10)+2)/100)); // (2-11% of cargo)
+                ship.cargo -= lost;
+                return `Your trip through the hostile zone went mostly smooth, except for a minor conflict towards the end in which you lost ${lost} tons fo cargo`
+            } else {
+                let lost = Math.floor(ship.cargo * ((random_int(10)+10)/100)); // (11-20% of cargo)
+                ship.cargo -= lost;
+                return `The marauders hit you hard, you lost ${lost} tons of cargo during the trip.`
+            }
+        }],
+        ["Look for a new route", function(ship, party){
+            let days = random_int(20)+1;
+            let fuel = Math.floor(days/2);
+            ship.current_day += days
+            ship.fuel -= fuel;
+            return `You took ${days} days to find a safe route, and used some fuel in the process.`
+        }],
+        ["Ask for an escort", function(ship, party){
+            let charge = Math.min(random_int(75)+50, ship.credits);
+            return `You pay for the local taxi service to escort you across the hostile zone. They do with no difficulties, but charge you ${charge} credits.`
+        }]]);
 }
 
 /**

@@ -17,7 +17,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
  */
 function Shop(ship){
     this.name = generate_name();
-    this.fuel_price = calculate_price(1, 3, 2) * (100 - ship.fuel);
+    this.fuel_price = calculate_price(1, 3, 2) * (100 - Math.floor(ship.fuel));
     this.message = generate_trucker_message();
 }
 
@@ -82,5 +82,5 @@ function leave(){
 }
 
 function shop_choices(shop){
-    return [`Refuel (costs ${shop.fuel_price} credits)`, "Talk", "Leave"];
+    return [`Refuel )${shop.fuel_price} credits)`, "Talk", "Leave"];
 }
