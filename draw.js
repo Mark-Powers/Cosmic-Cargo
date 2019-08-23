@@ -220,7 +220,7 @@ function draw_status(){
     var i = 0;
     for(let person of party){
         var c = 2
-        if(person.status == "Dead"){
+        if(person.status == "Dead" || person.status == "Missing"){
             c = 0
         } 
         font(8, person.name, 3, 7 + 12*i, false, c);

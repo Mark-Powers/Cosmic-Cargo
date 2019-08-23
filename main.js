@@ -272,10 +272,14 @@ function update() {
                     gameState = "shop_result";
                 }
                 else if (selectedChoice == 1){
-                    shopResult = truck_talk(currentShop);
+                    shopResult = fix_engine(ship, currentShop);
                     gameState = "shop_result";
                 }
                 else if (selectedChoice == 2){
+                    shopResult = truck_talk(currentShop);
+                    gameState = "shop_result";
+                }
+                else if (selectedChoice == 3){
                     shopResult = leave();
                     doneShopping = true;
                     gameState = "shop_result";
