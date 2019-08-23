@@ -48,7 +48,7 @@ function generate_events(){
                     return `${talker.name} tries to convince the doliks to leave. It Fails! The word "ELIMINATE" echoes in the ship as they murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
-        new SpaceEvent("Planetary Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
+        new SpaceEvent("Planet Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
             [["OK", function(ship, party){
                 let alive = party.filter( el => (el.status != "Dead"));
                 let sick = random_choice(alive);
@@ -76,7 +76,7 @@ function generate_events(){
             }]]),
         new SpaceEvent("Wormhole", "You spot a wormhole in front of you.",
             [["Enter it", function(ship, party){
-                var sign = math.random_int(2);
+                var sign = random_int(2);
                 let diff = 100 + random_int(100);
                 if(sign == 0){
                     ship.distance += diff
@@ -113,12 +113,12 @@ function generate_events(){
                 ship.fuel -= 10;
                 return "The ship is gracious that you help"
             }],
-            ["Say you have none to spare", function(ship, party){
-                let hurt = random_choice(alive);
+            ["You have no extra", function(ship, party){
+                let hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
                 return `The crew on the other ship gets violent. Nothing major, but ${hurt.name} is now ${hurt.status}.`
             }]]),
-        new SpaceEvent("Medical Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
+        new SpaceEvent("Med-Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
             [["Heal up", function(ship, party){
                 party.forEach(element => {
                     element.status = getStatus(element.status, 1);
@@ -136,7 +136,7 @@ function generate_events(){
                     healed.status = getStatus(healed.status, 1);
                     return `You don't notice anything outside changing, but ${healed.name} feels a bit better now.`
                 } else if(i < 50){
-                    ship.fuel = min(100, ship.fuel + 30)
+                    ship.fuel = Math.min(100, ship.fuel + 30)
                 } else if(i < 75){
                     ship.cargo += 10; 
                 } else {

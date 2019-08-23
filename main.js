@@ -106,7 +106,7 @@ function getRandomName(){
             "Sundace",
             "Butch",
             "Chad",
-            "Diago",
+            "Diego",
             "Slim-Jim",
             "Dick",
             "Rasputin",
