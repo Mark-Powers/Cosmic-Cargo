@@ -5,6 +5,8 @@ var event_cooldown = [];
  * Creates all established events and stores them in the events array
  */
 function generate_events(){
+    events = [];
+    event_cooldown = [];
     events = [
         new SpaceEvent("Pirates!", "Pirates have boarded your ship demanding payment! Fight?", 
             [["Pay",function(ship, party){

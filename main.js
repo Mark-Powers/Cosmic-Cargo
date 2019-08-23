@@ -297,6 +297,14 @@ function update() {
     }
 }
 function keyPush(e) {
+    if (gameState == "gameover" || gameState == "win") {
+        gameState = "title";
+        pause_audio("gameover");
+        pause_audio("endgame");
+        init();
+        return;
+    }
+
     e.preventDefault()
     if(imagesLoaded && gameState == "title") {
         play_audio("select");
