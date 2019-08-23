@@ -1,5 +1,5 @@
 var events = [];
-//test_events();
+var event_cooldown = [];
 
 /**
  * Creates all established events and stores them in the events array
@@ -280,9 +280,30 @@ function hostiles_event(){
 
 /**
  * Returns a random event from the events array
+ * Removes the chosen event from the events array and puts it in the event_cooldown array
+ * Once the length of the events array is less than or equal to the length of the cooldown array
+ * the events array is refilled with the elements within the event_cooldown array.
+ * The event_cooldown array is then reset
  */
 function get_event(){
-    return random_choice(events);
+    if (events.length <= 0){
+        events = events.concat(event_cooldown);
+        event_cooldown = [];
+    }
+    else if (events.length <= event_cooldown.length){
+        events = events.concat(event_cooldown);
+        event_cooldown = [];
+    }
+
+    let event = random_choice(events);
+    let event_index = events.indexOf(event);
+    event_cooldown.push(event);
+
+    if (event_index != -1){
+        events.splice(event_index, 1);
+    }
+
+    return event;
 }
 
 /**
