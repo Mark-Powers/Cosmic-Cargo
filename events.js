@@ -150,7 +150,7 @@ function generate_events(){
                 let kid = random_choice(getAliveMembers());
 
                 if (getAliveMembers().length > 2){
-                    while(kid.name == karen.name){
+                    while(kid.name == "Karen"){
                         kid = random_choice(getAliveMembers());
                     }
                 }
