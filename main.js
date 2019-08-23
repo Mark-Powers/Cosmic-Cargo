@@ -123,7 +123,7 @@ function getRandomName(){
     return randomNames[randomNameIndex++];
 }
 function getAliveMembers(){
-    return party.filter( el => (el.status != "Dead"));
+    return party.filter( el => (el.status != "Dead" && el.status != "Missing"));
 }
 function getStatus(currentStatus, delta = undefined){
     let statuses = {
