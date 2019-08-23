@@ -146,16 +146,19 @@ function generate_events(){
             }]]),   
         new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
             [["What's going on?", function(ship, party){
-                let karen = getAliveMembers().some(el =>el.name == "Karen");
+                let karen = getAliveMembers().find(el =>el.name == "Karen");
                 let kid = random_choice(getAliveMembers());
-                while(kid.name != karen.name){
-                    kid = random_choice(getAliveMembers());
+
+                if (getAliveMembers().length > 2){
+                    while(kid.name == karen.name){
+                        kid = random_choice(getAliveMembers());
+                    }
                 }
                 
                 if (karen != undefined){
-                    let karen_index = array.indexOf(karen.name);
+                    let karen_index = party.indexOf(karen.name);
                     party.splice(karen_index, 1);
-                    let kid_index = array.indexOf(kid.name);
+                    let kid_index = party.indexOf(kid.name);
                     party.splice(kid_index, 1);
                     ship.credits -= Math.floor(ship.credits * .5);
                     return `You catch crewman Karen stealing half of your credits while taking ${kid.name} as a hostage on an escape pod with her. They succesfully escape.`;
