@@ -26,10 +26,10 @@ function init() {
     }
     party = createParty(6);
     for(var song of music){
-        audio[song].volume = 0.5
+        audio[song].volume = 0.4
     }
     for(var song of sfx){
-        audio[song].volume = 0.5
+        audio[song].volume = 0.1
     }
     generate_events();
 }

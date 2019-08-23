@@ -48,7 +48,7 @@ function generate_events(){
                     return `${talker.name} tries to convince the doliks to leave. They shout 'ELIMINATE' and murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
-        new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
+        new SpaceEvent("Planetary Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
             [["OK", function(ship, party){
                 let alive = party.filter( el => (el.status != "Dead"));
                 let sick = random_choice(alive);
@@ -73,7 +73,78 @@ function generate_events(){
                 var days = random_int(25)+1;
                 ship.current_day += days;
                 return `It took ${days} days but you manage to get the engine back in working order.`
-            }]])
+            }]]),
+        new SpaceEvent("Wormhole", "You spot a wormhole in front of you.",
+            [["Enter it", function(ship, party){
+                var sign = math.random_int(2);
+                let diff = 100 + random_int(100);
+                if(sign == 0){
+                    ship.distance += diff
+                    return `You find your ship transported ${diff} lightyears further along your trip`;
+                } else {
+                    ship.distance -= diff
+                    return `You find your ship transported ${diff} lightyears backwards along your path`;
+                }
+            }],
+            ["Ignore it", function(ship, party){
+                return `You pass by the wormhole, never knowing what secrets it might hold.`
+            }]]),
+        new SpaceEvent("Space Sherrif", "You see flashing lights and a siren coming up behind you in the mirror",
+            [["Pull over", function(ship, party){
+                if(random_chance(0.25)){
+                    return `The officer speeds by you. He must be chasing someone ahead of you.`;
+                } else {
+                    let credits = Math.min(75, ship.credits);
+                    ship.credits -= credits;
+                    return `The officer tells you that your tailight is is out and fines you ${credits} credits.`;
+                }
+            }],
+            ["Try to out run him", function(ship, party){
+                if(random_chance(0.25)){
+                    return `You take off fast and manage to escape his pursuit.`
+                } else {
+                    let credits = Math.min(200, ship.credits);
+                    ship.credits -= credits;
+                    return `The sherrif pulls up to you and says, "Running from an officer is a serious offense. By the way, your tailight is out," as he hands you a fine for ${credits} credits.`
+                }                
+            }]]),
+        new SpaceEvent("Lost Ship", "A ship in the distance looks like it needs help. You approach and they say they ran out of fuel.",
+            [["Offer 10%", function(ship, party){
+                ship.fuel -= 10;
+                return "The ship is gracious that you help"
+            }],
+            ["Say you have none to spare", function(ship, party){
+                let hurt = random_choice(alive);
+                hurt.status = getStatus(hurt.status, -1);
+                return `The crew on the other ship gets violent. Nothing major, but ${hurt.name} is now ${hurt.status}.`
+            }]]),
+        new SpaceEvent("Medical Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
+            [["Heal up", function(ship, party){
+                party.forEach(element => {
+                    element.status = getStatus(element.status, 1);
+                });
+                return "Your team feels a lot better now"
+            }],
+            ["Pass", function(ship, party){
+                return `Your team is doing just fine, you ensure them things will be alright.`
+            }]]),
+        new SpaceEvent("Aurora", "A fantasical light show happens outside the windows of your ship, almost as if some magical being is present.",
+            [["Try to make contact", function(ship, party){
+                var i = random_int(100);
+                var healed = getAliveMembers().find(el => el.status != "Good" && el.status != "Dead");
+                if(i < 25 && healed){
+                    healed.status = getStatus(healed.status, 1);
+                    return `You don't notice anything outside changing, but ${healed.name} feels a bit better now.`
+                } else if(i < 50){
+                    ship.fuel = min(100, ship.fuel + 30)
+                } else if(i < 75){
+                    ship.cargo += 10; 
+                } else {
+                    ship.credits += 100; 
+                }
+                return `You don't notice anything outside changing, but something feels different.`
+                
+            }]]),
     ];
 }
 
