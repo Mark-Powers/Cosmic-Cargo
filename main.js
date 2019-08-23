@@ -3,6 +3,27 @@ var t, gameState, ship, party, images, imagesLoaded,
     currentEvent, lastEventDay, 
     selectedChoice, doAction, eventResult, doneShopping, shopResult;
 var FPS = 10;
+window.onload = function () {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    document.addEventListener("keydown", keyPush);
+    window.addEventListener('resize', resizeCanvas, false);
+    window.addEventListener('orientationchange', resizeCanvas, false);
+
+    var imagesArray = loadImages(["Assets/Ship_1.png", "Assets/Ship_2.png", "Assets/Ship_Destroyed.png", "Assets/Map.png"])
+    images = {
+        "ship1": imagesArray[0],
+        "ship2": imagesArray[1],
+        "shipDestroyed": imagesArray[2],
+        "map": imagesArray[3]
+    };
+    init();
+    resizeCanvas();
+}
+function resizeCanvas() {
+    canvas.width = width;
+    canvas.height = height;
+}
 function init() {
     t = 0 // The frame of the game (time basically)
     lastEventT = 0
@@ -159,27 +180,7 @@ function getStatus(currentStatus, delta = undefined){
         return statuses[currentStatus]["down"];
     }
 }
-window.onload = function () {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
-    document.addEventListener("keydown", keyPush);
-    window.addEventListener('resize', resizeCanvas, false);
-    window.addEventListener('orientationchange', resizeCanvas, false);
 
-    var imagesArray = loadImages(["Assets/Ship_1.png", "Assets/Ship_2.png", "Assets/Ship_Destroyed.png", "Assets/Map.png"])
-    images = {
-        "ship1": imagesArray[0],
-        "ship2": imagesArray[1],
-        "shipDestroyed": imagesArray[2],
-        "map": imagesArray[3]
-    };
-    init();
-    resizeCanvas();
-}
-function resizeCanvas() {
-    canvas.width = width;
-    canvas.height = height;
-}
 function game() {
     update();
     draw();
@@ -212,8 +213,9 @@ function update() {
 
             if(t % ship.speed == 0){
                 ship.current_day++;
+                // Should run out of fuel around 176 days
                 if(ship.current_day % 3 == 0){
-                    ship.fuel -= 1.5;
+                    ship.fuel -= 1.7;
                 }
                 // Check for event for today
                 if(lastEventDay + 3 < ship.current_day){
