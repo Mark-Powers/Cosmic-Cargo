@@ -73,7 +73,27 @@ function generate_events(){
                 var days = random_int(25)+1;
                 ship.current_day += days;
                 return `It took ${days} days but you manage to get the engine back in working order.`
-            }]])
+            }]]),
+        new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
+            [["What's going on?", function(ship, party){
+                let karen = getAliveMembers().some(el =>el.name == "Karen");
+                let kid = random_choice(alive);
+                while(kid.name != karen.name){
+                    kid = random_choice(alive);
+                }
+                
+                if (karen != undefined){
+                    let karen_index = array.indexOf(karen.name);
+                    party.splice(karen_index, 1);
+                    let kid_index = array.indexOf(kid.name);
+                    party.splice(kid_index, 1);
+                    ship.credits -= Math.floor(ship.credits * .5);
+                    return `You catch crewman Karen stealing half of your credits while taking ${kid.name} as a hostage on an escape pod with her. They succesfully escape.`;
+                }
+
+                return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
+            }]]),
+
     ];
 }
 
