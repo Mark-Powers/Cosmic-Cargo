@@ -93,7 +93,24 @@ function generate_events(){
 
                 return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
             }]]),
+        new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded. ",
+            [["Investigate it", function(ship, party){
+                if (random_chance(.2)){
+                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'Thank you mortals for waking me from my long slumber. I will now seek to consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions as you continue your journey.";
+                }
+                if (random_chance(.6)){
+                    let warp_bonus = random_int(250);
+                    ship.distance += warp_bonus;
 
+                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is shot through a mysterious wormhole. Upon regaining control you find yourself ${warp_bonus} lightyears closer to your destination!`;
+                }
+                loot = random_int();
+                ship.credits += loot;
+                return `Narrowing in on the anomaly reveals a cache of resources worth about ${loot} credits!`;
+            }],
+            ["Ignore it", function(ship, party){
+                return "You ponder what secrets the anomaly might've held as you choose to safely direct your ship to continue on your journey.";
+            }]]),
     ];
 }
 
