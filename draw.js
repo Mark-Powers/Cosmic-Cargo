@@ -223,15 +223,19 @@ function draw_status(){
     // person list
     var i = 0;
     for(let person of party){
-        font(8, person.name, 15, 15 + 12*i);
-        font(8, person.status, 100, 15 + 12*i);
+        var c = 2
+        if(person.status == "Dead"){
+            c = 0
+        } 
+        font(8, person.name, 3, 7 + 12*i, false, c);
+        font(8, person.status, 100, 7 + 12*i, false, c);
         i++;
     }
     
-    font(8, `Cargo: ${ship.cargo} tons`, 15, 106);
-    font(8, `Credits: ${ship.credits}`, 15, 118);
-    font(8, `Fuel: ${Math.floor(ship.fuel)}%`, 15, 130);
-    font(8, `Day ${ship.current_day}`, 15, 142);
+    font(8, `Cargo: ${ship.cargo} tons`, 3, 106);
+    font(8, `Credits: ${ship.credits}`, 3, 118);
+    font(8, `Fuel: ${Math.floor(ship.fuel)}%`, 3, 130);
+    font(8, `Day ${ship.current_day}`, 3, 142);
     font(8, `${ship.distance}/${ship.end_distance}`, 100, 142);
 }
 function draw_shop(){
@@ -265,9 +269,9 @@ function draw_shop_result(){
     font(8, ")press any key)", 26, height - 8);
 }
 
-function font(size, what, x, y, wrap = false) {
+function font(size, what, x, y, wrap = false, c = 2) {
     ctx.font = size + "px Gameboy";
-    color(2);
+    color(c);
     if(wrap){
         // Match up to 22 characters, making sure to not end a line mid word
         var parts = what.match(/.{1,21}\b/g); 
