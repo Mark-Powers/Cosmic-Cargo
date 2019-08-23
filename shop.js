@@ -19,6 +19,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
 function Shop(ship){
     this.name = generate_name();
     this.fuel_price = calculate_price(1, 3, 2) * (100 - Math.floor(ship.fuel));
+    this.engine_price = calculate_price(1, 3, 2) * 10 * (10 - ship.speed);
     this.message = generate_trucker_message();
 }
 
@@ -67,6 +68,19 @@ function purchase_fuel(ship, shop){
     return "You do not have enough credits to refuel your ship!";
 }
 
+function fix_engine(ship, shop){
+    if (ship.speed == 10){
+        return "Your engines are all fine."
+    }
+
+    if (ship.credits >= shop.engine_price){
+        ship.credits -= shop.engine_price;
+        ship.speed = 10;
+        return `You fix your engines. You have ${ship.credits} credits remaining!`;
+    }
+    return "You do not have enough credits to repair your engines!";
+}
+
 /**
  * Flavor text of talking with a trucker at this shop
  * @param {Shop} shop - The current shop the player is at
@@ -83,5 +97,5 @@ function leave(){
 }
 
 function shop_choices(shop){
-    return [`Refuel )${shop.fuel_price} credits)`, "Talk", "Leave"];
+    return [`Refuel )${shop.fuel_price} credits)`, `Repair )${shop.engine_price} Credits)`, "Talk", "Leave"];
 }
