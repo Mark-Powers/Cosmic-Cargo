@@ -143,7 +143,43 @@ function generate_events(){
                     ship.credits += 100; 
                 }
                 return `You don't notice anything outside changing, but something feels different.`
+            }]]),   
+        new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
+            [["What's going on?", function(ship, party){
+                let karen = getAliveMembers().some(el =>el.name == "Karen");
+                let kid = random_choice(getAliveMembers());
+                while(kid.name != karen.name){
+                    kid = random_choice(getAliveMembers());
+                }
                 
+                if (karen != undefined){
+                    let karen_index = array.indexOf(karen.name);
+                    party.splice(karen_index, 1);
+                    let kid_index = array.indexOf(kid.name);
+                    party.splice(kid_index, 1);
+                    ship.credits -= Math.floor(ship.credits * .5);
+                    return `You catch crewman Karen stealing half of your credits while taking ${kid.name} as a hostage on an escape pod with her. They succesfully escape.`;
+                }
+
+                return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
+            }]]),
+        new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded. ",
+            [["Investigate it", function(ship, party){
+                if (random_chance(.2)){
+                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'Thank you mortals for waking me from my long slumber. I will now seek to consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions as you continue your journey.";
+                }
+                if (random_chance(.6)){
+                    let warp_bonus = random_int(250);
+                    ship.distance += warp_bonus;
+
+                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is shot through a mysterious wormhole. Upon regaining control you find yourself ${warp_bonus} lightyears closer to your destination!`;
+                }
+                loot = random_int();
+                ship.credits += loot;
+                return `Narrowing in on the anomaly reveals a cache of resources worth about ${loot} credits!`;
+            }],
+            ["Ignore it", function(ship, party){
+                return "You ponder what secrets the anomaly might've held as you choose to safely direct your ship to continue on your journey.";
             }]]),
     ];
 }
