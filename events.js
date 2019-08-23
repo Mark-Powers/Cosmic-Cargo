@@ -156,10 +156,8 @@ function generate_events(){
                 }
                 
                 if (karen != undefined){
-                    let karen_index = party.indexOf(karen.name);
-                    party.splice(karen_index, 1);
-                    let kid_index = party.indexOf(kid.name);
-                    party.splice(kid_index, 1);
+                    karen.status = "Missing";
+                    kid.status = "Missing";
                     ship.credits -= Math.floor(ship.credits * .5);
                     return `You catch crewman Karen stealing half of your credits while taking ${kid.name} as a hostage on an escape pod with her. They succesfully escape.`;
                 }
