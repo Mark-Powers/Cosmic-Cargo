@@ -297,6 +297,7 @@ function update() {
     }
 }
 function keyPush(e) {
+    e.preventDefault()
     if(imagesLoaded && gameState == "title") {
         play_audio("select");
         play_audio("bgm", true);
