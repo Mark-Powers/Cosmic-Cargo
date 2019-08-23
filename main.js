@@ -113,6 +113,7 @@ function getRandomName(){
             "Gaston",
             "Short Round",
             "Curtis",
+            "Egg",
         ];
         shuffle_array(randomNames);
     }
