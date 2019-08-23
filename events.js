@@ -45,7 +45,7 @@ function generate_events(){
                     }
                     talker.status = "Dead";
                     fodder.status = "Dead"
-                    return `${talker.name} tries to convince the doliks to leave. They shout 'ELIMINATE' and murder ${talker.name} and ${fodder.name}.`
+                    return `${talker.name} tries to convince the doliks to leave. It Fails! The word "ELIMINATE" echoes in the ship as they murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
         new SpaceEvent("Space Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
