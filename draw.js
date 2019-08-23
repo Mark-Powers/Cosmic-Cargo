@@ -127,8 +127,8 @@ function draw_main(){
     color(1)
     // Day and distance notification
     font(8, `Day ${ship.current_day}`, 3, 82);
-    font(8, `${Math.floor(ship.fuel)}% Fuel`, 3, 129);
-    font(8, `${ship.distance}/${ship.end_distance} lightyears`, 3, 139);
+    font(8, `${Math.floor(ship.fuel)} Fuel`, 3, 129);
+    font(8, `${ship.distance} lightyears`, 3, 139);
     // map progress
     color(0);
     ctx.lineWidth = "1";
@@ -230,9 +230,9 @@ function draw_status(){
     
     font(8, `Cargo: ${ship.cargo} tons`, 3, 106);
     font(8, `Credits: ${ship.credits}`, 3, 118);
-    font(8, `Fuel: ${Math.floor(ship.fuel)}%`, 3, 130);
+    font(8, `Fuel: ${Math.floor(ship.fuel)}`, 3, 130);
     font(8, `Day ${ship.current_day}`, 3, 142);
-    font(8, `${ship.distance}/${ship.end_distance}`, 100, 142);
+    font(8, `${ship.distance} of ${ship.end_distance}`, 75, 142);
 }
 function draw_shop(){
     // background
