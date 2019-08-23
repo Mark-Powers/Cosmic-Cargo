@@ -47,7 +47,7 @@ function draw_setup(){
     }, "")
     let text = `You are a space trucker in the distant year of 2019. Your latest mission: transport essential cargo from Octilion to a new colony on Replaris. Without your shipment of goods within the next year, everyone there will die. Your assemble your most able crew: ${names}.`;
     font(8, text, 3, 7, true);
-    font(8, ")press any key)", 30, height - 10);
+    font(8, ")press any key)", 30, height - 8);
 }
 function draw_win(){
     color(3);
@@ -220,7 +220,7 @@ function draw_status(){
     var i = 0;
     for(let person of party){
         var c = 2
-        if(person.status == "Dead"){
+        if(person.status == "Dead" || person.status == "Missing"){
             c = 0
         } 
         font(8, person.name, 3, 7 + 12*i, false, c);
@@ -265,12 +265,28 @@ function draw_shop_result(){
     font(8, ")press any key)", 26, height - 8);
 }
 
+function split_into_parts(what, size){
+    var parts = [];
+    var line = "";
+    for(var word of what.split(" ")){
+        if(line.length + word.length > size){
+            parts.push(line.trim());
+            line = "";
+        }
+        line += " " + word;
+    }
+    if(line){
+        parts.push(line);
+    }
+    return parts;
+}
 function font(size, what, x, y, wrap = false, c = 2) {
     ctx.font = size + "px Gameboy";
     color(c);
     if(wrap){
         // Match up to 22 characters, making sure to not end a line mid word
-        var parts = what.match(/.{1,21}\b/g); 
+        //var parts = what.match(/.{1,21}[\b\.'\?\)]/g); 
+        var parts = split_into_parts(what, 21);
         parts.forEach((element, i) => {
             ctx.fillText(element.trim(), x, y + i*size);
         });

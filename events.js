@@ -146,17 +146,18 @@ function generate_events(){
             }]]),   
         new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
             [["What's going on?", function(ship, party){
-                let karen = getAliveMembers().some(el =>el.name == "Karen");
+                let karen = getAliveMembers().find(el =>el.name == "Karen");
                 let kid = random_choice(getAliveMembers());
-                while(kid.name != karen.name){
-                    kid = random_choice(getAliveMembers());
+
+                if (getAliveMembers().length > 2){
+                    while(kid.name == karen.name){
+                        kid = random_choice(getAliveMembers());
+                    }
                 }
                 
                 if (karen != undefined){
-                    let karen_index = array.indexOf(karen.name);
-                    party.splice(karen_index, 1);
-                    let kid_index = array.indexOf(kid.name);
-                    party.splice(kid_index, 1);
+                    karen.status = "Missing";
+                    kid.status = "Missing";
                     ship.credits -= Math.floor(ship.credits * .5);
                     return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears taking both with her. You should have seen it coming.`;
                 }
@@ -239,7 +240,10 @@ function hostiles_event(){
         }],
         ["Hire a navigator", function(ship, party){
             let charge = Math.min(random_int(75)+50, ship.credits);
+
+            ship.credits -= charge;
             return `You pay for the local taxi service to escort you across the hostile zone. They do so without difficulty, but charge you ${charge} credits.`
+
         }]]);
 }
 
