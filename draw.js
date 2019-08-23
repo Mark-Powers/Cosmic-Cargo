@@ -125,10 +125,6 @@ function draw_main(){
     ctx.drawImage(images["map"], 0, height/2); 
     // map rectangle
     color(1)
-    ctx.beginPath();
-    ctx.lineWidth = "2";
-    ctx.rect(1, 1, width-2, height/2);
-    ctx.stroke();
     // Day and distance notification
     font(8, `Day ${ship.current_day}`, 3, 82);
     font(8, `${Math.floor(ship.fuel)}% Fuel`, 3, 129);
