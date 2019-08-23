@@ -85,6 +85,7 @@ function getRandomName(){
             "Janet",
             "Jill",
             "Stephanie",
+            "Albino Rhino",
             "Rose",
             "Martha",
             "Ohio Queen",
@@ -97,7 +98,7 @@ function getRandomName(){
             "Beatsy",
             "Caroline",
             "Mitch",
-            "Gurdy",
+            "Gerty",
             "Ma'am",
             "Smokey",
             "Hoss",
@@ -105,6 +106,7 @@ function getRandomName(){
             "Clyde",
             "Sundace",
             "Butch",
+            "Big Dunc",
             "Chad",
             "Diego",
             "Slim-Jim",
@@ -112,6 +114,7 @@ function getRandomName(){
             "Rasputin",
             "Gaston",
             "Short Round",
+            "Long Schlong",
             "Curtis",
             "Egg",
         ];
@@ -130,14 +133,14 @@ function getStatus(currentStatus, delta = undefined){
         },
         "Good": {
             "up": "Good",
-            "down": "Fatigued"
+            "down": "Unwell"
         },
-        "Fatigued": {
+        "Unwell": {
             "up": "Good",
-            "down": "Ill"
+            "down": "Dire"
         },
-        "Ill": {
-            "up": "Fatigued",
+        "Dire": {
+            "up": "Unwell",
             "down": "Dead"
         },
         "Dead": {

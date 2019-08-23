@@ -6,9 +6,13 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
                     "It's a harsh life out in space. Never know what day might be your last out here.",
                     "How do you do? I'm the owner of this here establishment. Good to see a friendly face.",
                     "Beware of people named Karen. Maybe you'll understand when you're old like me. Ha!",
+                    "My darn engine keeps acting up on me. Who makes these things anyway?",
                     "Look kid, are you going to buy something?",
                     "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one",
                     "Buzz off.",
+                    "Those Doliks mean business. They won't hesistate to murder people in cold blood if they're in a bad mood.",
+                    "I coulda swore I saw a red convertable drift past me the other day. My old eyes must be playing tricks on me!",
+                    "Damn cops are all over the place out there. Make sure things are on the up and up if you see 'em snooping around.",
                     "Space age technology and we're still clinging to our CB radios. Heh. Imagine that.",
                     "Hey we got a rule around these parts! The new guy pays first round!"]
 

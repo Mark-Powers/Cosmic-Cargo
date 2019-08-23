@@ -36,7 +36,7 @@ function generate_events(){
                 let alive = party.filter( el => (el.status != "Dead"));
                 if(alive.length == 1 || random_chance(0.2)){
                     let talker = random_choice(alive);
-                    return `${talker.name} tries to convince the doliks to leave. Some how against all odds, it works!`
+                    return `${talker.name} tries to convince the doliks to leave. Somehow it works!`
                 } else {
                     let talker = random_choice(alive);
                     var fodder = random_choice(alive);
@@ -45,10 +45,10 @@ function generate_events(){
                     }
                     talker.status = "Dead";
                     fodder.status = "Dead"
-                    return `${talker.name} tries to convince the doliks to leave. It Fails! The word "ELIMINATE" echoes in the ship as they murder ${talker.name} and ${fodder.name}.`
+                    return `${talker.name} tries to convince the doliks to leave. It Fails! They loudly synthesize the word "ELIMINATE" as they murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
-        new SpaceEvent("Planet Plague", "During your travels through a nebula, your ship took on foreign bacteria, infecting your crew",
+        new SpaceEvent("Planet Plague", "An encounter with an asteroid causes your ship to take on foreign bacteria. It infects your crew",
             [["OK", function(ship, party){
                 let alive = party.filter( el => (el.status != "Dead"));
                 let sick = random_choice(alive);
@@ -89,7 +89,7 @@ function generate_events(){
             ["Ignore it", function(ship, party){
                 return `You pass by the wormhole, never knowing what secrets it might hold.`
             }]]),
-        new SpaceEvent("Space Sherrif", "You see flashing lights and a siren coming up behind you in the mirror",
+        new SpaceEvent("Space Sheriff", "You see flashing lights and a siren coming up behind you in the mirror",
             [["Pull over", function(ship, party){
                 if(random_chance(0.25)){
                     return `The officer speeds by you. He must be chasing someone ahead of you.`;
@@ -99,7 +99,7 @@ function generate_events(){
                     return `The officer tells you that your tailight is is out and fines you ${credits} credits.`;
                 }
             }],
-            ["Try to out run him", function(ship, party){
+            ["Try to outrun him", function(ship, party){
                 if(random_chance(0.25)){
                     return `You take off fast and manage to escape his pursuit.`
                 } else {
@@ -126,9 +126,9 @@ function generate_events(){
                 return "Your team feels a lot better now"
             }],
             ["Pass", function(ship, party){
-                return `Your team is doing just fine, you ensure them things will be alright.`
+                return `Your team is doing just fine, you assure them things will be alright.`
             }]]),
-        new SpaceEvent("Aurora", "A fantasical light show happens outside the windows of your ship, almost as if some magical being is present.",
+        new SpaceEvent("Aurora", "A fantasical light-show happens outside the windows of your ship, almost as if some magical being is present.",
             [["Try to make contact", function(ship, party){
                 var i = random_int(100);
                 var healed = getAliveMembers().find(el => el.status != "Good" && el.status != "Dead");
@@ -158,7 +158,7 @@ function generate_events(){
                     let kid_index = array.indexOf(kid.name);
                     party.splice(kid_index, 1);
                     ship.credits -= Math.floor(ship.credits * .5);
-                    return `You catch crewman Karen stealing half of your credits while taking ${kid.name} as a hostage on an escape pod with her. They succesfully escape.`;
+                    return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears taking both with her. You should have seen it coming.`;
                 }
 
                 return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
@@ -166,13 +166,13 @@ function generate_events(){
         new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded. ",
             [["Investigate it", function(ship, party){
                 if (random_chance(.2)){
-                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'Thank you mortals for waking me from my long slumber. I will now seek to consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions as you continue your journey.";
+                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'I thank you mortals for waking me from my long slumber. Behold as I now consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions as you continue your journey.";
                 }
                 if (random_chance(.6)){
                     let warp_bonus = random_int(250);
                     ship.distance += warp_bonus;
 
-                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is shot through a mysterious wormhole. Upon regaining control you find yourself ${warp_bonus} lightyears closer to your destination!`;
+                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is flung through a mysterious wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
                 }
                 loot = random_int();
                 ship.credits += loot;
@@ -195,11 +195,11 @@ function asteroid_event(){
                     } else if(random_chance(0.5)){
                         let lost = Math.floor(ship.cargo * ((random_int(10)+2)/100)); // (2-11% of cargo)
                         ship.cargo -= lost;
-                        return `Your trip through the asteroid belt went mostly smooth, except for a minor collision towards the end in which you lost ${lost} tons fo cargo`
+                        return `Your trip through the asteroid belt was nearly sucessfull except for a minor collision towards the end in which you lost ${lost} tons fo cargo`
                     } else {
                         let lost = Math.floor(ship.cargo * ((random_int(10)+10)/100)); // (11-20% of cargo)
                         ship.cargo -= lost;
-                        return `The asteroid belt hits you hard, you lost ${lost} tons of cargo during the trip.`
+                        return `A rogue asteroid slams into the cargo bay doors, you lose ${lost} tons of cargo in the collision.`
                     }
                 }],
                 ["Look for a new route", function(ship, party){
@@ -209,9 +209,9 @@ function asteroid_event(){
                     ship.fuel -= fuel;
                     return `You took ${days} days to find a safe route, and used some fuel in the process.`
                 }],
-                ["Ask for an escort", function(ship, party){
+                ["Hire a navigator", function(ship, party){
                     let charge = Math.min(random_int(75)+50, ship.credits);
-                    return `You pay for the local taxi service to escort you across the belt. They do with no difficulties,  but charge you ${charge} credits.`
+                    return `You pay for the local taxi service to escort you across the belt. They do so without difficulty, but charge you ${charge} credits.`
                 }]]);
 }
 
@@ -219,15 +219,15 @@ function hostiles_event(){
     return new SpaceEvent("Hostile Area", "Your ship is reaches a hostile zone, full of marauders.",
         [["Try to fly through", function(ship, party){
             if(random_chance(0.33)){
-                return "Your mastery at piloting your ship allowed you to navigate the area with no difficulties."
+                return "Your piloting mastery allowed you to navigate the area with no difficulties."
             } else if(random_chance(0.5)){
                 let lost = Math.floor(ship.cargo * ((random_int(10)+2)/100)); // (2-11% of cargo)
                 ship.cargo -= lost;
-                return `Your trip through the hostile zone went mostly smooth, except for a minor conflict towards the end in which you lost ${lost} tons fo cargo`
+                return `Your trip through the hostile zone was mostly smooth, except for a minor conflict towards the end in which you lost ${lost} tons of cargo`
             } else {
                 let lost = Math.floor(ship.cargo * ((random_int(10)+10)/100)); // (11-20% of cargo)
                 ship.cargo -= lost;
-                return `The marauders hit you hard, you lost ${lost} tons of cargo during the trip.`
+                return `The marauders manage to hinder your voyage, you lost ${lost} tons of cargo during the trip.`
             }
         }],
         ["Look for a new route", function(ship, party){
@@ -237,9 +237,9 @@ function hostiles_event(){
             ship.fuel -= fuel;
             return `You took ${days} days to find a safe route, and used some fuel in the process.`
         }],
-        ["Ask for an escort", function(ship, party){
+        ["Hire a navigator", function(ship, party){
             let charge = Math.min(random_int(75)+50, ship.credits);
-            return `You pay for the local taxi service to escort you across the hostile zone. They do with no difficulties, but charge you ${charge} credits.`
+            return `You pay for the local taxi service to escort you across the hostile zone. They do so without difficulty, but charge you ${charge} credits.`
         }]]);
 }
 
