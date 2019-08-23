@@ -167,13 +167,13 @@ function generate_events(){
         new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded. ",
             [["Investigate it", function(ship, party){
                 if (random_chance(.2)){
-                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'I thank you mortals for waking me from my long slumber. Behold as I now consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions as you continue your journey.";
+                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your head. 'I thank you mortals for waking me from my long slumber. I must now consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions and continue your journey.";
                 }
                 if (random_chance(.6)){
                     let warp_bonus = random_int(250);
                     ship.distance += warp_bonus;
 
-                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is flung through a mysterious wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
+                    return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is flung through a wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
                 }
                 loot = random_int();
                 ship.credits += loot;
@@ -181,6 +181,37 @@ function generate_events(){
             }],
             ["Ignore it", function(ship, party){
                 return "You ponder what secrets the anomaly might've held as you choose to safely direct your ship to continue on your journey.";
+            }]]),
+        new SpaceEvent("Black Market", "While parked, a cloaked ship suddenly reveals itself to you. They seem to want your cargo, and are willing to pay handsomely for it.",
+            [["Sell 5 Cargo", function(ship, party){
+                if (ship.cargo >= 5){
+                    ship.cargo -= 5;
+                    ship.credits += 625;
+                    return "As quick as it appeared, the ship suddenly cloaks. The exchange went without issue. 5 cargo for an easy 625 credit bonus. You just hope what you have left will be enough for the colony...";
+                }
+                else if (ship.cargo <= 0){
+                    return "Unfortunately, you don't have any cargo left to sell. Picking up on this the opposing ship quickly cloaks away...";
+                }
+                else {
+                    remaining_cargo = ship.cargo;
+                    bonus_credits = remaining_cargo * 125;
+                    ship.cargo -= remaining_cargo;
+                    ship.credits += bonus_credits;
+                    return `While you didn't have quite enough cargo, the visitors were still more than happy to make a trade. In exchange for the rest of your cargo you recieved ${bonus_credits} credits!`;
+                }
+            }],
+            ["Sell 1 Cargo", function(ship, party){
+                if (ship.cargo >= 1){
+                    ship.cargo -= 1;
+                    ship.credits += 125;
+                    return "As quick as it appeared, the ship suddenly cloaks. The exchange went without issue. 1 cargo for an easy 125 credit bonus.";
+                }
+                else {
+                    return "Unfortunately, you don't have any cargo left to sell. Picking up on this the opposing ship quickly cloaks away...";
+                }
+            }],
+            ["Thanks, but no thanks.", function(ship, party){
+                return "As quick as it appeared, the ship suddenly cloaks. While relieved that no conflict occured, a new anonymous message in your ship's inbox containing 'We'll be in touch' leaves you a little shaken.";
             }]]),
     ];
 }
