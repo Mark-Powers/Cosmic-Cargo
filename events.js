@@ -239,6 +239,7 @@ function hostiles_event(){
         }],
         ["Ask for an escort", function(ship, party){
             let charge = Math.min(random_int(75)+50, ship.credits);
+            ship.credits -= charge;
             return `You pay for the local taxi service to escort you across the hostile zone. They do with no difficulties, but charge you ${charge} credits.`
         }]]);
 }
