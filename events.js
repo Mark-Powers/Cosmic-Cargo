@@ -343,7 +343,7 @@ function generate_events(){
         new SpaceEvent("Space Whale", "A majestic space whale graces you with its presence while flying next to your ship!",
             [["Fascinating", function(ship, party){
                 ship.days -= 1;
-                return "Struck in awe by the whale, you don't notice your ship slowing down, resulting in a 1 day delay...";
+                return "Struck in awe by the whale, you don't notice your ship slowing down, resulting in a 1 day delay.";
             }]]),
         new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead...",
             [["Investigate", function(ship, party){
