@@ -311,9 +311,34 @@ function generate_events(){
 
                 return "Damage report indicates the ship is moving slower, fuel is leaking, and 1 crate of cargo was damaged.";
             }]]),
-        new SpaceEvent("Make a Wish! Shooting Star", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Make a Wish!", "You see a shooting star! Time to make a wish... I wish for...",
+            [["Fuel!", function(ship, party){
+                ship.fuel = 100;
+                return "It seems that star was perfect for scouping fuel! Your fuel reserves are full!";
+            }],
+            ["Credits!", function(ship, party){
+                if (random_chance(.3)){
+                    ship.credits += 100;
+                    return "Your pocket seems oddly heavy. Reaching in you find a cool extra 100 credits! Score!"
+                }
+
+                let delay = random(int) + 5;
+                ship.days += delay;
+                return `The shooting star curses you for your greed. Systems on your ship have randomly shut down, delaying your progress by ${delay} days.`;
+            }],
+            ["A quick journey!", function(ship, party){
+                let bonus_distance = random_int(100) + 10;
+                ship.distance += bonus_distance;
+                return `Interestingly, following your wish a lot of time seems to have passed in a moment and you are ${bonus_distance} lightyears closer to the colony!`;
+            }],
+            ["Repairs.", function(ship, party){
+                party.forEach(element => {
+                    element.status = getStatus(element.status, 1);
+                });
+
+                ship.speed = 10;
+                ship.rate = 1.7;
+                return "Interestingly, following your wish your ship appears to be working as normal, and your crew is feeling a lot better!";
             }]]),
         new SpaceEvent("Space Whale", "",
             [["", function(ship, party){
