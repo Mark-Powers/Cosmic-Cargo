@@ -342,7 +342,7 @@ function generate_events(){
             }]]),
         new SpaceEvent("Space Whale", "A majestic space whale graces you with its presence while flying next to your ship!",
             [["Fascinating", function(ship, party){
-                ship.days -= 1;
+                ship.days += 1;
                 return "Struck in awe by the whale, you don't notice your ship slowing down, resulting in a 1 day delay.";
             }]]),
         new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead...",
@@ -361,7 +361,7 @@ function generate_events(){
                 }
 
                 let bonus_credits = random_int(100) + 25;
-                let bonus_cargo = random_int(1) + 1;
+                let bonus_cargo = random_int(2) + 1;
                 ship.credits += bonus_credits; 
                 return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} and ${bonus_cargo} cargo!`;
             }],
