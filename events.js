@@ -340,13 +340,32 @@ function generate_events(){
                 ship.rate = 1.7;
                 return "Interestingly, following your wish your ship appears to be working as normal, and your crew is feeling a lot better!";
             }]]),
-        new SpaceEvent("Space Whale", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Space Whale", "A majestic space whale graces you with its presence while flying next to your ship!",
+            [["Fascinating", function(ship, party){
+                ship.days -= 1;
+                return "Struck in awe by the whale, you don't notice your ship slowing down, resulting in a 1 day delay...";
             }]]),
-        new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead.",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead...",
+            [["Investigate", function(ship, party){
+                if (random_int(.1)){
+                    if (random_int(.1)){
+                        party.forEach(element => {
+                            element.status = "Dead";
+                        });
+                        return "Oh no, you walked into its trap. The creature quickly reaches out to consume your ship, snatches it, and swallows. A dark abyss awaits you...";
+                    }
+
+                    ship.fuel -= 5;
+                    return "Oh no, you walked into its trap. The creature quickly reaches out to consume your ship, but you manage to engage warp just in time. This has cost you significant fuel loss.";
+                }
+
+                let bonus_credits = random_int(100) + 25;
+                let bonus_cargo = random_int(1) + 1;
+                ship.credits += bonus_credits; 
+                return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} and ${bonus_cargo} cargo!`;
+            }],
+            ["Leave it alone.", function(ship, party){
+                return "You leave the strange beast alone and continue your travels. You notice on your scanners the creature appears to have disappeared...";
             }]]),
         new SpaceEvent("Investment Opportunity", "",
             [["", function(ship, party){
