@@ -98,7 +98,7 @@ function generate_events(){
                 } else {
                     let credits = Math.min(75, ship.credits);
                     ship.credits -= credits;
-                    return `The officer tells you that your tailight is is out and fines you ${credits} credits.`;
+                    return `The officer tells you that your taillight is is out and fines you ${credits} credits.`;
                 }
             }],
             ["Try to outrun him", function(ship, party){
