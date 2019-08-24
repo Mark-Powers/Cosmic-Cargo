@@ -275,9 +275,9 @@ function generate_events(){
             }]]),
         new SpaceEvent("Dysentery", "Someone in your party contracts dysentery.",
             [["Uh oh", function(ship, party){
-                var hurt = random_choice(getAliveMembers());
+                let hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
-                return `${hurt} is now ${hurt.stats} from dysentery.`
+                return `${hurt.name} is now ${hurt.status} from dysentery.`
             }]]),
     ];
 }
