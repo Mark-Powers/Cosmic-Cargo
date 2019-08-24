@@ -196,6 +196,10 @@ function game() {
 }
 
 function update() {
+    if (ship.speed < 0){
+        ship.speed = 0;
+    }
+
     switch(gameState){
         case "main":
             t++;
