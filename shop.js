@@ -1,5 +1,5 @@
 var names = ["Johnny's", "Clarney's", "The Mysterious", "The Belt-line", "Astro's", "Solar Star's", "Randal's", "Mitchard's"];
-var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spitoon", "Diner and More!", "Pool Party", "Restaurant at the End of the Universe"];
+var descriptors = ["Galactic Truck Stop!", "World of Wonders!", "Gas and Grill", "Land of the Lost!", "Sunken Astroid", "Spittoon", "Diner and More!", "Pool Party", "Restaurant at the End of the Universe"];
 var trucker_talk = ["I would be wary of pirates around these parts. Good folk have been getting robbed as of late.",
                     "You new around here? Haven't seen you around these parts.",
                     "I used to be a trucker like you, until I took a torpedo to the wing.",
@@ -11,7 +11,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
                     "Hackers are nerdy, pasty, tubby, little geeks with triple thick glasses... Should be easy to catch if you're looking for one",
                     "Buzz off.",
                     "Those Doliks mean business. They won't hesistate to murder people in cold blood if they're in a bad mood.",
-                    "I coulda swore I saw a red convertable drift past me the other day. My old eyes must be playing tricks on me!",
+                    "I coulda swore I saw a red convertible drift past me the other day. My old eyes must be playing tricks on me!",
                     "Damn cops are all over the place out there. Make sure things are on the up and up if you see 'em snooping around.",
                     "Space age technology and we're still clinging to our CB radios. Heh. Imagine that.",
                     "Hey we got a rule around these parts! The new guy pays first round!"]
@@ -98,7 +98,7 @@ function truck_talk(shop){
  * The player leaves the shop
  */
 function leave(){
-    return "You leave the stop.";
+    return "You leave the shop.";
 }
 
 function shop_choices(shop){
