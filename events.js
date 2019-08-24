@@ -1,5 +1,6 @@
 var events = [];
 var event_cooldown = [];
+var karen_finale = false;
 
 /**
  * Creates all established events and stores them in the events array
@@ -7,6 +8,7 @@ var event_cooldown = [];
 function generate_events(){
     events = [];
     event_cooldown = [];
+    karen_finale = false;
     events = [
         new SpaceEvent("Pirates!", "Pirates have boarded your ship demanding payment! Fight?", 
             [["Pay",function(ship, party){
@@ -322,7 +324,7 @@ function generate_events(){
                     return "Your pocket seems oddly heavy. Reaching in you find a cool extra 100 credits! Score!"
                 }
 
-                let delay = random(int) + 5;
+                let delay = random_int(10) + 5;
                 ship.days += delay;
                 return `The shooting star curses you for your greed. Systems on your ship have randomly shut down, delaying your progress by ${delay} days.`;
             }],
@@ -455,7 +457,7 @@ function generate_events(){
             [["Well, alright.", function(ship, party){
                 let lost_days = random_int(50) + 1;
                 ship.days += lost_days;
-                return `Arriving at the location, you quickly determine this 'workshop' to be some sort of tourist trap. While leaving, a crowd of businessmen attempt to sell you timeshares for condos. Shrugging them off, you leave. However, due to time dialation on the planet you lost ${lost_days} days`;
+                return `Arriving at the location, you quickly determine this is a tourist trap. While leaving, businessmen attempt to sell you timeshares for condos. Shrugging them off, you leave. However, due to time dialation you lost ${lost_days} days`;
             }],
             ["There's no time!", function(ship, party){
                 return "You decide to stop another time.";
@@ -544,10 +546,85 @@ function return_karen(){
                         karen.status = "Missing";
                         kid.status = "Missing";
                         ship.credits -= Math.floor(ship.credits * .5);
+                        events.push(karens_revenge());
                         return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears, taking both with her. You should have seen it coming.`;
                     }
 
                     return `Oh, it's just crewman ${kid.name} dancing around and being a goof.`;
+                }]]);
+}
+
+/**
+ * Adds 'Revenge' event after 'Rouge Karen'
+ */
+function karens_revenge(){
+    return new SpaceEvent("Karen's Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her kids",
+                [["Surrender", function(ship, party){
+                    if (getAliveMembers().length > 2){
+                        let kid1 = random_choice(getAliveMembers());
+                        let kid2 = random_choice(getAliveMembers());
+
+                        while (kid1.name == kid2.name){
+                            kid2 = random_choice(getAliveMembers());
+                        }
+
+                        kid1.status = "Missing";
+                        kid2.status = "Missing";
+                        ship.credits = 0;
+                        karen_finale = true;
+                        return `Giving in to her demands, you hand over ${kid1.name} and ${kid2.name} along with the rest of your credits. With a smirk, Karen and her aramda fly off. She will rue this day...`;
+                    }
+                    else if (getAliveMembers().length > 1){
+                        let kid1 = random_choice(getAliveMembers());
+                        kid1.status = "Missing";
+                        ship.credits = 0;
+                        karen_finale = true;
+                        return `Giving in to her demands, you hand over ${kid1.name} along with the rest of your credits. With a smirk, Karen and her aramda fly off. She will rue this day...`;
+                    }
+
+                    karen_finale = true;
+                    return `Seeing that her 'kids' are either dead or missing, Karen is happy enough with taking the rest of your credits. With a smirk, Karen and her aramda fly off. She will rue this day...`;
+                }],
+                ["Not without a fight!", function(ship, party){
+                    if (random_chance(.2)){
+                        let victim = random_choice(getAliveMembers());
+                        victim.status = getStatus(victim.status, -1);
+                        karen_finale = true;
+                        return `Through your superior navigation skills, you manage to fly through the armada and take out a few of her ships! Though ${victim.name} is ${victim.status} after the attempt. Hopefully this is the last you see of Karen...`;
+                    }
+                    
+                    let alive = getAliveMembers();
+                    
+                    for (i = 0; i < alive.length; i++){
+                        alive[i].status = "Dead";
+                    }
+
+                    return "There are too many of them! Slowly but surely, you succumb to the might of Karen. Your last sight is that of the commanding ship firing into your fuel storage. Never trust a Karen.";
+                }]]);
+}
+
+/**
+ * Adds 'Karen's Requeim' event after 'Karen's Revenge' and only at 3000 lightyears
+ */
+function karen_requiem(){
+    return new SpaceEvent("Karen's Requiem'", "At your destination, you again find the Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
+                [["This ends here!", function(ship, party){
+                    if (talk_count >= 3){
+                        ship.credits += 1000;
+                        return "You are a cargo trucker. No more, no less. But that is exactly what you needed to be today. Grabbing your CB radio you message every nearby trucker. Soon, an army of trucks stands with you. Karen surrenders all she has for her life. The colony is saved.";
+                    }
+                    
+                    let alive = getAliveMembers();
+                    
+                    for (i = 0; i < alive.length; i++){
+                        alive[i].status = "Dead";
+                    }
+
+                    return "You are a cargo trucker. No more, no less. But that is exactly what you needed to be today. Grabbing your CB radio you message every nearby trucker in the sector... but no ones comes. Perhaps you didn't talk to enough truckers... You don't stand a chance.";
+                }],
+                ["Surrender the cargo...", function(ship, party){
+                    ship.cargo = 0;
+                    return "It is a hopeless situation. In exchange for your life you surrender your cargo. Karen smirks and leaves with her armada. You have no choice but to face the colony and deliver them the terrible news...";
                 }]]);
 }
 
@@ -570,7 +647,10 @@ function get_event(){
 
     let event = random_choice(events);
     let event_index = events.indexOf(event);
-    event_cooldown.push(event);
+
+    if (event.name != "Karen's Revenge"){
+        event_cooldown.push(event);
+    }
 
     if (event_index != -1){
         events.splice(event_index, 1);

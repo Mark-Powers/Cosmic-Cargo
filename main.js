@@ -1,7 +1,7 @@
 var gameInterval, canvas, ctx, width, height;
 var t, gameState, ship, party, images, imagesLoaded, 
     currentEvent, lastEventDay, 
-    selectedChoice, doAction, eventResult, doneShopping, shopResult;
+    selectedChoice, doAction, eventResult, doneShopping, shopResult, talk_count, talked;
 var FPS = 10;
 window.onload = function () {
     canvas = document.getElementById("canvas");
@@ -62,6 +62,8 @@ function init() {
             events.push(return_karen());
         }
     }
+
+    talk_count = 0;
 }
 
 function createParty(size){
@@ -222,7 +224,19 @@ function update() {
                 pause_audio("encounter");
                 play_audio("endgame", true);
                 return;
-            }      
+            }
+            
+            if(ship.distance == (ship.end_distance - 1) && karen_finale){
+                currentEvent = karen_requiem();
+                selectedChoice = 0;
+                doAction = false;
+                eventResult = undefined;
+                gameState = "event";
+                pause_audio("bgm");
+                play_audio("alert");
+                play_audio("encounter", true);
+                return;
+            }
 
             if(t % ship.speed == 0){
                 ship.current_day++;
@@ -295,11 +309,19 @@ function update() {
                 }
                 else if (selectedChoice == 2){
                     shopResult = truck_talk(currentShop);
+                    talked = true;
                     gameState = "shop_result";
                 }
                 else if (selectedChoice == 3){
                     shopResult = leave();
                     doneShopping = true;
+
+                    if (talked){
+                        talk_count += 1;
+                    }
+
+                    talked = false;
+
                     gameState = "shop_result";
                 }
             }
