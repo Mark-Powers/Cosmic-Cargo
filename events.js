@@ -347,8 +347,8 @@ function generate_events(){
             }]]),
         new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead...",
             [["Investigate", function(ship, party){
-                if (random_int(.1)){
-                    if (random_int(.1)){
+                if (random_chance(.1)){
+                    if (random_chance(.1)){
                         party.forEach(element => {
                             element.status = "Dead";
                         });
@@ -373,7 +373,7 @@ function generate_events(){
                 if (ship.credits >= 100){
                     ship.credits -= 100;
 
-                    if (random_int(.5)){
+                    if (random_chance(.5)){
                         let bonus_credits = random_int(100) + 50
                         ship.credits += bonus_credits + 100;
                         return `This deal is too good to pass up. You invest 100 credits and are told to give it some time. A few days later a message arrives revealing you are ${bonus_credits} credits richer.`;
@@ -420,13 +420,21 @@ function generate_events(){
                     return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. You stand no chance against their strength. One colony is saved, yet another colony is lost...";
                 }
             }]]),
-        new SpaceEvent("Red Alert", "",
-            [["", function(ship, party){
-                return "";
-            }]]),
-        new SpaceEvent("Assassination", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Red Alert", "The 'RED ALERT' alarm suddenly blares off! Your crewmen quickly approach the helm to investigate.",
+            [["Computer, status report.", function(ship, party){
+                if (random_chance(.25)){
+                    let victim = random_choice(getAliveMembers());
+                    victim.status = getStatus(victim.status, -1);
+
+                    return `A small breach in the hull reveals a leak! Your crewmen manage to repair the leak before losing too much oxygen although ${victim.name} is suddenly not feeling so great.`;
+                }
+
+                if (random_chance(.25)){
+                    ship.cargo -= 1;
+                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reclose it, but lose 1 cargo during the effort.";
+                }
+
+                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reclose it without losing any cargo";
             }]]),
         new SpaceEvent("Space Cat", "While stopped for a break, you see the oddest sight. A cat, in a space suit, is floating around on a crate.",
             [["What...?", function(ship, party){
@@ -443,9 +451,14 @@ function generate_events(){
                 
                 return "You take the crate and get 1 cargo. As you reach for the cat it waves goodbye, and flys off.";
             }]]),
-        new SpaceEvent("It came from the Moon!", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("It came from the Moon!", "A video message appears on your ships console. What appears to be a man dressed as a wizard asks you to consider stopping at his moon workshop.",
+            [["Well, alright.", function(ship, party){
+                let lost_days = random_int(50) + 1;
+                ship.days += lost_days;
+                return `Arriving at the location, you quickly determine this 'workshop' to be some sort of tourist trap. While leaving, a crowd of businessmen attempt to sell you timeshares for condos. Shrugging them off, you leave. However, due to time dialation on the planet you lost ${lost_days} days`;
+            }],
+            ["There's no time!", function(ship, party){
+                return "You decide to stop another time.";
             }]]),
     ];
 }
