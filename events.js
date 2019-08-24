@@ -198,7 +198,7 @@ function generate_events(){
         new SpaceEvent("Comet", "A comet flies towards your ship.",
             [["Engage the shields", function(ship, party){
                 ship.speed -= 1
-                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+                return "The shields get overloaded by the collision and the surge takes one of your engines offline."
             }],
             ["Take it head on", function(ship, party){
                 var hit = random_choice(getAliveMembers());
