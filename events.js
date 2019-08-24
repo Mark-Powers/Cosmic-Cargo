@@ -250,7 +250,7 @@ function generate_events(){
                 let cargo = Math.min(random_int(5), ship.cargo);
                 return `The bounty hunter board your ship and you start to brawl. ${hurt.name} becomes ${hurt.status} in the process. The tumble also takes out ${cargo} cargo.`
             }]]),
-        new SpaceEvent("Mutiny", "Your crew demands higher wages, or else they will be a fight.",
+        new SpaceEvent("Mutiny", "Your crew demands higher wages, or else there will be a fight.",
             [["Pay them", function(ship, party){
                 ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
                 return "Each member demands 40 credits payment right now, which you deliver."
