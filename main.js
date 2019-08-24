@@ -46,6 +46,7 @@ function init() {
         next_zone: 0
     }
     party = createParty(6);
+
     for(var song of music){
         audio[song].volume = 0.4
     }
@@ -53,6 +54,13 @@ function init() {
         audio[song].volume = 0.1
     }
     generate_events();
+
+    // If Karen is in the Party add the 'Rouge Karen' event
+    for (i = 0; i < party.length; i++){
+        if (party[i].name == "Karen"){
+            events.push(return_karen());
+        }
+    }
 }
 
 function createParty(size){
