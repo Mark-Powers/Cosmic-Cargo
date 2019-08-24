@@ -383,13 +383,20 @@ function generate_events(){
             [["", function(ship, party){
                 return "";
             }]]),
-        new SpaceEvent("Space Cat", "",
-            [["", function(ship, party){
-                return "";
-            }]]),
-        new SpaceEvent("Space Dog", "", 
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Space Cat", "While stopped for a break, you see the oddest sight. A cat, in a space suit, is floating around on a crate.",
+            [["What...?", function(ship, party){
+                ship.cargo += 1;
+
+                if (party.length < 7){
+                    party.push({
+                        name: "Space Cat",
+                        status: getStatus(""),
+                    });
+
+                    return "You decide to recruit the cat and gain a new crew member! You also scored an additional cargo!";
+                }
+                
+                return "You take the crate and get 1 cargo. As you reach for the cat it waves goodbye, and flys off.";
             }]]),
         new SpaceEvent("It came from the Moon!", "",
             [["", function(ship, party){
