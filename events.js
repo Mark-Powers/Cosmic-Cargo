@@ -261,7 +261,7 @@ function generate_events(){
                 ship.credits -= Math.min(getAliveMembers().length * 15, ship.credits)
                 return `Not all the crew is against you. ${hurt.name} joins your side and becomes ${hurt.status} in the spat. In the end, you settle things by paying each crew member 15 credits.`
             }]]),
-        new SpaceEvent("Amatuer mechanic", "An amateur mechanic offers to upgrade your ship, though he warns you that any official repairman will revert his changes if you go through with it.",
+        new SpaceEvent("Mechanic", "An amateur mechanic offers to upgrade your ship, though he warns you that any official repairman will revert his changes if you go through with it.",
             [["Upgrade )200 credits)", function(ship, party){
                 if(ship.credits < 200){
                     return "Sorry, you just don't have the cash."
@@ -368,7 +368,7 @@ function generate_events(){
             ["Leave it alone.", function(ship, party){
                 return "You leave the strange beast alone and continue your travels. You notice on your scanners the creature appears to have disappeared...";
             }]]),
-        new SpaceEvent("Investment Opportunity", "At a rest stop, you and your crew are pulled to the side of the building by a shady man who speaks of the deal of a lifetime for only 100 credits!",
+        new SpaceEvent("Investment", "At a rest stop, you and your crew are pulled to the side of the building by a shady man who speaks of the deal of a lifetime for only 100 credits!",
             [["Go on...", function(ship, party){
                 if (ship.credits >= 100){
                     ship.credits -= 100;
@@ -451,7 +451,7 @@ function generate_events(){
                 
                 return "You take the crate and get 1 cargo. As you reach for the cat it waves goodbye, and flys off.";
             }]]),
-        new SpaceEvent("It came from the Moon!", "A video message appears on your ships console. What appears to be a man dressed as a wizard asks you to consider stopping at his moon workshop.",
+        new SpaceEvent("The Wizard", "A video message appears on your ships console. What appears to be a man dressed as a wizard asks you to consider stopping at his moon workshop.",
             [["Well, alright.", function(ship, party){
                 let lost_days = random_int(50) + 1;
                 ship.days += lost_days;
