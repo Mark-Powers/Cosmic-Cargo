@@ -111,7 +111,7 @@ function generate_events(){
                 }                
             }]]),
         new SpaceEvent("Lost Ship", "A ship in the distance looks like it needs help. You approach and they say they ran out of fuel.",
-            [["Offer 10%", function(ship, party){
+            [["Offer 10 fuel", function(ship, party){
                 ship.fuel -= 10;
                 return "The ship is gracious that you help"
             }],
