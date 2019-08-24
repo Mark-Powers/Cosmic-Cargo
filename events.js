@@ -280,6 +280,73 @@ function generate_events(){
                 hurt.status = getStatus(hurt.status, -1);
                 return `${hurt.name} is now ${hurt.status} from dysentery.`
             }]]),
+        new SpaceEvent("Event Horizon", "During your travels your navigation module attempts to navigate your ship into the center of a black hole, claiming it as a shortcut.",
+            [["Worth a shot!", function(ship, party){
+                if (random_chance(.6)){
+                    ship.speed -= 4;
+                    ship.rate = 2.1;
+                    cargo_loss = random_int(3) + 1;
+
+                    if (ship.cargo > cargo_loss){
+                        ship.cargo -= cargo_loss;
+                        return `This is a disaster! Losing control, your ship bounces around the event horizon before successfully warping away. The engine is now severly damaged, fuel is leaking, and ${cargo_loss} cargo was lost.`;
+                    }
+                    
+                    ship.cargo = 0;
+                    return "This is a disaster! Losing control, your ship bounces around the event horizon before successfully warping away. The engine is now severly damaged, fuel is leaking, and all cargo was lost.";
+                }
+
+                let distance_bonus = random_int(300) + 100;
+                ship.distance += distance_bonus;
+                return `Somehow you successfully navigate through the event horizon! You find yourself ${distance_bonus} lightyears closer to your destination!`;
+            }],
+            ["Too risky.", function(ship, party){
+                return "You (smartly) choose not to risk your ship and find an alternative route.";
+            }]]),
+        new SpaceEvent("Asteroid Shower", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Make a Wish! Shooting Star", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Space Whale", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Deceased Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead.",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Investment Opportunity", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Distress Beacon", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Red Alert", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Assassination", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Space Cat", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("Space Dog", "", 
+            [["", function(ship, party){
+                return "";
+            }]]),
+        new SpaceEvent("It came from the Moon!", "",
+            [["", function(ship, party){
+                return "";
+            }]]),
     ];
 }
 
