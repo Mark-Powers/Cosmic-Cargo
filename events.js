@@ -563,7 +563,7 @@ function get_event(){
         events = events.concat(event_cooldown);
         event_cooldown = [];
     }
-    else if (events.length <= event_cooldown.length){
+    else if (events.length <= Math.floor(event_cooldown.length * .5)){
         events = events.concat(event_cooldown);
         event_cooldown = [];
     }
