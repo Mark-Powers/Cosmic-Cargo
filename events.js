@@ -205,10 +205,10 @@ function generate_events(){
                 hit.status = getStatus(hit.status, -1);
                 return `The collision shakes up ${hit.name} who now is ${hit.status}.`
             }]]),
-        new SpaceEvent("Snakes", "A spectral snake comes through the ships teleporter and interrupts your activities on the bridge.",
+        new SpaceEvent("Snakes", "A spectral snake comes through the ship's teleporter and interrupts your activities on the bridge.",
             [["Attack it", function(ship, party){
                 ship.speed -= 1
-                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+                return "The shields get overloaded by the collision and the surge takes one of your engines offline."
             }],
             ["Ignore it", function(ship, party){
                 var scared = random_choice(getAliveMembers());
