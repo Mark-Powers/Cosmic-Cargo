@@ -98,7 +98,7 @@ function generate_events(){
                 } else {
                     let credits = Math.min(75, ship.credits);
                     ship.credits -= credits;
-                    return `The officer tells you that your tailight is is out and fines you ${credits} credits.`;
+                    return `The officer tells you that your taillight is is out and fines you ${credits} credits.`;
                 }
             }],
             ["Try to outrun him", function(ship, party){
@@ -198,17 +198,17 @@ function generate_events(){
         new SpaceEvent("Comet", "A comet flies towards your ship.",
             [["Engage the shields", function(ship, party){
                 ship.speed -= 1
-                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+                return "The shields get overloaded by the collision and the surge takes one of your engines offline."
             }],
             ["Take it head on", function(ship, party){
                 var hit = random_choice(getAliveMembers());
                 hit.status = getStatus(hit.status, -1);
                 return `The collision shakes up ${hit.name} who now is ${hit.status}.`
             }]]),
-        new SpaceEvent("Snakes", "A spectral snake comes through the ships teleporter and interrupts your activities on the bridge.",
+        new SpaceEvent("Snakes", "A spectral snake comes through the ship's teleporter and interrupts your activities on the bridge.",
             [["Attack it", function(ship, party){
                 ship.speed -= 1
-                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+                return "The shields get overloaded by the collision and the surge takes one of your engines offline."
             }],
             ["Ignore it", function(ship, party){
                 var scared = random_choice(getAliveMembers());
@@ -250,7 +250,7 @@ function generate_events(){
                 let cargo = Math.min(random_int(5), ship.cargo);
                 return `The bounty hunter board your ship and you start to brawl. ${hurt.name} becomes ${hurt.status} in the process. The tumble also takes out ${cargo} cargo.`
             }]]),
-        new SpaceEvent("Mutiny", "Your crew demands higher wages, or else they will be a fight.",
+        new SpaceEvent("Mutiny", "Your crew demands higher wages, or else there will be a fight.",
             [["Pay them", function(ship, party){
                 ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
                 return "Each member demands 40 credits payment right now, which you deliver."
@@ -276,9 +276,9 @@ function generate_events(){
             }]]),
         new SpaceEvent("Dysentery", "Someone in your party contracts dysentery.",
             [["Uh oh", function(ship, party){
-                var hurt = random_choice(getAliveMembers());
+                let hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
-                return `${hurt} is now ${hurt.stats} from dysentery.`
+                return `${hurt.name} is now ${hurt.status} from dysentery.`
             }]]),
     ];
 }
