@@ -146,26 +146,6 @@ function generate_events(){
                 }
                 return `You don't notice anything outside changing, but something feels different.`
             }]]),   
-        new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
-            [["What's going on?", function(ship, party){
-                let karen = getAliveMembers().find(el =>el.name == "Karen");
-                let kid = random_choice(getAliveMembers());
-
-                if (getAliveMembers().length > 2){
-                    while(kid.name == "Karen"){
-                        kid = random_choice(getAliveMembers());
-                    }
-                }
-                
-                if (karen != undefined){
-                    karen.status = "Missing";
-                    kid.status = "Missing";
-                    ship.credits -= Math.floor(ship.credits * .5);
-                    return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears taking both with her. You should have seen it coming.`;
-                }
-
-                return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
-            }]]),
         new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded. ",
             [["Investigate it", function(ship, party){
                 if (random_chance(.2)){
@@ -278,6 +258,32 @@ function hostiles_event(){
             return `You pay for the local taxi service to escort you across the hostile zone. They do so without difficulty, but charge you ${charge} credits.`
 
         }]]);
+}
+
+/**
+ * Returns 'Rogue Karen' event if Karen is in the party
+ */
+function return_karen(){
+    return new SpaceEvent("Rogue Karen", "A member of your crew is acting awfully suspicious...",
+                [["What's going on?", function(ship, party){
+                    let karen = getAliveMembers().find(el =>el.name == "Karen");
+                    let kid = random_choice(getAliveMembers());
+
+                    if (getAliveMembers().length > 2){
+                        while(kid.name == "Karen"){
+                            kid = random_choice(getAliveMembers());
+                        }
+                    }
+                    
+                    if (karen != undefined){
+                        karen.status = "Missing";
+                        kid.status = "Missing";
+                        ship.credits -= Math.floor(ship.credits * .5);
+                        return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears taking both with her. You should have seen it coming.`;
+                    }
+
+                    return `Oh it's just crewman ${kid.name} dancing around and being a goof.`;
+                }]]);
 }
 
 /**
