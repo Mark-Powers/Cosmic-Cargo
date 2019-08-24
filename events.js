@@ -352,6 +352,7 @@ function generate_events(){
                         party.forEach(element => {
                             element.status = "Dead";
                         });
+
                         return "Oh no, you walked into its trap. The creature quickly reaches out to consume your ship, snatches it, and swallows. A dark abyss awaits you...";
                     }
 
@@ -367,9 +368,27 @@ function generate_events(){
             ["Leave it alone.", function(ship, party){
                 return "You leave the strange beast alone and continue your travels. You notice on your scanners the creature appears to have disappeared...";
             }]]),
-        new SpaceEvent("Investment Opportunity", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Investment Opportunity", "At a rest stop, you and your crew are pulled to the side of the building by a shady man who speaks of the deal of a lifetime for only 100 credits!",
+            [["Go on...", function(ship, party){
+                if (ship.credits >= 100){
+                    ship.credits -= 100;
+
+                    if (random_int(.5)){
+                        let bonus_credits = random_int(100) + 50
+                        ship.credits += bonus_credits + 100;
+                        return `This deal is too good to pass up. You invest 100 credits and are told to give it some time. A few days later a message arrives revealing you are ${bonus_credits} credits richer.`;
+                    }
+
+                    return "This deal is too good to pass up. You invest 100 credits and are told to give it some time. You never hear back.";
+                }
+
+                ship.credits += 25;
+                return "Realizing you are short on credits, the man takes pity on you for listening in on his presentation and gives you 25 credits";
+            }],
+            ["Not interested", function(ship, party){
+                let injured = random_choice(alive);
+                injured.status = getStatus(sick.status, -1);
+                return `The man doesn't take this well and motions to his muscle to convince you. A brawl ensues leaving ${injured.name} feeling ${injured.status}, but your credits safe!`;
             }]]),
         new SpaceEvent("Distress Beacon", "",
             [["", function(ship, party){
