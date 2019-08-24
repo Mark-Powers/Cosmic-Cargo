@@ -50,7 +50,7 @@ function generate_events(){
                     return `${talker.name} tries to convince the doliks to leave. It Fails! They loudly synthesize the word "ELIMINATE" as they murder ${talker.name} and ${fodder.name}.`
                 }
             }]]),
-        new SpaceEvent("Planet Plague", "An encounter with an asteroid causes your ship to take on foreign bacteria. It infects your crew",
+        new SpaceEvent("Planet Plague", "An encounter with an asteroid causes your ship to take on foreign bacteria which infects your crew",
             [["OK", function(ship, party){
                 let alive = party.filter( el => (el.status != "Dead"));
                 let sick = random_choice(alive);
@@ -177,7 +177,7 @@ function generate_events(){
 
                     return `Approaching the anomaly you and your crewmen find themselves losing control of the ship! Suddenly your ship is flung through a wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
                 }
-                loot = random_int();
+                loot = random_int(200);
                 ship.credits += loot;
                 return `Narrowing in on the anomaly reveals a cache of resources worth about ${loot} credits!`;
             }],
@@ -214,6 +214,90 @@ function generate_events(){
             }],
             ["Thanks, but no thanks.", function(ship, party){
                 return "As quick as it appeared, the ship suddenly cloaks. While relieved that no conflict occured, a new anonymous message in your ship's inbox containing 'We'll be in touch' leaves you a little shaken.";
+            }]]),
+        new SpaceEvent("Comet", "A comet flies towards your ship.",
+            [["Engage the shields", function(ship, party){
+                ship.speed -= 1
+                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+            }],
+            ["Take it head on", function(ship, party){
+                var hit = random_choice(getAliveMembers());
+                hit.status = getStatus(hit.status, -1);
+                return `The collision shakes up ${hit.name} who now is ${hit.status}.`
+            }]]),
+        new SpaceEvent("Snakes", "A spectral snake comes through the ships teleporter and interrupts your activities on the bridge.",
+            [["Attack it", function(ship, party){
+                ship.speed -= 1
+                return "The sheilds get overloaded by the collision and the surge takes one of your engines offline."
+            }],
+            ["Ignore it", function(ship, party){
+                var scared = random_choice(getAliveMembers());
+                scared.status = getStatus(scared.status, -1);
+                return `You ignore the snake, but it still scares ${scared.name} who now is ${scared.status}. ${scared.name} hates snakes.`
+            }]]),
+        new SpaceEvent("Droids", "A group of Class-C encforment droids request to be boarded.",
+            [["Talk to them", function(ship, party){
+                ship.cargo -= 3;
+                return "The droids search your cargo for contraband. They look around and realize this is not the ship they are looking for, though some cargo now seems to be missing."
+            }],
+            ["Deny their request", function(ship, party){
+                var scared = random_choice(getAliveMembers());
+                scared.status = getStatus(scared.status, -1);
+                return `The droids get upset, and call ${scared.name} mean names, who now is ${scared.status}.`
+            }]]),
+        new SpaceEvent("Wandering comic", "A wandering comedian enters into your path and you let her on the ship.",
+            [["Talk to her", function(ship, party){
+                var jokes = ["What's the deal with astronaut food? It's coarse and rough and irritating. That one is more of an observation.",
+                 "You ever worry about aliens? Not me, I'm safe, I'd never get eaten. You know why? Cause I'd taste funny! Hah!",
+                 "I don't have any material, sorry"]
+                return random_choice(jokes);
+            }],
+            ["Ignore her", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = getStatus(hurt.status, -1);
+                return `"What's your problem?" the comedian says and gives ${hurt.name} the punch line, they are now feeling ${hurt.status}.`
+            }]]),
+        new SpaceEvent("Bounty Hunter", "A bounty hunter hails your ship and informs you that you are harboring a fugitive. He requests that you either give them up, or he will come on board.",
+            [["Comply with his orders", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = "Missing";
+                ship.credits += 150;
+                return `You deliver ${hurt.name} to the hunter and they fly off into space, never to be seen again. You earn a few credits for not giving him a hard time`
+            }],
+            ["Refuse", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = getStatus(hurt.status, -1);
+                let cargo = Math.min(random_int(5), ship.cargo);
+                return `The bounty hunter board your ship and you start to brawl. ${hurt.name} becomes ${hurt.status} in the process. The tumble also takes out ${cargo} cargo.`
+            }]]),
+        new SpaceEvent("Mutiny", "Your crew demands higher wages, or else they will be a fight.",
+            [["Pay them", function(ship, party){
+                ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
+                return "Each member demands 40 credits payment right now, which you deliver."
+            }],
+            ["Fight", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = getStatus(hurt.status, -1);
+                ship.credits -= Math.min(getAliveMembers().length * 15, ship.credits)
+                return `Not all the crew is against you. ${hurt.name} joins your side and becomes ${hurt.name} in the spat. In the end, you settle things by paying each crew member 15 credits.`
+            }]]),
+        new SpaceEvent("Amatuer mechanic", "An amateur mechanic offers to upgrade you ship, though he warns you that any official repairman will revert his changes if you go through with it.",
+            [["Upgrade )300 credits)", function(ship, party){
+                if(ship.credits < 300){
+                    return "Sorry, you just don't have the cash."
+                }
+                ship.credits -= 300;
+                ship.speed += 5;
+                return "That baby should be traveling much faster now. You'll make it to where ever you are going months ahead of time."
+            }],
+            ["Leave", function(ship, party){
+                return `Alright, your loss.`
+            }]]),
+        new SpaceEvent("Dysentery", "Someone in your party contracts dysentery.",
+            [["Uh oh", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = getStatus(hurt.status, -1);
+                return `${hurt} is now ${hurt.stats} from dysentery.`
             }]]),
     ];
 }
