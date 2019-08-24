@@ -303,9 +303,13 @@ function generate_events(){
             ["Too risky.", function(ship, party){
                 return "You (smartly) choose not to risk your ship and find an alternative route.";
             }]]),
-        new SpaceEvent("Asteroid Shower", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Asteroid Shower", "An astroid shower rains down on your ship, causing severe damage!",
+            [["This is troubling...", function(ship, party){
+                ship.speed -= 1;
+                ship.rate = 1.9;
+                ship.cargo -= 1;
+
+                return "Damage report indicates the ship is moving slower, fuel is leaking, and 1 crate of cargo was damaged.";
             }]]),
         new SpaceEvent("Make a Wish! Shooting Star", "",
             [["", function(ship, party){
