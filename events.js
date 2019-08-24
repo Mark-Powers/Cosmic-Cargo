@@ -259,15 +259,16 @@ function generate_events(){
                 var hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
                 ship.credits -= Math.min(getAliveMembers().length * 15, ship.credits)
-                return `Not all the crew is against you. ${hurt.name} joins your side and becomes ${hurt.name} in the spat. In the end, you settle things by paying each crew member 15 credits.`
+                return `Not all the crew is against you. ${hurt.name} joins your side and becomes ${hurt.status} in the spat. In the end, you settle things by paying each crew member 15 credits.`
             }]]),
         new SpaceEvent("Amatuer mechanic", "An amateur mechanic offers to upgrade you ship, though he warns you that any official repairman will revert his changes if you go through with it.",
-            [["Upgrade )300 credits)", function(ship, party){
-                if(ship.credits < 300){
+            [["Upgrade )200 credits)", function(ship, party){
+                if(ship.credits < 200){
                     return "Sorry, you just don't have the cash."
                 }
-                ship.credits -= 300;
+                ship.credits -= 200;
                 ship.speed += 5;
+                ship.rate = 2.2
                 return "That baby should be traveling much faster now. You'll make it to where ever you are going months ahead of time."
             }],
             ["Leave", function(ship, party){

@@ -43,7 +43,8 @@ function init() {
         current_day: 1,
         next_shop: 1,
         // hostiles / asteroid
-        next_zone: 0
+        next_zone: 0,
+        rate: 1.7
     }
     party = createParty(6);
 
@@ -223,7 +224,7 @@ function update() {
                 ship.current_day++;
                 // Should run out of fuel around 176 days
                 if(ship.current_day % 3 == 0){
-                    ship.fuel -= 1.7;
+                    ship.fuel -= ship.rate;
                 }
                 // Check for event for today
                 if(lastEventDay + 3 < ship.current_day){
