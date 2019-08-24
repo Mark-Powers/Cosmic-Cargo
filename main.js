@@ -216,6 +216,19 @@ function update() {
             }
 
             ship.distance++;
+            if(ship.distance >= (ship.end_distance - 1) && karen_finale){
+                currentEvent = karen_requiem();
+                selectedChoice = 0;
+                doAction = false;
+                eventResult = undefined;
+                gameState = "event";
+                pause_audio("bgm");
+                play_audio("alert");
+                play_audio("encounter", true);
+                karen_finale = false;
+                return;
+            }
+            
             if(ship.distance >= ship.end_distance){
                 gameState = "win"
                 play_audio("alert");
@@ -225,18 +238,7 @@ function update() {
                 play_audio("endgame", true);
                 return;
             }
-            
-            if(ship.distance == (ship.end_distance - 1) && karen_finale){
-                currentEvent = karen_requiem();
-                selectedChoice = 0;
-                doAction = false;
-                eventResult = undefined;
-                gameState = "event";
-                pause_audio("bgm");
-                play_audio("alert");
-                play_audio("encounter", true);
-                return;
-            }
+        
 
             if(t % ship.speed == 0){
                 ship.current_day++;
