@@ -47,7 +47,7 @@ function draw_setup(){
     }, "")
     let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Octilion to a new colony on Replaris. Without a shipment of goods within the next year, they won't survive. You assemble your most able crew: ${names}.`;
     font(8, text, 3, 7, true);
-    font(8, ")press any key)", 30, height - 8);
+    font(8, ")press any key)", 30, height - 2);
 }
 function draw_win(){
     color(3);
@@ -183,14 +183,14 @@ function draw_event(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(12, `${currentEvent.name}`, 5, 13);
-    font(8, `${currentEvent.desc}`, 5, 25, true);
+    font(12, `${currentEvent.name}`, 3, 13);
+    font(8, `${currentEvent.desc}`, 3, 25, true);
     let choices = get_choices(currentEvent)
     var i = 0;
     for(let choice of choices){
         font(8, choice, 10, 100 + 10*i);
         if(selectedChoice == i){
-            font(8, `~`, 4, 100 + 10*i);
+            font(8, `~`, 3, 100 + 10*i);
         }
         i++;
     }
@@ -238,8 +238,8 @@ function draw_shop(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(12, "Shop", 5, 13);
-    font(8, `Welcome to ${currentShop.name}! Enjoy your stay!`, 5, 25, true);
+    font(12, "Shop", 3, 13);
+    font(8, `Welcome to ${currentShop.name}! Enjoy your stay!`, 3, 25, true);
     let choices = shop_choices(currentShop);
     var i = 0;
     for(let choice of choices){
@@ -254,14 +254,14 @@ function draw_event_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(8, `${eventResult}`, 5, 11, true);
+    font(8, `${eventResult}`, 3, 11, true);
     font(8, ")press any key)", 26, height - 8);
 }
 function draw_shop_result(){
     // background
     color(3);
     ctx.fillRect(0, 0, width, height);
-    font(8, `${shopResult}`, 5, 11, true);
+    font(8, `${shopResult}`, 3, 11, true);
     font(8, ")press any key)", 26, height - 8);
 }
 
