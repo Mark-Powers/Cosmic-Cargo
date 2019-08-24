@@ -387,12 +387,38 @@ function generate_events(){
             }],
             ["Not interested", function(ship, party){
                 let injured = random_choice(alive);
-                injured.status = getStatus(sick.status, -1);
+                injured.status = getStatus(injured.status, -1);
                 return `The man doesn't take this well and motions to his muscle to convince you. A brawl ensues leaving ${injured.name} feeling ${injured.status}, but your credits safe!`;
             }]]),
-        new SpaceEvent("Distress Beacon", "",
-            [["", function(ship, party){
-                return "";
+        new SpaceEvent("Distress Beacon", "Your scanner picks up a distress beacon on a nearby planet. You investigate and find a colony that is experiencing famine, and seeking cargo.",
+            [["Maybe we can spare 1...", function(ship, party){
+                ship.cargo -= 1;
+                return "You give the colony 1 cargo to get by, and hope they can recover.";
+            }],
+            ["Others need our help more...", function(ship, party){
+                let alive_party = getAliveMembers();
+
+                if (alive_party.length >= 3){
+                    let p1 = alive_party[0];
+                    let p2 = alive_party[1];
+                    let p3 = alive_party[2];
+                    p1.status = getStatus(p1.status, -1);
+                    p2.status = getStatus(p2.status, -1);
+                    p3.status = getStatus(p3.status, -1);
+
+                    return `The colonists despair and attack the grounded crewmen! ${p1.name}, ${p2.name}, and ${p3.name} are hurt while returning to the ship.`;
+                }
+                else if (alive_party.length >= 2){
+                    let p1 = alive_party[0];
+                    let p2 = alive_party[1];
+                    p1.status = getStatus(p1.status, -1);
+                    p2.status = getStatus(p2.status, -1);
+
+                    return `The colonists despair and attack the grounded crewmen! ${p1.name}, and ${p2.name} are hurt while returning to the ship.`;
+                }
+                else {
+                    return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. You stand no chance against their strength. One colony is saved, yet another colony is lost...";
+                }
             }]]),
         new SpaceEvent("Red Alert", "",
             [["", function(ship, party){
