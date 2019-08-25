@@ -115,12 +115,12 @@ function generate_events(){
         new SpaceEvent("Lost Ship", "A ship in the distance looks like it needs help. You approach and they say they ran out of fuel.",
             [["Offer 10 fuel", function(ship, party){
                 ship.fuel -= 10;
-                return "The ship is gracious that you help"
+                return "The ship is gracious for your help"
             }],
             ["You have no extra", function(ship, party){
                 let hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
-                return `The crew on the other ship gets violent. Nothing major, but ${hurt.name} is now ${hurt.status}.`
+                return `The crew on the other ship gets violent. They attack and ${hurt.name} is now ${hurt.status}.`
             }]]),
         new SpaceEvent("Med-Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
             [["Heal up", function(ship, party){
@@ -148,10 +148,10 @@ function generate_events(){
                 }
                 return `You don't notice anything outside changing, but something feels different.`
             }]]),   
-        new SpaceEvent("Space Anomaly", "While traveling through a subspace field your scanners pick up a strange signal that cannot be decoded.",
+        new SpaceEvent("Space Anomaly", "While traveling through a subspace field, your scanners pick up a strange signal that cannot be decoded.",
             [["Investigate it", function(ship, party){
                 if (random_chance(.2)){
-                    return "While approaching the anomaly, you and your crew suddenly hear a voice speak in your heads. 'I thank you mortals for waking me from my long slumber. I must now consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions and continue your journey.";
+                    return "While approaching the anomaly, you and your crew hears a voice speak in your heads. 'I thank you mortals for waking me from my long slumber. I must now consume the loop of time. You will be remembered forever...'. The voice fades. You ponder your actions and continue your journey.";
                 }
                 if (random_chance(.6)){
                     let warp_bonus = random_int(250);
@@ -188,14 +188,14 @@ function generate_events(){
                 if (ship.cargo >= 1){
                     ship.cargo -= 1;
                     ship.credits += 125;
-                    return "As quick as it appeared, the ship suddenly cloaks. The exchange went without issue. 1 cargo for an easy 125 credit bonus.";
+                    return "As quickly as it appeared, the ship suddenly cloaks. The exchange went without issue. 1 cargo for an easy 125 credit bonus.";
                 }
                 else {
                     return "Unfortunately, you don't have any cargo left to sell. Picking up on this the opposing ship quickly cloaks away...";
                 }
             }],
             ["No thanks.", function(ship, party){
-                return "As quick as it appeared, the ship suddenly cloaks. While relieved that no conflict occurred, a new anonymous message in your ship's inbox containing 'We'll be in touch' leaves you a little shaken.";
+                return "As quickly as it appeared, the mysterious vessel disappears back into the abyss of space. Your ship's communications hub pings and a message appears: 'We'll be in touch...' .";
             }]]),
         new SpaceEvent("Comet", "A comet flies towards your ship.",
             [["Engage the shields", function(ship, party){
@@ -212,7 +212,7 @@ function generate_events(){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
                     return `Before you are able to land a blow on the snake, Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
                 }
-                return "You kill it with a swift bash, and standing over its corpse, you begin to realize that you are the true monster."
+                return "With a swift kick to the snake's head, is collapses and dies a little too easily and standing over its corpse, you begin to realize that you are the true monster."
             }],
             ["Ignore it", function(ship, party){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
@@ -244,7 +244,7 @@ function generate_events(){
             ["Ignore her", function(ship, party){
                 var hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
-                return `"What's your problem?" the comedian says and gives ${hurt.name} the punch line. They are now feeling ${hurt.status}.`
+                return `"What's your problem?" the comedian says and gives ${hurt.name} the punch line. They are now ${hurt.status}.`
             }]]),
         new SpaceEvent("Bounty Hunter", "A bounty hunter hails your ship and informs you that you are harboring a fugitive. He requests that you either give them up, or he will come on board.",
             [["Comply", function(ship, party){
@@ -257,18 +257,18 @@ function generate_events(){
                 var hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
                 let cargo = Math.min(random_int(5), ship.cargo) + 2;
-                return `The bounty hunter board your ship and you start to brawl. ${hurt.name} becomes ${hurt.status} in the process. The tumble also takes out ${cargo} cargo.`
+                return `The bounty hunter boards your ship and picks a fight. ${hurt.name} becomes ${hurt.status} in the process. The rumble also takes out ${cargo} cargo.`
             }]]),
         new SpaceEvent("Mutiny", "Your crew demands higher wages, or else there will be a fight.",
             [["Pay them", function(ship, party){
                 ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
-                return "Each member demands 40 credits as payment right now, which you deliver."
+                return "Each member demands 40 credits immediately, which you deliver."
             }],
             ["Fight", function(ship, party){
                 var hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
                 ship.credits -= Math.min(getAliveMembers().length * 15, ship.credits)
-                return `Not all the crew is against you. ${hurt.name} joins your side and becomes ${hurt.status} in the spat. In the end, you settle things by paying each crew member 15 credits.`
+                return `Not all the crew is against you. ${hurt.name} joins your side and is injured in the spat. Their status is now ${hurt.status}. In the end, you settle things by paying each remaining crew member 15 credits.`
             }]]),
         new SpaceEvent("Mechanic", "An amateur mechanic offers to upgrade your ship, though he warns you that any official repairman will revert his changes if you go through with it.",
             [["Upgrade )200 credits)", function(ship, party){
@@ -289,7 +289,7 @@ function generate_events(){
                 hurt.status = getStatus(hurt.status, -1);
                 return `${hurt.name} is now ${hurt.status} from dysentery.`
             }]]),
-        new SpaceEvent("Event Horizon", "During your travels your navigation module attempts to navigate your ship into the center of a black hole, claiming it as a shortcut.",
+        new SpaceEvent("Event Horizon", "During your travels your navigation module attempts to guide your ship into the center of a black hole, claiming it as a shortcut.",
             [["Worth a shot!", function(ship, party){
                 if (random_chance(.6)){
                     ship.speed -= 4;
@@ -324,7 +324,7 @@ function generate_events(){
         new SpaceEvent("Make a Wish!", "You see a shooting star! Time to make a wish... I wish for...",
             [["Fuel!", function(ship, party){
                 ship.fuel = 100;
-                return "It seems that star was perfect for scouping fuel! Your fuel reserves are full!";
+                return "It seems that star was perfect for fuel scooping! Your fuel reserves are full!";
             }],
             ["Credits!", function(ship, party){
                 if (random_chance(.3)){
@@ -339,7 +339,7 @@ function generate_events(){
             ["A quick journey!", function(ship, party){
                 let bonus_distance = random_int(100) + 10;
                 ship.distance += bonus_distance;
-                return `Interestingly, following your wish a lot of time seems to have passed in a moment and you are ${bonus_distance} lightyears closer to the colony!`;
+                return `A lot of time seems to have passed in only a moment and you realize that you are ${bonus_distance} lightyears closer to the colony!`;
             }],
             ["Repairs!", function(ship, party){
                 //party.forEach(element => {
@@ -348,14 +348,14 @@ function generate_events(){
 
                 ship.speed = 10;
                 ship.rate = 1.7;
-                return "Interestingly, following your wish your ship appears to be working as normal!";
+                return "Your ship's damaged systems spring to life and seem to be working as normal!";
             }]]),
-        new SpaceEvent("Space Whale", "A majestic space whale graces you with its presence while flying next to your ship!",
+        new SpaceEvent("Space Whale", "Improbably, a majestic sperm whale is spawned into existence in front of you. Sadly, without oxygen it is doomed to die",
             [["Fascinating", function(ship, party){
                 ship.days += 1;
-                return "Struck in awe by the whale, you don't notice your ship slowing down, resulting in a 1 day delay.";
+                return "Struck in awe by the great beast, you don't notice your ship drifting from course, resulting in a 1 day delay.";
             }]]),
-        new SpaceEvent("Dead Anomaly", "While crossing the sector your scanners come across a gigantic tentacled beast. It appears to be dead...",
+        new SpaceEvent("Creature Anomaly", "Your scanners detect an  come across the hulking mass of an enormous tentacled creature. It appears to be dead...",
             [["Investigate", function(ship, party){
                 if (random_chance(.1)){
                     if (random_chance(.1)){
@@ -363,11 +363,11 @@ function generate_events(){
                             element.status = "Dead";
                         });
 
-                        return "Oh no, you walked into its trap. The creature quickly reaches out to consume your ship, snatches it, and swallows. A dark abyss awaits you...";
+                        return "Oh no, you walked into a trap! The creature moves effortlessly through space and envelops your ship, you and your crew are helpless as you are brought to what looks like an orifice and swallowed. A dark abyss awaits you...";
                     }
 
                     ship.fuel -= 5;
-                    return "Oh no, you walked into its trap. The creature quickly reaches out to consume your ship, but you manage to engage warp just in time. This has cost you significant fuel loss.";
+                    return "Oh no, you fell for the beast's charade! The creature quickly reaches out to consume your ship, but you manage to engage warp just in time. Your ships's fuel reserves are significantly depleted.";
                 }
 
                 let bonus_credits = random_int(100) + 25;
@@ -376,7 +376,7 @@ function generate_events(){
                 return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} and ${bonus_cargo} cargo!`;
             }],
             ["Leave it alone.", function(ship, party){
-                return "You leave the strange beast alone and continue your travels. You notice on your scanners the creature appears to have disappeared...";
+                return "You leave the strange beast alone and continue your travels. You notice on your scanners the anomaly has since disappeared...";
             }]]),
         new SpaceEvent("Investment", "At a rest stop, you and your crew are pulled to the side of the building by a shady man who speaks of the deal of a lifetime for only 100 credits!",
             [["Go on...", function(ship, party){
@@ -398,9 +398,9 @@ function generate_events(){
             ["Not interested", function(ship, party){
                 let injured = random_choice(getAliveMembers());
                 injured.status = getStatus(injured.status, -1);
-                return `The man doesn't take this well and motions to his muscle to convince you. A brawl ensues leaving ${injured.name} feeling ${injured.status}, but your credits safe!`;
+                return `The man doesn't take this well and motions to his muscle to convince you. A brawl ensues leaving ${injured.name} ${injured.status}, but your credits safe!`;
             }]]),
-        new SpaceEvent("Distress", "Your scanner picks up a distress beacon on a nearby planet. You investigate and find a colony that is experiencing famine, and seeking cargo.",
+        new SpaceEvent("Distress", "Your scanner picks up a distress beacon from a nearby planet. You investigate and find a colony that is experiencing famine and seeking cargo.",
             [["Spare 5", function(ship, party){
                 ship.cargo -= 5;
                 return "You give the colony 3 cargo to get by, and hope they can recover.";
@@ -430,7 +430,7 @@ function generate_events(){
                     return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. You stand no chance against their strength. One colony is saved, yet another colony is lost...";
                 }
             }]]),
-        new SpaceEvent("Red Alert", "The 'RED ALERT' alarm suddenly blares off! Your crewmen quickly approach the helm to investigate.",
+        new SpaceEvent("Red Alert", "The 'RED ALERT' alarm suddenly roars to life! Your crewmen rush to the helm to investigate.",
             [["'Computer, status'", function(ship, party){
                 if (random_chance(.50)){
                     let victim = random_choice(getAliveMembers());
@@ -441,12 +441,12 @@ function generate_events(){
 
                 if (random_chance(.50)){
                     ship.cargo -= 1 + random_int(5);
-                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reclose it, but lose some cargo during the effort.";
+                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo in the effort.";
                 }
 
-                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reclose it without losing any cargo";
+                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reseal it without losing any cargo";
             }]]),
-        new SpaceEvent("Space Cat", "While stopped for a break, you see the oddest sight. A cat, in a space suit, is floating around on a crate.",
+        new SpaceEvent("Space Cat", "While stopped for a break, you see a sight most odd. A cat, in a space suit, is floating around on a crate.",
             [["What...?", function(ship, party){
                 ship.cargo += 1;
                 if (party.length < 7){
@@ -554,7 +554,7 @@ function return_karen(){
                         kid.status = "Missing";
                         ship.credits -= Math.floor(ship.credits * .5);
                         events.push(karens_revenge());
-                        return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name} as a hostage. She hijacks an escape pod and disappears, taking both with her. You should have seen it coming.`;
+                        return `Oh no! Crewman Karen has stolen half of your hard-earned credits and claims ${kid.name}, the youngest of your crew, as a hostage. She hijacks an escape pod and disappears, taking her bounty and the kid with her. You should have seen it coming.`;
                     }
 
                     return `Oh, it's just crewman ${kid.name} dancing around and being a goof.`;
@@ -565,7 +565,7 @@ function return_karen(){
  * Adds 'Revenge' event after 'Rouge Karen'
  */
 function karens_revenge(){
-    return new SpaceEvent("Karen's Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her kids",
+    return new SpaceEvent("Karen's Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her 'kids'",
                 [["Surrender", function(ship, party){
                     if (getAliveMembers().length > 2){
                         let kid1 = random_choice(getAliveMembers());
@@ -606,7 +606,7 @@ function karens_revenge(){
                         alive[i].status = "Dead";
                     }
 
-                    return "There are too many of them! Slowly but surely, you succumb to the might of Karen. Your last sight is that of the commanding ship firing into your fuel storage. Never trust a Karen.";
+                    return "There are too many of them! The ship is overtaken as you succumb to Karen's assault. Your last sight is that of the commanding ship firing into your fuel storage. Never trust Karen.";
                 }]]);
 }
 
@@ -614,7 +614,7 @@ function karens_revenge(){
  * Adds 'Karen's Requeim' event after 'Karen's Revenge' and only at 3000 lightyears
  */
 function karen_requiem(){
-    return new SpaceEvent("Karen's Requiem'", "At your destination, you again find the Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
+    return new SpaceEvent("Karen's Requiem'", "At your destination, you again find Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
                 [["This ends here!", function(ship, party){
                     if (talk_count >= 3){
                         ship.credits += 1000;
