@@ -427,7 +427,7 @@ function generate_events(){
                     return `The colonists despair and attack the grounded crewmen! ${p1.name}, and ${p2.name} are hurt while returning to the ship.`;
                 }
                 else {
-                    return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. You stand no chance against their strength. One colony is saved, yet another colony is lost...";
+                    return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. One colony is saved, yet another colony is lost...";
                 }
             }]]),
         new SpaceEvent("Red Alert", "The 'RED ALERT' alarm suddenly blares off! Your crewmen quickly approach the helm to investigate.",
