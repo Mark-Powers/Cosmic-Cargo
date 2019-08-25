@@ -141,6 +141,37 @@ function draw_main(){
     ctx.lineTo(98, 81)
     ctx.lineTo(147, 103)
     ctx.stroke();
+    // Draw indicators
+    ship.next_zone * .5 + .36
+    ctx.beginPath();
+    var coords = line_to_from_progress(.11, 43, 92, 76, 112);
+    ctx.arc(coords[0], coords[1], 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    coords = line_to_from_progress(.11, 98, 81, 147, 103);
+    ctx.arc(coords[0], coords[1], 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    // Planet 1
+    ctx.beginPath();
+    ctx.arc(9, 104, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    // Planet 2
+    ctx.beginPath();
+    ctx.arc(43, 92, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    // Planet 3
+    ctx.beginPath();
+    ctx.arc(76, 112, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    // Planet 4
+    ctx.beginPath();
+    ctx.arc(98, 81, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    // Planet 5
+    ctx.beginPath();
+    ctx.arc(147, 103, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+
     // Draw solid on top
     let progress = ship.distance / ship.end_distance;
     ctx.setLineDash([0])
@@ -154,14 +185,17 @@ function draw_main(){
         ctx.lineTo(43, 92)
         if (progress < 0.5){
             shipCoords = line_to_from_progress(progress - .25, 43, 92, 76, 112);
+            ctx.lineTo(shipCoords[0], shipCoords[1])
         }
         else {
             ctx.lineTo(76, 112)
             if(progress < 0.75){
                 shipCoords = line_to_from_progress(progress - .5, 76, 112, 98, 81);
+                ctx.lineTo(shipCoords[0], shipCoords[1])
             } else {
                 ctx.lineTo(98, 81)
                 shipCoords = line_to_from_progress(progress - .75, 98, 81, 147, 103);
+                ctx.lineTo(shipCoords[0], shipCoords[1])
             }   
         }        
     }
@@ -176,7 +210,6 @@ function draw_ship_indicator(coords){
 function line_to_from_progress(norm_progress, x1, y1, x2, y2){
     var  newX = x1 + (x2-x1)*4*norm_progress
     var  newY = y1 + (y2-y1)*4*norm_progress
-    ctx.lineTo(newX, newY)
     return [newX, newY]
 }
 function draw_event(){
