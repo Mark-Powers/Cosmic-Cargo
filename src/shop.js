@@ -27,7 +27,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
  */
 function Shop(ship){
     this.name = generate_name();
-    this.fuel_price = calculate_price(2, 4, 1) * .9* (100 - Math.floor(ship.fuel));
+    this.fuel_price = Math.floor(calculate_price(2, 4, 1) * .9* (100 - Math.floor(ship.fuel)));
     this.engine_price = calculate_price(3, 5, 1) * 10 * (10 - ship.speed);
     this.message = generate_trucker_message();
 }
@@ -78,7 +78,7 @@ function purchase_fuel(ship, shop){
 }
 
 function fix_engine(ship, shop){
-    if (ship.speed == 10){
+    if (ship.speed == 10 && ship.rate == 2.5){
         return "Your engines are all fine."
     }
 
