@@ -165,14 +165,10 @@ function getStatus(currentStatus, delta = undefined){
         },
         "Good": {
             "up": "Good",
-            "down": "Dire"//"Unwell"
-        },
-        "Unwell": {
-            "up": "Good",
             "down": "Dire"
         },
         "Dire": {
-            "up": "Good",//"Unwell",
+            "up": "Good",
             "down": "Dead"
         },
         "Dead": {
