@@ -453,7 +453,7 @@ function generate_events(){
         new SpaceEvent("Space Cat", "While stopped for a break, you see the oddest sight. A cat, in a space suit, is floating around on a crate.",
             [["What...?", function(ship, party){
                 ship.cargo += 1;
-                if (party.length < 7){
+                if (party.length < 7 && random_chance(.7)){
                     party.push({
                         name: "Space Cat",
                         status: getStatus(""),
