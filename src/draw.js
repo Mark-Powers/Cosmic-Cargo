@@ -57,10 +57,10 @@ function draw_win(){
     font(8, "Score:", 3, 24);
     font(8, `${getAliveMembers().length} alive members * 400`, 3, 34);
     font(8, `${ship.cargo} tons of cargo * 100`, 3, 44);
-    font(8, `${ship.credits} credits`, 3, 54);
+    font(8, `${Math.floor(ship.credits)} credits`, 3, 54);
     font(8, `Took ${ship.current_day} days )${10*(350-ship.current_day)})`, 3, 64);
     var total = getAliveMembers().length*400 + ship.cargo*100 + ship.credits + (10*(350-ship.current_day));
-    font(8, `Total: ${total}`, 3, 120);
+    font(8, `Total: ${Math.floor(total)}`, 3, 120);
 }
 function draw_gameover(){
     // background
@@ -75,10 +75,10 @@ function draw_gameover(){
         font(8, "You ran out of fuel", 3, 24);
     }
     font(8, "Score:", 3, 44);
-    font(8, `${ship.credits} credits`, 3, 54);
+    font(8, `${Math.floor(ship.credits)} credits`, 3, 54);
     font(8, `Took ${ship.current_day} days`, 3, 64);
     var total = ship.credits + ship.current_day;
-    font(8, `Total: ${total}`, 3, 120);
+    font(8, `Total: ${Math.floor(total)}`, 3, 120);
 }
 function draw_stars(w, h){
     color(1);
