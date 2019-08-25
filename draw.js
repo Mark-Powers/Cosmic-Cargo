@@ -45,7 +45,7 @@ function draw_setup(){
             return `${acc}, ${el.name}`
         }
     }, "")
-    let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Octilion to a new colony on Replaris. Without a shipment of goods within the next year, they won't survive. You assemble your most able crew: ${names}.`;
+    let text = `You are a space trucker in the distant year 2019. Your latest mission: transport essential cargo from Octilion to a new colony on Replaris. Without a shipment of goods within the next Earth-year, they won't survive. You assemble your most able crew: ${names}.`;
     font(8, text, 3, 7, true);
     font(8, ")press any key)", 30, height - 2);
 }
