@@ -124,7 +124,7 @@ function generate_events(){
             }]]),
         new SpaceEvent("Med-Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
             [["Heal up", function(ship, party){
-                party.forEach(element => {
+                getAliveMembers().forEach(element => {
                     element.status = getStatus(element.status, 1);
                 });
                 return "Your team feels a lot better now."
@@ -216,7 +216,7 @@ function generate_events(){
             }],
             ["Ignore it", function(ship, party){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
-                    return `Before you are able to land a blow on the snake, Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
+                    return `Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
                 }
                 var scared = random_choice(getAliveMembers());
                 scared.status = getStatus(scared.status, -1);
