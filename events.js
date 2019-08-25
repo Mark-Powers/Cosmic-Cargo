@@ -457,13 +457,11 @@ function generate_events(){
                     victim.status = getStatus(victim.status, -1);
                     ship.cargo -= 1 + random_int(5);
 
-                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo during the effort. ${victim.name} is not feeling so great.";
+                    return `It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo during the effort. ${victim.name} is not feeling so great.`;
                 }
                 let victim = random_choice(getAliveMembers());
                 victim.status = getStatus(victim.status, -1);
-
-
-                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reseal it without losing any cargo. ${victim.name} feels a little sick after.";
+                return `It seems someone forgot to close the liftgate at the last stop... You manage to successfully reseal it without losing any cargo. ${victim.name} feels a little sick after.`;
 
             }]]),
         new SpaceEvent("Space Cat", "While stopped for a break, you see a sight most odd. A cat, in a space suit, is floating around on a crate.",
