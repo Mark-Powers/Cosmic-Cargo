@@ -277,7 +277,7 @@ function generate_events(){
                 }
                 ship.credits -= 200;
                 ship.speed += 5;
-                ship.rate = 2.2
+                ship.rate = 3.0
                 return "That baby should be traveling much faster now. You'll make it to wherever you are going months ahead of time."
             }],
             ["Leave", function(ship, party){
@@ -293,7 +293,7 @@ function generate_events(){
             [["Worth a shot!", function(ship, party){
                 if (random_chance(.6)){
                     ship.speed -= 4;
-                    ship.rate = 2.1;
+                    ship.rate = 2.7;
                     cargo_loss = random_int(3) + 1;
 
                     if (ship.cargo > cargo_loss){
@@ -315,7 +315,7 @@ function generate_events(){
         new SpaceEvent("Asteroids", "An astroid shower rains down on your ship, causing severe damage!",
             [["This is troubling...", function(ship, party){
                 ship.speed -= 1;
-                ship.rate = 1.9;
+                ship.rate = 2.7;
                 ship.cargo -= 1;
                 let injured = random_choice(getAliveMembers());
                 injured.status = getStatus(injured.status, -1);
@@ -347,7 +347,7 @@ function generate_events(){
                 //});
 
                 ship.speed = 10;
-                ship.rate = 1.7;
+                ship.rate = 2.5;
                 return "Your ship's damaged systems spring to life and seem to be working as normal!";
             }]]),
         new SpaceEvent("Space Whale", "Improbably, a majestic sperm whale is spawned into existence in front of you. Sadly, without oxygen it is doomed to die",
@@ -456,7 +456,7 @@ function generate_events(){
         new SpaceEvent("Space Cat", "While stopped for a break, you see a sight most odd. A cat, in a space suit, is floating around on a crate.",
             [["What...?", function(ship, party){
                 ship.cargo += 1;
-                if (party.length < 7 && random_chance(.7)){
+                if (party.length < 7 && random_chance(.3)){
                     party.push({
                         name: "Space Cat",
                         status: getStatus(""),

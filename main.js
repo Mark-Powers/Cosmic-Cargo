@@ -44,7 +44,7 @@ function init() {
         next_shop: 1,
         // hostiles / asteroid
         next_zone: 0,
-        rate: 1.7
+        rate: 2.5
     }
     party = createParty(6);
 

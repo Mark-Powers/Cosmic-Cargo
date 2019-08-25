@@ -85,7 +85,7 @@ function fix_engine(ship, shop){
     if (ship.credits >= shop.engine_price){
         ship.credits -= shop.engine_price;
         ship.speed = 10;
-        ship.rate = 1.7;
+        ship.rate = 2.5;
         return `You fix your engines. You have ${ship.credits} credits remaining!`;
     }
     return "You do not have enough credits to repair your engines!";
