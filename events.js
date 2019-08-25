@@ -157,7 +157,7 @@ function generate_events(){
                     let warp_bonus = random_int(250);
                     ship.distance += warp_bonus;
 
-                    return `Approaching the anomaly you and your crewmen find yourselves losing control of the ship! Suddenly your ship is flung through a wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
+                    return `Approaching the anomaly you and your crewmen find yourselves losing control of the ship! The craft is flung through a wormhole. Upon regaining control, you find yourself ${warp_bonus} lightyears closer to your destination!`;
                 }
                 loot = random_int(200);
                 ship.credits += loot;
@@ -166,12 +166,12 @@ function generate_events(){
             ["Ignore it", function(ship, party){
                 return "You ponder what secrets the anomaly might've held as you choose to safely direct your ship to continue on your journey.";
             }]]),
-        new SpaceEvent("Black Market", "While parked, a cloaked ship suddenly reveals itself to you. They seem to want your cargo, and are willing to pay handsomely for it.",
+        new SpaceEvent("Black Market", "While parked, a cloaked ship reveals itself to you. They seem to want your cargo, and are willing to pay handsomely for it.",
             [["Sell 5 Cargo", function(ship, party){
                 if (ship.cargo >= 5){
                     ship.cargo -= 5;
                     ship.credits += 625;
-                    return "As quick as it appeared, the ship suddenly cloaks. The exchange went without issue. 5 cargo for an easy 625 credit bonus. You just hope what you have left will be enough for the colony...";
+                    return "As quick as it appeared, the ship cloaks and fades away. The exchange went without issue. 5 cargo for an easy 625 credit bonus. You just hope what you have left will be enough for the colony...";
                 }
                 else if (ship.cargo <= 0){
                     return "Unfortunately, you don't have any cargo left to sell. Picking up on this the opposing ship quickly cloaks away...";
@@ -188,7 +188,7 @@ function generate_events(){
                 if (ship.cargo >= 1){
                     ship.cargo -= 1;
                     ship.credits += 125;
-                    return "As quickly as it appeared, the ship suddenly cloaks. The exchange went without issue. 1 cargo for an easy 125 credit bonus.";
+                    return "As quickly as it appeared, the ship disappears. The exchange went without issue. 1 cargo for an easy 125 credit bonus.";
                 }
                 else {
                     return "Unfortunately, you don't have any cargo left to sell. Picking up on this the opposing ship quickly cloaks away...";
@@ -353,15 +353,15 @@ function generate_events(){
         new SpaceEvent("Space Whale", "Improbably, a majestic sperm whale is spawned into existence in front of you. Sadly, without oxygen it is doomed to die",
             [["Fascinating", function(ship, party){
                 ship.days += 1;
-                return "Struck in awe by the great beast, you don't notice your ship drifting from course, resulting in a 1 day delay.";
+                return "Struck in awe by the great beast, you don't notice your ship drifting from course, resulting in a delay of one day.";
             }]]),
-        new SpaceEvent("Creature Anomaly", "Your scanners detect an  come across the hulking mass of an enormous tentacled creature. It appears to be dead...",
+        new SpaceEvent("Creature Anomaly", "Your scanners detect the hulking mass of a tentacled monstrosity. It appears to be dead...",
             [["Investigate", function(ship, party){
                 if (random_chance(.1)){
                     if (random_chance(.1)){
                         party.forEach(element => {
                             element.status = "Dead";
-                        });
+                        });wizaed
 
                         return "Oh no, you walked into a trap! The creature moves effortlessly through space and envelops your ship, you and your crew are helpless as you are brought to what looks like an orifice and swallowed. A dark abyss awaits you...";
                     }
@@ -378,7 +378,7 @@ function generate_events(){
             ["Leave it alone.", function(ship, party){
                 return "You leave the strange beast alone and continue your travels. You notice on your scanners the anomaly has since disappeared...";
             }]]),
-        new SpaceEvent("Investment", "At a rest stop, you and your crew are pulled to the side of the building by a shady man who speaks of the deal of a lifetime for only 100 credits!",
+        new SpaceEvent("Investment", "At a rest stop, you and your crew are pulled to the side of the building by a shifty man who lets you in on the investment of a lifetime for only 100 credits!",
             [["Go on...", function(ship, party){
                 if (ship.credits >= 100){
                     ship.credits -= 100;
@@ -436,7 +436,7 @@ function generate_events(){
                     let victim = random_choice(getAliveMembers());
                     victim.status = getStatus(victim.status, -1);
 
-                    return `A small breach in the hull reveals a leak! Your crewmen manage to repair the leak before losing too much oxygen although ${victim.name} is suddenly not feeling so great.`;
+                    return `A small breach in the hull reveals a leak! Your crewmen manage to repair the leak before losing too much oxygen although ${victim.name} is not feeling so great.`;
                 }
 
                 if (random_chance(.50)){
@@ -444,7 +444,7 @@ function generate_events(){
                     victim.status = getStatus(victim.status, -1);
                     ship.cargo -= 1 + random_int(5);
 
-                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo during the effort. ${victim.name} is suddenly not feeling so great.";
+                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo during the effort. ${victim.name} is not feeling so great.";
                 }
                 let victim = random_choice(getAliveMembers());
                 victim.status = getStatus(victim.status, -1);
@@ -465,7 +465,7 @@ function generate_events(){
                 }
                 return "You take the crate and get 1 cargo. As you reach for the cat it waves goodbye, and flys off.";
             }]]),
-        new SpaceEvent("The Wizard", "A video message appears on your ships console. What appears to be a man dressed as a wizard asks you to consider stopping at his moon workshop.",
+        new SpaceEvent("The Wizard", "A video message appears on your ships console. What appears to be a man dressed as a wizard asks you to consider stopping at his moon workshop. Are you interested?",
             [["Well, alright.", function(ship, party){
                 let lost_days = random_int(50) + 1;
                 ship.days += lost_days;
@@ -474,7 +474,7 @@ function generate_events(){
             ["There's no time!", function(ship, party){
                 let injured = random_choice(getAliveMembers());
                 injured.status = getStatus(injured.status, -1);
-                return `The wizard some how sends a magic fireball through the radio, injuring ${injured.name}.`;
+                return `The wizard somehow sends a magic fireball through the radio, injuring ${injured.name}.`;
             }]]),
     ];
 }
