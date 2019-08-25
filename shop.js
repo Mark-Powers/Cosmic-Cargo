@@ -13,7 +13,7 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
                     "Boy you sure come accross some crazy stuff out there on the road, eh?",
                     "If a reptilian woman approaches you while you're here, just pretend like you can't understand her. I promise you it's for your own good.",
                     "Life on the interstellar highway sure is lonely. I miss my cat.",
-                    "Can you believe this place? No rooms available for ole Rusty eh? Fine! I'll go make my own truck stop, with blackjack and hookers! In fact, forget the truck stop and the blackjack.."
+                    "Can you believe this place? No rooms available for ole Rusty eh? Fine! I'll go make my own truck stop, with blackjack and hookers! In fact, forget the truck stop and the blackjack..",
                     "Those Doliks mean business. They won't hesistate to murder people in cold blood if they're in a bad mood.",
                     "I coulda swore I saw a red convertible drift past me the other day. My old eyes must be playing tricks on me!",
                     "What, so everyone's suppose to sleep every single night now? You realize that sleeping takes up half of all time?",

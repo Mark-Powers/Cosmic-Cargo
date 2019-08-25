@@ -142,7 +142,6 @@ function draw_main(){
     ctx.lineTo(147, 103)
     ctx.stroke();
     // Draw indicators
-    ship.next_zone * .5 + .36
     ctx.beginPath();
     var coords = line_to_from_progress(.11, 43, 92, 76, 112);
     ctx.arc(coords[0], coords[1], 1.5, 0, 2 * Math.PI);
@@ -180,7 +179,7 @@ function draw_main(){
     var shipCoords = [-20, -20];
     if(progress < 0.25){
         shipCoords = line_to_from_progress(progress, 9, 104, 43, 92);
-        
+        ctx.lineTo(shipCoords[0], shipCoords[1])
     } else {
         ctx.lineTo(43, 92)
         if (progress < 0.5){
@@ -204,7 +203,7 @@ function draw_main(){
 }
 function draw_ship_indicator(coords){
     ctx.beginPath();
-    ctx.arc(coords[0], coords[1], 1.5, 0, 2 * Math.PI);
+    ctx.arc(coords[0], coords[1], 2, 0, 2 * Math.PI);
     ctx.fill();
 }
 function line_to_from_progress(norm_progress, x1, y1, x2, y2){

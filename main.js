@@ -459,8 +459,6 @@ function keyPush(e) {
             }
             break;
         case 88: // x
-            break;
-        case 32: // space
             if(gameState == "status"){
                 gameState = "main";
                 play_audio("select");
@@ -469,6 +467,7 @@ function keyPush(e) {
                 play_audio("select");
             }
             break;
+        case 32: // space
         case 13: // enter
             if(gameState == "options"){
                 gameState = "main";
