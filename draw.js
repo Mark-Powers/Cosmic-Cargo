@@ -203,7 +203,7 @@ function draw_main(){
 }
 function draw_ship_indicator(coords){
     ctx.beginPath();
-    ctx.arc(coords[0], coords[1], 1.5, 0, 2 * Math.PI);
+    ctx.arc(coords[0], coords[1], 2, 0, 2 * Math.PI);
     ctx.fill();
 }
 function line_to_from_progress(norm_progress, x1, y1, x2, y2){
