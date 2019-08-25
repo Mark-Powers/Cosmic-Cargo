@@ -269,9 +269,9 @@ function generate_events(){
             [["Pay them", function(ship, party){
                 var hurt = random_choice(getAliveMembers());
                 hurt.status = getStatus(hurt.status, -1);
-                var fodder = random_choice(alive);
+                var fodder = random_choice(getAliveMembers());
                 while(fodder.name == hurt.name){
-                    fodder = random_choice(alive);
+                    fodder = random_choice(getAliveMembers());
                 }
                 fodder.status = getStatus(fodder.status, -1);
                 ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
