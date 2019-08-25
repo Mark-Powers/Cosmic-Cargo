@@ -218,7 +218,7 @@ function generate_events(){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
                     return `Before you are able to land a blow on the snake, Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
                 }
-                return "With a swift kick to the snake's head, is collapses and dies a little too easily and standing over its corpse, you begin to realize that you are the true monster."
+                return "With a swift kick to the snake's head, it collapses and dies a little too easily and standing over its corpse, you begin to realize that you are the true monster."
             }],
             ["Ignore it", function(ship, party){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
