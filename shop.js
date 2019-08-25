@@ -27,8 +27,8 @@ var trucker_talk = ["I would be wary of pirates around these parts. Good folk ha
  */
 function Shop(ship){
     this.name = generate_name();
-    this.fuel_price = calculate_price(1, 3, 2) * (100 - Math.floor(ship.fuel));
-    this.engine_price = calculate_price(1, 3, 2) * 10 * (10 - ship.speed);
+    this.fuel_price = calculate_price(2, 4, 1) * .9* (100 - Math.floor(ship.fuel));
+    this.engine_price = calculate_price(3, 5, 1) * 10 * (10 - ship.speed);
     this.message = generate_trucker_message();
 }
 

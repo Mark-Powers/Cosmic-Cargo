@@ -70,13 +70,17 @@ function generate_events(){
             }]]),
         new SpaceEvent("Engine Fault", "Your engine breaks down and requires repair.",
             [["Go on without it", function(ship, party){
-                ship.speed -= 1
-                return "Your speed has been impacted. It will take you longer to arrive."
+                ship.speed -= 1;
+                let injured = random_choice(getAliveMembers());
+                injured.status = getStatus(injured.status, -1);
+                return `The engine blow out hurt ${injured.name} and your speed has been impacted. It will take you longer to arrive.`
             }],
             ["Try to repair it", function(ship, party){
                 var days = random_int(25)+1;
                 ship.current_day += days;
-                return `It took ${days} days but you manage to get the engine back in working order.`
+                let injured = random_choice(getAliveMembers());
+                injured.status = getStatus(injured.status, -1);
+                return `The engine blow out hurt ${injured.name}. It took ${days} days but you manage to get the engine back in working order.`
             }]]),
         new SpaceEvent("Wormhole", "You spot a wormhole in front of you.",
             [["Enter it", function(ship, party){
@@ -104,12 +108,14 @@ function generate_events(){
                 }
             }],
             ["Try to outrun him", function(ship, party){
-                if(random_chance(0.25)){
+                if(random_chance(0.1)){
                     return `You take off fast and manage to escape his pursuit.`
                 } else {
+                    let injured = random_choice(getAliveMembers());
+                    injured.status = getStatus(injured.status, -1);
                     let credits = Math.min(200, ship.credits);
                     ship.credits -= credits;
-                    return `The sheriff pulls up to you and says, "Running from an officer is a serious offense. By the way, your taillight is out," as he hands you a fine for ${credits} credits.`
+                    return `The sheriff catches up to you and says, "Running from an officer is a serious offense. By the way, your taillight is out," as he hands you a fine for ${credits} credits.`
                 }                
             }]]),
         new SpaceEvent("Lost Ship", "A ship in the distance looks like it needs help. You approach and they say they ran out of fuel.",
@@ -261,8 +267,15 @@ function generate_events(){
             }]]),
         new SpaceEvent("Mutiny", "Your crew demands higher wages, or else there will be a fight.",
             [["Pay them", function(ship, party){
+                var hurt = random_choice(getAliveMembers());
+                hurt.status = getStatus(hurt.status, -1);
+                var fodder = random_choice(alive);
+                while(fodder.name == hurt.name){
+                    fodder = random_choice(alive);
+                }
+                fodder.status = getStatus(fodder.status, -1);
                 ship.credits -= Math.min(getAliveMembers().length * 40, ship.credits)
-                return "Each member demands 40 credits immediately, which you deliver."
+                return `${hurt.name} and ${fodder.name} get hurt in the commotion, but you settle it. Each member demands 40 credits, which you deliver.`
             }],
             ["Fight", function(ship, party){
                 var hurt = random_choice(getAliveMembers());
@@ -286,8 +299,8 @@ function generate_events(){
         new SpaceEvent("Dysentery", "Someone in your party contracts dysentery.",
             [["Uh oh", function(ship, party){
                 let hurt = random_choice(getAliveMembers());
-                hurt.status = getStatus(hurt.status, -1);
-                return `${hurt.name} is now ${hurt.status} from dysentery.`
+                hurt.status = "Dead";
+                return `${hurt.name} has died of dysentery.`
             }]]),
         new SpaceEvent("Event Horizon", "During your travels your navigation module attempts to guide your ship into the center of a black hole, claiming it as a shortcut.",
             [["Worth a shot!", function(ship, party){
@@ -310,7 +323,7 @@ function generate_events(){
                 return `Somehow you successfully navigate through the event horizon! You find yourself ${distance_bonus} lightyears closer to your destination!`;
             }],
             ["Too risky.", function(ship, party){
-                return "You (smartly) choose not to risk your ship and find an alternative route.";
+                return "You choose not to risk your ship and find an alternative route.";
             }]]),
         new SpaceEvent("Asteroids", "An astroid shower rains down on your ship, causing severe damage!",
             [["This is troubling...", function(ship, party){
@@ -323,7 +336,7 @@ function generate_events(){
             }]]),
         new SpaceEvent("Make a Wish!", "You see a shooting star! Time to make a wish... I wish for...",
             [["Fuel!", function(ship, party){
-                ship.fuel = 100;
+                ship.fuel = Math.min(ship.fuel + 25, 100);
                 return "It seems that star was perfect for fuel scooping! Your fuel reserves are full!";
             }],
             ["Credits!", function(ship, party){
@@ -355,7 +368,7 @@ function generate_events(){
                 ship.days += 1;
                 return "Struck in awe by the great beast, you don't notice your ship drifting from course, resulting in a delay of one day.";
             }]]),
-        new SpaceEvent("Creature Anomaly", "Your scanners detect the hulking mass of a tentacled monstrosity. It appears to be dead...",
+        new SpaceEvent("Creature", "Your scanners detect the hulking mass of a tentacled monstrosity. It appears to be dead...",
             [["Investigate", function(ship, party){
                 if (random_chance(.1)){
                     if (random_chance(.1)){
