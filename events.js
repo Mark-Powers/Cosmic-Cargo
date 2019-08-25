@@ -124,7 +124,7 @@ function generate_events(){
             }]]),
         new SpaceEvent("Med-Outpost", "You arrive at the medical outpost. For 200 credits, they can heal your entire team.",
             [["Heal up", function(ship, party){
-                party.forEach(element => {
+                getAliveMembers().forEach(element => {
                     element.status = getStatus(element.status, 1);
                 });
                 return "Your team feels a lot better now."
@@ -216,7 +216,7 @@ function generate_events(){
             }],
             ["Ignore it", function(ship, party){
                 if(getAliveMembers().some((el) => el.name == "Space Cat")){
-                    return `Before you are able to land a blow on the snake, Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
+                    return `Space Cat calls out to the Snake 'Jimmy! I haven't seen you since college!' The two go into the galley and catch up over some drinks.`
                 }
                 var scared = random_choice(getAliveMembers());
                 scared.status = getStatus(scared.status, -1);
@@ -373,7 +373,7 @@ function generate_events(){
                 let bonus_credits = random_int(100) + 25;
                 let bonus_cargo = random_int(2) + 1;
                 ship.credits += bonus_credits; 
-                return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} and ${bonus_cargo} cargo!`;
+                return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} credits and ${bonus_cargo} cargo!`;
             }],
             ["Leave it alone.", function(ship, party){
                 return "You leave the strange beast alone and continue your travels. You notice on your scanners the anomaly has since disappeared...";
@@ -427,7 +427,7 @@ function generate_events(){
                     return `The colonists despair and attack the grounded crewmen! ${p1.name}, and ${p2.name} are hurt while returning to the ship.`;
                 }
                 else {
-                    return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. You stand no chance against their strength. One colony is saved, yet another colony is lost...";
+                    return "The colonists desperately attempt to board your landed ship and seize control. Upon gaining entry, they find you are the only crew member. One colony is saved, yet another colony is lost...";
                 }
             }]]),
         new SpaceEvent("Red Alert", "The 'RED ALERT' alarm suddenly roars to life! Your crewmen rush to the helm to investigate.",
@@ -440,16 +440,23 @@ function generate_events(){
                 }
 
                 if (random_chance(.50)){
+                    let victim = random_choice(getAliveMembers());
+                    victim.status = getStatus(victim.status, -1);
                     ship.cargo -= 1 + random_int(5);
-                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo in the effort.";
-                }
 
-                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reseal it without losing any cargo";
+                    return "It seems someone forgot to close the liftgate at the last stop... You manage to reseal it, but lose some cargo during the effort. ${victim.name} is suddenly not feeling so great.";
+                }
+                let victim = random_choice(getAliveMembers());
+                victim.status = getStatus(victim.status, -1);
+
+
+                return "It seems someone forgot to close the liftgate at the last stop... You manage to successfully reseal it without losing any cargo. ${victim.name} feels a little sick after.";
+
             }]]),
         new SpaceEvent("Space Cat", "While stopped for a break, you see a sight most odd. A cat, in a space suit, is floating around on a crate.",
             [["What...?", function(ship, party){
                 ship.cargo += 1;
-                if (party.length < 7){
+                if (party.length < 7 && random_chance(.7)){
                     party.push({
                         name: "Space Cat",
                         status: getStatus(""),
@@ -565,7 +572,9 @@ function return_karen(){
  * Adds 'Revenge' event after 'Rouge Karen'
  */
 function karens_revenge(){
+
     return new SpaceEvent("Karen's Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her 'kids'",
+
                 [["Surrender", function(ship, party){
                     if (getAliveMembers().length > 2){
                         let kid1 = random_choice(getAliveMembers());
@@ -614,7 +623,9 @@ function karens_revenge(){
  * Adds 'Karen's Requeim' event after 'Karen's Revenge' and only at 3000 lightyears
  */
 function karen_requiem(){
-    return new SpaceEvent("Karen's Requiem'", "At your destination, you again find Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
+
+    return new SpaceEvent("Karen's Requiem", "At your destination, you again find Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
+
                 [["This ends here!", function(ship, party){
                     if (talk_count >= 3){
                         ship.credits += 1000;
