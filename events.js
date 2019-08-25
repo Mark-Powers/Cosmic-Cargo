@@ -373,7 +373,7 @@ function generate_events(){
                 let bonus_credits = random_int(100) + 25;
                 let bonus_cargo = random_int(2) + 1;
                 ship.credits += bonus_credits; 
-                return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} and ${bonus_cargo} cargo!`;
+                return `The creature appears to be dead, though there are a lot of destroyed ships around it. You scavange what you can and find ${bonus_credits} credits and ${bonus_cargo} cargo!`;
             }],
             ["Leave it alone.", function(ship, party){
                 return "You leave the strange beast alone and continue your travels. You notice on your scanners the creature appears to have disappeared...";
@@ -565,7 +565,7 @@ function return_karen(){
  * Adds 'Revenge' event after 'Rouge Karen'
  */
 function karens_revenge(){
-    return new SpaceEvent("Karen's Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her kids",
+    return new SpaceEvent("Karen Revenge", "An armada of ships blocks your path and you're hailed. It is Karen. She demands your credits and her kids",
                 [["Surrender", function(ship, party){
                     if (getAliveMembers().length > 2){
                         let kid1 = random_choice(getAliveMembers());
@@ -614,7 +614,7 @@ function karens_revenge(){
  * Adds 'Karen's Requeim' event after 'Karen's Revenge' and only at 3000 lightyears
  */
 function karen_requiem(){
-    return new SpaceEvent("Karen's Requiem'", "At your destination, you again find the Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
+    return new SpaceEvent("Karen Requiem'", "At your destination, you again find the Karen's gang, only this time attacking the colony. Karen hails you, sparing them in exchange for all of your cargo.",
                 [["This ends here!", function(ship, party){
                     if (talk_count >= 3){
                         ship.credits += 1000;
